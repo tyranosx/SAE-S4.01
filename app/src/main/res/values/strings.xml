@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">SAE</string>
+    <string name="logo">Logo application</string>
+    <string name="geste">Chaque geste compte\nSoutenez les causes qui vous tiennent à cœur</string>
+    <string name="connexion">Se connecter</string>
+    <string name="inscription">S\'inscrire</string>
+    <string name="don">Faire un don</string>
+</resources>
