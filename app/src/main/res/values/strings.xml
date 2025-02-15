@@ -5,4 +5,11 @@
     <string name="connexion">Se connecter</string>
     <string name="inscription">S\'inscrire</string>
     <string name="don">Faire un don</string>
+    <string name="retour">Retour</string>
+    <string name="email">E-mail</string>
+    <string name="mot_de_passe">Mot de passe</string>
+    <string name="mot_de_passe_oublie"><u>Mot de passe oublié</u></string>
+    <string name="connection">Connexion</string>
+    <string name="pascompte">Pas encore de compte ?</string>
+    <string name="inscrireici"><u>S\'inscrire ici</u></string>
 </resources>

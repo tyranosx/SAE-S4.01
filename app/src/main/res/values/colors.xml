@@ -3,6 +3,7 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="textColor">#315C64</color>
-    <color name="buttonColor">#0099A8</color> <!-- Bleu turquoise -->
-    <color name="buttonTextColor">#FFFFFF</color> <!-- Texte blanc -->
+    <color name="buttonColor">#0099A8</color>
+    <color name="buttonTextColor">#FFFFFF</color>
+    <color name="rectangleColor">#E0ECF4</color>
 </resources>

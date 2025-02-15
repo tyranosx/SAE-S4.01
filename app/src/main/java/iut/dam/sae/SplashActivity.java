@@ -4,8 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import androidx.appcompat.app.AppCompatActivity;
-import android.widget.TextView;
-import android.widget.ImageView;
 
 public class SplashActivity extends AppCompatActivity {
 
@@ -17,13 +15,10 @@ public class SplashActivity extends AppCompatActivity {
         setContentView(R.layout.activity_splash);
 
         // Redirection après quelques secondes
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                Intent intent = new Intent(SplashActivity.this, LoginChoiceActivity.class);
-                startActivity(intent);
-                finish(); // Ferme cette activité pour éviter de revenir en arrière
-            }
+        new Handler().postDelayed(() -> {
+            Intent intent = new Intent(SplashActivity.this, LoginChoiceActivity.class);
+            startActivity(intent);
+            finish(); // Ferme cette activité pour éviter de revenir en arrière
         }, SPLASH_TIME_OUT);
     }
 }
