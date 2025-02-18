@@ -17,7 +17,7 @@
             android:exported="false" />
         <activity
             android:name=".InscriptionActivity"
-            android:exported="false" />
+            android:exported="true" />
         <activity
             android:name=".ConnexionActivity"
             android:exported="false" />

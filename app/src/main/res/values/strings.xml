@@ -12,4 +12,8 @@
     <string name="connection">Connexion</string>
     <string name="pascompte">Pas encore de compte ?</string>
     <string name="inscrireici"><u>S\'inscrire ici</u></string>
+    <string name="creer_compte">Créer un compte</string>
+    <string name="prenom">Prénom</string>
+    <string name="nom">Nom</string>
+    <string name="date_naissance">Date de naissance</string>
 </resources>
