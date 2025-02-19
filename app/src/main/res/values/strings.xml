@@ -21,5 +21,6 @@
     <string name="periodicite">Quelle périodicité souhaitez-vous ? </string>
     <string name="donmensuel">Dons mensuels</string>
     <string name="donsannuel">Dons Annuels</string>
+    <string name="deconnecter">Se déconnter</string>
     <string name="date_naissance">Date de naissance</string>
 </resources>
