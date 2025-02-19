@@ -15,5 +15,11 @@
     <string name="creer_compte">Créer un compte</string>
     <string name="prenom">Prénom</string>
     <string name="nom">Nom</string>
+    <string name="donrecurent">Voulez-vous que ce don soit récurrent ?</string>
+    <string name="non">Non</string>
+    <string name="oui">Oui</string>
+    <string name="periodicite">Quelle périodicité souhaitez-vous ? </string>
+    <string name="donmensuel">Dons mensuels</string>
+    <string name="donsannuel">Dons Annuels</string>
     <string name="date_naissance">Date de naissance</string>
 </resources>
