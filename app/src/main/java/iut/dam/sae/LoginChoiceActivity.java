@@ -19,7 +19,7 @@ public class LoginChoiceActivity extends AppCompatActivity {
 
         // Ajout des listeners avec lambdas
         btnFaireDon.setOnClickListener(v -> {
-            Intent intent = new Intent(LoginChoiceActivity.this, donsActivity.class);
+            Intent intent = new Intent(LoginChoiceActivity.this, DonsActivity.class);
             startActivity(intent);
         });
 

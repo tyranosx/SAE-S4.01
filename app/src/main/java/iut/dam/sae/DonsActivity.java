@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class donsActivity extends AppCompatActivity {
+public class DonsActivity extends AppCompatActivity {
 
     private RecyclerView recyclerView;
     private ItemAssoAdapter adapter;

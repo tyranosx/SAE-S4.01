@@ -21,8 +21,8 @@
     <string name="periodicite">Quelle périodicité souhaitez-vous ? </string>
     <string name="donmensuel">Dons mensuels</string>
     <string name="donsannuel">Dons Annuels</string>
-    <string name="deconnecter">Se déconnter</string>
-    <string name="aiderasso">J aide une association</string>
+    <string name="deconnecter">Se déconnecter</string>
+    <string name="aiderasso">Je veux aider une association</string>
     <string name="date_naissance">Date de naissance</string>
     <string name="chercher">Rechercher une association</string>
     <string name="choisirasso">Choississez une association</string>

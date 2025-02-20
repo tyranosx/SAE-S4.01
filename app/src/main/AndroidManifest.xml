@@ -28,16 +28,16 @@
             android:name=".listeassoActivity"
             android:exported="false" />
         <activity
-            android:name=".donsActivity"
+            android:name=".DonsActivity"
             android:exported="false" />
         <activity
             android:name=".profilActivity"
             android:exported="false" />
         <activity
-            android:name=".don2Activity"
+            android:name=".Don2Activity"
             android:exported="false" />
         <activity
-            android:name=".don1Activity"
+            android:name=".Don1Activity"
             android:exported="false" />
         <activity
             android:name=".ForgotPasswordActivity"
