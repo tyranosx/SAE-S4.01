@@ -19,7 +19,9 @@ public class DonsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dons);
 
-        // Initialisation correcte du RecyclerView
+        // Initialiser RecyclerView
+        recyclerView = findViewById(R.id.recyclerViewAssociations);  // C'est ici que ça manquait !
+
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         // Initialisation de la liste des associations
@@ -33,5 +35,7 @@ public class DonsActivity extends AppCompatActivity {
 
         // Associer l'Adapter au RecyclerView
         adapter = new ItemAssoAdapter(associationList, this);
+        recyclerView.setAdapter(adapter);  // Cette ligne était également manquante !
     }
 }
+
