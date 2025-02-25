@@ -26,4 +26,5 @@
     <string name="date_naissance">Date de naissance</string>
     <string name="chercher">Rechercher une association</string>
     <string name="choisirasso">Choississez une association</string>
+    <string name="acc_s_admin">Accès Admin</string>
 </resources>
