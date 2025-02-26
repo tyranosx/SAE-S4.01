@@ -25,5 +25,13 @@
     <string name="aiderasso">J aide une association</string>
     <string name="date_naissance">Date de naissance</string>
     <string name="chercher">Rechercher une association</string>
+    <string name="consulter">Consulter mon activité</string>
+    <string name="fairedon">Faire un don</string>
     <string name="choisirasso">Choississez une association</string>
+    <string name="choixmontant">Choisir un montant : </string>
+    <string name="ou">Ou </string>
+    <string name="Modepaiment">Mode de paiement :  </string>
+    <string name="donner">Donner </string>
+    <string name="montant">Entrez le montant </string>
+    <string name="saisiemontant">Saisir le montant :</string>
 </resources>

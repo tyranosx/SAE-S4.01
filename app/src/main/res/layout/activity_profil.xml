@@ -34,14 +34,40 @@
         android:layout_marginBottom="15dp"
         android:layout_gravity="center_horizontal"/>
 
-
-    <!-- Espace en bas -->
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"/>
     <Button
-        android:id="@+id/btn_don_non"
+        android:id="@+id/btn_consulteractivite"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:minWidth="250dp"
+        android:maxWidth="320dp"
+        android:layout_gravity="center"
+        android:text="@string/consulter"
+        android:textSize="16sp"
+        android:textColor="@color/buttonTextColor"
+        android:background="@drawable/button_rounded"
+        android:gravity="center"
+        android:layout_marginTop="100dp"
+        android:layout_marginBottom="15dp"
+        app:backgroundTint="@color/buttonColor"
+        tools:ignore="RtlHardcoded" />
+    <Button
+        android:id="@+id/btn_faire_un_non"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:minWidth="250dp"
+        android:maxWidth="320dp"
+        android:layout_gravity="center"
+        android:text="@string/fairedon"
+        android:textSize="16sp"
+        android:textColor="@color/buttonTextColor"
+        android:background="@drawable/button_rounded"
+        android:gravity="center"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="15dp"
+        app:backgroundTint="@color/buttonColor"
+        tools:ignore="RtlHardcoded" />
+    <Button
+        android:id="@+id/btn_deconnexion"
         android:layout_width="wrap_content"
         android:layout_height="50dp"
         android:minWidth="250dp"
@@ -52,16 +78,30 @@
         android:textColor="@color/buttonTextColor"
         android:background="@drawable/button_rounded"
         android:gravity="center"
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="10dp"
         android:layout_marginBottom="15dp"
         app:backgroundTint="@color/buttonColor"
         tools:ignore="RtlHardcoded" />
+
     <!-- Espace en bas -->
 
     <View
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"/>
+
+    <ImageButton
+        android:id="@+id/btn_profil"
+        android:layout_width="50dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/round_button_back"
+        android:src="@drawable/utilisateur_24"
+        android:contentDescription="@string/retour"
+        android:elevation="4dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginStart="20dp"
+        app:backgroundTint="#D1D1D1"
+        android:layout_gravity="center"/>
 
 
 
