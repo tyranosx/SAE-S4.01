@@ -24,11 +24,6 @@
         android:layout_marginStart="20dp"
         app:backgroundTint="#008F99"/>
 
-    <!-- Espace en haut -->
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="20dp"/>
-
     <!-- Logo -->
     <ImageView
         android:id="@+id/logo"
@@ -103,8 +98,6 @@
     </LinearLayout>
 
 
-
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -149,7 +142,7 @@
             <EditText
                 android:id="@+id/et_montant"
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
+                android:layout_height="30dp"
                 android:hint="@string/saisirmontant"
                 android:inputType="numberDecimal"
                 android:background="@drawable/input_background"
@@ -157,8 +150,8 @@
                 android:textSize="18sp"
                 android:textColor="#007980"
                 android:textColorHint="#A0A0A0"
-                android:paddingStart="16dp"
-                android:paddingEnd="16dp"/>
+                android:paddingStart="10dp"
+                android:paddingEnd="10dp"/>
 
         </LinearLayout>
 
@@ -241,7 +234,7 @@
         <Button
             android:id="@+id/btn_donner"
             android:layout_width="wrap_content"
-            android:layout_height="40dp"
+            android:layout_height="45dp"
             android:layout_gravity="center"
             android:layout_marginTop="20dp"
             android:layout_marginBottom="15dp"
@@ -256,6 +249,12 @@
             tools:ignore="RtlHardcoded" />
 
     </LinearLayout>
+
+    <!-- Espace en haut -->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="20dp"/>
+
 
 </LinearLayout>
 
