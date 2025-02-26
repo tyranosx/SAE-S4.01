@@ -34,4 +34,11 @@
     <string name="donner">Donner </string>
     <string name="montant">Entrez le montant </string>
     <string name="saisiemontant">Saisir le montant :</string>
+    <string name="saisirmontant">Saisir un montant</string>
+    <string name="cartebancaire">Carte bancaire</string>
+    <string name="ibanbic">IBAN/BIC</string>
+    <string name="_50">50 €</string>
+    <string name="_20">20 €</string>
+    <string name="_10">10 €</string>
+    <string name="carte_bancaire">Carte Bancaire</string>
 </resources>

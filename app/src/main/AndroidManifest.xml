@@ -16,21 +16,6 @@
             android:name=".dons3Activity"
             android:exported="false" />
         <activity
-            android:name=".itemAsso"
-            android:exported="false" />
-        <activity
-            android:name=".itemAssoActivity"
-            android:exported="false" />
-        <activity
-            android:name=".ItemassoAdapterActivity"
-            android:exported="false" />
-        <activity
-            android:name=".itemsassoActivity"
-            android:exported="false" />
-        <activity
-            android:name=".listeassoActivity"
-            android:exported="false" />
-        <activity
             android:name=".donsActivity"
             android:exported="false" />
         <activity
@@ -50,9 +35,6 @@
             android:exported="true" />
         <activity
             android:name=".ConnexionActivity"
-            android:exported="false" />
-        <activity
-            android:name=".ChoixAssociationActivity"
             android:exported="false" />
         <activity
             android:name=".LoginChoiceActivity"
