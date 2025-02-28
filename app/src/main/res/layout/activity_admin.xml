@@ -28,8 +28,8 @@
 
         <ImageButton
             android:id="@+id/icon_admin"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
             android:layout_alignParentEnd="true"
             android:background="@null"
             android:src="@drawable/ic_admin"
@@ -46,8 +46,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/activite_recente"
-        android:textSize="18sp"
-        android:textStyle="bold"
+        android:textSize="14sp"
+        android:textStyle="normal"
         android:textColor="@color/textColor"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="4dp"/>

@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "846717162498",
+    "project_id": "saes401-392cc",
+    "storage_bucket": "saes401-392cc.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:846717162498:android:d8239838f6b48ac45a431b",
+        "android_client_info": {
+          "package_name": "iut.dam.sae"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyACjI4h5xhIxYWm02kHqnSUI0Zvi9lnqc8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

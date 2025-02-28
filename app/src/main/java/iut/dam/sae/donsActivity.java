@@ -1,25 +1,47 @@
 package iut.dam.sae;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.widget.Toast;
+
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+
 import java.util.ArrayList;
 import java.util.List;
 
-
-public class donsActivity extends AppCompatActivity {
+public class DonsActivity extends AppCompatActivity {
 
     private RecyclerView recyclerView;
     private ItemAssoAdapter adapter;
     private List<itemAsso> associationList;
+    private FirebaseAuth mAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dons);
 
-        // Initialisation correcte du RecyclerView
+        // Initialiser Firebase Auth
+        mAuth = FirebaseAuth.getInstance();
+        FirebaseUser user = mAuth.getCurrentUser();
+
+        // Vérifier si l'utilisateur est connecté
+        if (user == null) {
+            Toast.makeText(this, "Vous devez être connecté pour faire un don", Toast.LENGTH_SHORT).show();
+            startActivity(new Intent(this, ConnexionActivity.class));
+            finish();
+            return;
+        }
+
+        // Initialisation du RecyclerView
+        recyclerView = findViewById(R.id.recyclerViewAssociations);
+        recyclerView.setHasFixedSize(true); // Ajout pour améliorer les performances
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         // Initialisation de la liste des associations
@@ -33,5 +55,6 @@ public class donsActivity extends AppCompatActivity {
 
         // Associer l'Adapter au RecyclerView
         adapter = new ItemAssoAdapter(associationList, this);
+        recyclerView.setAdapter(adapter);
     }
 }

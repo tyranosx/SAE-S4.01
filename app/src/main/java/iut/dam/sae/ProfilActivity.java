@@ -2,7 +2,6 @@ package iut.dam.sae;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.Toast;
@@ -34,9 +33,9 @@ public class ProfilActivity extends AppCompatActivity {
             startActivity(intent);
         });
 
-        // Rediriger vers DonsActivity
+        // Rediriger vers LoginChoiceActivity
         btnFaireDon.setOnClickListener(v -> {
-            Intent intent = new Intent(ProfilActivity.this, DonsActivity.class);
+            Intent intent = new Intent(ProfilActivity.this, LoginChoiceActivity.class);
             startActivity(intent);
         });
 
