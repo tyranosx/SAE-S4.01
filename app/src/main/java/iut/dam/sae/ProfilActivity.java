@@ -51,7 +51,11 @@ public class ProfilActivity extends AppCompatActivity {
             finish(); // Fermer ProfilActivity
         });
 
-        // Bouton retour pour fermer l'activité actuelle
-        btnRetour.setOnClickListener(v -> finish());
+        // Bouton retour -> Redirige vers LoginChoiceActivity
+        btnRetour.setOnClickListener(v -> {
+            Intent intent = new Intent(ProfilActivity.this, LoginChoiceActivity.class);
+            startActivity(intent);
+            finish();
+        });
     }
 }

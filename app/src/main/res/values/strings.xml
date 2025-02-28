@@ -47,5 +47,6 @@
     <string name="activite_recente">Activités récentes</string>
     <string name="nombre_dons_realises">Nombre de dons réalisés</string>
     <string name="derniers_dons_recus">Derniers dons reçus</string>
+    <string name="nom_de_l_association">Nom de l\'Association</string>
 
 </resources>

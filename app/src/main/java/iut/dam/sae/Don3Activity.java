@@ -21,9 +21,14 @@ public class Don3Activity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_don3);
 
-        // Bouton retour
+        // Bouton retour qui renvoie à Don1Activity
         ImageButton btnRetour = findViewById(R.id.btn_retour);
-        btnRetour.setOnClickListener(v -> finish());
+        ImageButton btnProfil = findViewById(R.id.btn_profil);
+        btnRetour.setOnClickListener(v -> {
+            Intent intent = new Intent(Don3Activity.this, Don1Activity.class);
+            startActivity(intent);
+            finish(); // Fermer Don3Activity pour éviter un retour ici après Don1Activity
+        });
 
         // Champs pour entrer un montant personnalisé
         etMontant = findViewById(R.id.et_montant);
@@ -66,6 +71,11 @@ public class Don3Activity extends AppCompatActivity {
             // Retourner à LoginChoiceActivity après un don
             Intent intent = new Intent(Don3Activity.this, LoginChoiceActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            startActivity(intent);
+        });
+
+        btnProfil.setOnClickListener(v -> {
+            Intent intent = new Intent(Don3Activity.this, ProfilActivity.class);
             startActivity(intent);
         });
     }

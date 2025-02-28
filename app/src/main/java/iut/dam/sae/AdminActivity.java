@@ -18,5 +18,13 @@ public class AdminActivity extends AppCompatActivity {
             Intent intent = new Intent(AdminActivity.this, ProfilActivity.class);
             startActivity(intent);
         });
+
+        // Ajout du bouton retour qui renvoie à LoginChoiceActivity
+        ImageButton btnRetour = findViewById(R.id.btn_retour);
+        btnRetour.setOnClickListener(v -> {
+            Intent intent = new Intent(AdminActivity.this, LoginChoiceActivity.class);
+            startActivity(intent);
+            finish(); // Fermer AdminActivity pour éviter de revenir dessus après retour
+        });
     }
 }

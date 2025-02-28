@@ -2,7 +2,6 @@ package iut.dam.sae;
 
 import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -39,8 +38,10 @@ public class ItemAssoAdapter extends RecyclerView.Adapter<ItemAssoAdapter.ItemAs
         holder.descriptionAssociation.setText(association.getDescription());
         holder.imageAssociation.setImageResource(association.getImageResId());
 
+        // Rediriger vers Don1Activity au lieu du site web
         holder.btnDonner.setOnClickListener(v -> {
-            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(association.getUrl()));
+            Intent intent = new Intent(context, Don1Activity.class);
+            intent.putExtra("nomAssociation", association.getNom());
             context.startActivity(intent);
         });
     }

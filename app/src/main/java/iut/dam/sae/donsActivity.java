@@ -2,6 +2,7 @@ package iut.dam.sae;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -21,11 +22,14 @@ public class DonsActivity extends AppCompatActivity {
     private ItemAssoAdapter adapter;
     private List<itemAsso> associationList;
     private FirebaseAuth mAuth;
+    private ImageButton btnRetour; // Ajout du bouton retour
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dons);
+
+        ImageButton btnProfil = findViewById(R.id.btn_profil);
 
         // Initialiser Firebase Auth
         mAuth = FirebaseAuth.getInstance();
@@ -41,7 +45,7 @@ public class DonsActivity extends AppCompatActivity {
 
         // Initialisation du RecyclerView
         recyclerView = findViewById(R.id.recyclerViewAssociations);
-        recyclerView.setHasFixedSize(true); // Ajout pour améliorer les performances
+        recyclerView.setHasFixedSize(true); // Amélioration des performances
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         // Initialisation de la liste des associations
@@ -56,5 +60,18 @@ public class DonsActivity extends AppCompatActivity {
         // Associer l'Adapter au RecyclerView
         adapter = new ItemAssoAdapter(associationList, this);
         recyclerView.setAdapter(adapter);
+
+        // Gestion du bouton retour
+        btnRetour = findViewById(R.id.btn_retour);
+        btnRetour.setOnClickListener(v -> {
+            Intent intent = new Intent(DonsActivity.this, LoginChoiceActivity.class);
+            startActivity(intent);
+            finish();
+        });
+
+        btnProfil.setOnClickListener(v -> {
+            Intent intent = new Intent(DonsActivity.this, ProfilActivity.class);
+            startActivity(intent);
+        });
     }
 }

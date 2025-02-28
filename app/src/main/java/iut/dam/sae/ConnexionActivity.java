@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -17,6 +18,7 @@ public class ConnexionActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private EditText inputEmail, inputPassword;
     private Button btnConnexion;
+    private ImageButton btnRetour; // Ajout du bouton retour
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +32,7 @@ public class ConnexionActivity extends AppCompatActivity {
         inputEmail = findViewById(R.id.input_email);
         inputPassword = findViewById(R.id.input_password);
         btnConnexion = findViewById(R.id.btn_connexion);
+        btnRetour = findViewById(R.id.btn_retour); // Initialisation du bouton retour
 
         // Gérer la connexion
         btnConnexion.setOnClickListener(v -> {
@@ -55,6 +58,13 @@ public class ConnexionActivity extends AppCompatActivity {
                             Toast.makeText(ConnexionActivity.this, "Échec de la connexion : " + task.getException().getMessage(), Toast.LENGTH_LONG).show();
                         }
                     });
+        });
+
+        // Gérer le retour à LoginChoiceActivity
+        btnRetour.setOnClickListener(v -> {
+            Intent intent = new Intent(ConnexionActivity.this, LoginChoiceActivity.class);
+            startActivity(intent);
+            finish();
         });
     }
 }

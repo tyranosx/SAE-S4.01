@@ -90,17 +90,4 @@
         android:layout_height="0dp"
         android:layout_weight="1"/>
 
-    <ImageButton
-        android:id="@+id/btn_profil"
-        android:layout_width="50dp"
-        android:layout_height="wrap_content"
-        android:background="@drawable/round_button_back"
-        android:src="@drawable/utilisateur_24"
-        android:contentDescription="@string/retour"
-        android:elevation="4dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginStart="20dp"
-        app:backgroundTint="#D1D1D1"
-        android:layout_gravity="center"/>
-
 </LinearLayout>
