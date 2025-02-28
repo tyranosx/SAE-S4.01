@@ -1,6 +1,5 @@
 plugins {
-    id 'com.android.application'
-    id 'com.google.gms.google-services' // Pour Firebase
+    alias(libs.plugins.android.application)
 }
 
 android {
@@ -23,7 +22,6 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
-
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_11
         targetCompatibility JavaVersion.VERSION_11
@@ -31,18 +29,12 @@ android {
 }
 
 dependencies {
-    implementation platform(libs.firebase.bom)
-    implementation libs.firebase.auth
-    implementation libs.google.firebase.analytics
 
     implementation libs.appcompat
     implementation libs.material
-    implementation libs.constraintlayout.v214
     implementation libs.activity
-
+    implementation libs.constraintlayout
     testImplementation libs.junit
-    androidTestImplementation libs.junit.v115
-    androidTestImplementation libs.espresso.core.v351
+    androidTestImplementation libs.ext.junit
+    androidTestImplementation libs.espresso.core
 }
-
-apply plugin: 'com.google.gms.google-services'

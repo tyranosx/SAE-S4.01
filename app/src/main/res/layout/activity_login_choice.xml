@@ -95,25 +95,6 @@
         app:backgroundTint="@color/buttonColor"
         tools:ignore="RtlHardcoded" />
 
-    <Button
-        android:id="@+id/btn_admin_panel"
-        android:layout_width="wrap_content"
-        android:layout_height="50dp"
-        android:minWidth="250dp"
-        android:maxWidth="320dp"
-        android:layout_gravity="center"
-        android:text="@string/acc_s_admin"
-        android:textSize="16sp"
-        android:textColor="@color/buttonTextColor"
-        android:background="@drawable/button_rounded"
-        android:drawableLeft="@drawable/ic_admin"
-        android:drawablePadding="10dp"
-        android:gravity="center"
-        android:layout_marginTop="15dp"
-        app:backgroundTint="@color/buttonColor"
-        tools:ignore="RtlHardcoded"
-        android:visibility="gone"/> <!-- Caché par défaut -->
-
     <!-- Espace en bas -->
     <View
         android:layout_width="match_parent"

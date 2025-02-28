@@ -6,34 +6,34 @@ import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
 import java.util.List;
 
-public class ItemAssoAdapter extends RecyclerView.Adapter<ItemAssoAdapter.ItemAssoViewHolder> {
+public class ItemAssoAdapter extends ArrayAdapter<itemAsso> {
 
     private List<itemAsso> associationList;
     private Context context;
 
     public ItemAssoAdapter(List<itemAsso> associationList, Context context) {
+        super(context, 0,associationList);
         this.associationList = associationList;
         this.context = context;
     }
 
     @NonNull
-    @Override
-    public ItemAssoViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+
+    public itemAssoViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_asso, parent, false);
-        return new ItemAssoViewHolder(view);
+        return new itemAssoViewHolder(view);
     }
 
-    @Override
-    public void onBindViewHolder(@NonNull ItemAssoViewHolder holder, int position) {
+
+    public void onBindViewHolder(@NonNull itemAssoViewHolder holder, int position) {
         itemAsso association = associationList.get(position);
         holder.nomAssociation.setText(association.getNom());
         holder.descriptionAssociation.setText(association.getDescription());
@@ -45,17 +45,17 @@ public class ItemAssoAdapter extends RecyclerView.Adapter<ItemAssoAdapter.ItemAs
         });
     }
 
-    @Override
+
     public int getItemCount() {
         return associationList.size();
     }
 
-    public static class ItemAssoViewHolder extends RecyclerView.ViewHolder {
+    public static class itemAssoViewHolder extends RecyclerView.ViewHolder {
         TextView nomAssociation, descriptionAssociation;
         ImageView imageAssociation;
         Button btnDonner;
 
-        public ItemAssoViewHolder(@NonNull View itemView) {
+        public itemAssoViewHolder(@NonNull View itemView) {
             super(itemView);
             nomAssociation = itemView.findViewById(R.id.tv_nom_association);
             descriptionAssociation = itemView.findViewById(R.id.tv_description_association);
@@ -64,4 +64,3 @@ public class ItemAssoAdapter extends RecyclerView.Adapter<ItemAssoAdapter.ItemAs
         }
     }
 }
-
