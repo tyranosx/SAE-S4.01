@@ -48,5 +48,12 @@
     <string name="nombre_dons_realises">Nombre de dons réalisés</string>
     <string name="derniers_dons_recus">Derniers dons reçus</string>
     <string name="nom_de_l_association">Nom de l\'Association</string>
+    <string name="acces_admin">Accès Admin</string>
+    <string name="tableau_de_bord">Tableau de bord</string>
+    <string name="activit_s_r_centes">Activités récentes</string>
+    <string name="nombre_de_dons_r_alis_s">Nombre de dons réalisés</string>
+    <string name="derniers_dons_re_us">Derniers dons reçus</string>
+    <string name="date">Date</string>
+    <string name="d_connexion">Déconnexion</string>
 
 </resources>

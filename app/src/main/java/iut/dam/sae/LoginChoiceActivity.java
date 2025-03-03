@@ -4,20 +4,16 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageButton;
-import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 public class LoginChoiceActivity extends AppCompatActivity {
 
-    private Button btnFaireDon, btnSeConnecter, btnSinscrire, btnAdmin;
+    private Button btnFaireDon, btnSeConnecter, btnSinscrire, btnAdminPanel, btnDeconnexion;
     private FirebaseAuth mAuth;
     private FirebaseFirestore db;
 
@@ -26,7 +22,7 @@ public class LoginChoiceActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login_choice);
 
-        // Initialiser Firebase
+        // Initialisation Firebase
         mAuth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();
 
@@ -34,49 +30,62 @@ public class LoginChoiceActivity extends AppCompatActivity {
         btnFaireDon = findViewById(R.id.btn_faire_don);
         btnSeConnecter = findViewById(R.id.btn_se_connecter);
         btnSinscrire = findViewById(R.id.btn_sinscrire);
-        btnAdmin = findViewById(R.id.btn_admin_panel); // Ajout du bouton Admin (doit être dans l'XML)
+        btnAdminPanel = findViewById(R.id.btn_admin_panel);
+        btnDeconnexion = findViewById(R.id.btn_deconnexion); // Bouton Déconnexion
 
-        // Vérifier si un utilisateur est connecté
-        FirebaseUser user = mAuth.getCurrentUser();
-        if (user != null) {
-            // Masquer les boutons de connexion/inscription si déjà connecté
+        // Vérifier l'état de connexion
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        if (currentUser != null) {
+            // Si connecté, cacher les boutons "Se connecter" et "S'inscrire"
             btnSeConnecter.setVisibility(View.GONE);
             btnSinscrire.setVisibility(View.GONE);
 
-            // Vérifier si l'utilisateur est un admin
-            checkIfUserIsAdmin(user.getUid());
+            // Afficher le bouton de déconnexion
+            btnDeconnexion.setVisibility(View.VISIBLE);
+
+            // Vérifier si l'utilisateur est admin dans Firestore
+            db.collection("users").document(currentUser.getUid()).get()
+                    .addOnSuccessListener(documentSnapshot -> {
+                        if (documentSnapshot.exists() && Boolean.TRUE.equals(documentSnapshot.getBoolean("isAdmin"))) {
+                            // Si c'est un admin, afficher "Accès Admin"
+                            btnAdminPanel.setVisibility(View.VISIBLE);
+                        } else {
+                            // Si ce n'est pas un admin, cacher "Accès Admin"
+                            btnAdminPanel.setVisibility(View.GONE);
+                        }
+                    });
         } else {
-            // Cacher le bouton admin si personne n'est connecté
-            btnAdmin.setVisibility(View.GONE);
+            // Si aucun utilisateur connecté, cacher "Accès Admin" et le bouton de déconnexion
+            btnAdminPanel.setVisibility(View.GONE);
+            btnDeconnexion.setVisibility(View.GONE);
         }
 
-        // Gestion des clics
+        // Rediriger vers l'activité de dons
         btnFaireDon.setOnClickListener(v -> {
-            if (mAuth.getCurrentUser() != null) {
-                startActivity(new Intent(LoginChoiceActivity.this, DonsActivity.class));
-            } else {
-                Toast.makeText(LoginChoiceActivity.this, "Veuillez vous connecter pour faire un don", Toast.LENGTH_SHORT).show();
-                startActivity(new Intent(LoginChoiceActivity.this, ConnexionActivity.class));
-            }
+            startActivity(new Intent(LoginChoiceActivity.this, DonsActivity.class));
         });
 
-        btnSeConnecter.setOnClickListener(v -> startActivity(new Intent(LoginChoiceActivity.this, ConnexionActivity.class)));
+        // Rediriger vers la page de connexion
+        btnSeConnecter.setOnClickListener(v -> {
+            startActivity(new Intent(LoginChoiceActivity.this, ConnexionActivity.class));
+        });
 
-        btnSinscrire.setOnClickListener(v -> startActivity(new Intent(LoginChoiceActivity.this, InscriptionActivity.class)));
+        // Rediriger vers la page d'inscription
+        btnSinscrire.setOnClickListener(v -> {
+            startActivity(new Intent(LoginChoiceActivity.this, InscriptionActivity.class));
+        });
 
-        btnAdmin.setOnClickListener(v -> startActivity(new Intent(LoginChoiceActivity.this, AdminActivity.class)));
-    }
+        // Rediriger vers le panneau admin
+        btnAdminPanel.setOnClickListener(v -> {
+            startActivity(new Intent(LoginChoiceActivity.this, AdminActivity.class));
+        });
 
-    private void checkIfUserIsAdmin(String userId) {
-        db.collection("users").document(userId).get().addOnCompleteListener(task -> {
-            if (task.isSuccessful() && task.getResult() != null) {
-                DocumentSnapshot document = task.getResult();
-                if (document.exists() && Boolean.TRUE.equals(document.getBoolean("isAdmin"))) {
-                    btnAdmin.setVisibility(View.VISIBLE);
-                } else {
-                    btnAdmin.setVisibility(View.GONE);
-                }
-            }
+        // Déconnexion
+        btnDeconnexion.setOnClickListener(v -> {
+            mAuth.signOut();
+            Intent intent = new Intent(LoginChoiceActivity.this, LoginChoiceActivity.class);
+            startActivity(intent);
+            finish(); // Ferme l'activité actuelle après déconnexion
         });
     }
 }

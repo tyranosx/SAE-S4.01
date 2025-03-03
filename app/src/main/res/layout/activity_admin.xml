@@ -34,7 +34,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/tableau_bord"
+            android:text="@string/tableau_de_bord"
             android:textSize="22sp"
             android:textStyle="bold"
             android:textColor="@color/textColor"
@@ -53,6 +53,18 @@
             android:layout_marginTop="5dp"/>
     </RelativeLayout>
 
+    <!-- Nom de l'association de l'admin -->
+    <TextView
+        android:id="@+id/nom_association_admin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/nom_de_l_association"
+        android:textSize="22sp"
+        android:textStyle="bold"
+        android:textColor="@color/textColor"
+        android:layout_gravity="center_horizontal"
+        android:padding="10dp"/>
+
     <!-- Espacement -->
     <View
         android:layout_width="match_parent"
@@ -62,7 +74,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/activite_recente"
+        android:text="@string/activit_s_r_centes"
         android:textSize="14sp"
         android:textStyle="normal"
         android:textColor="@color/textColor"
@@ -78,7 +90,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/nombre_dons_realises"
+        android:text="@string/nombre_de_dons_r_alis_s"
         android:textSize="18sp"
         android:textStyle="bold"
         android:textColor="@color/textColor"
@@ -94,11 +106,17 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/derniers_dons_recus"
+        android:text="@string/derniers_dons_re_us"
         android:textSize="18sp"
         android:textStyle="bold"
         android:textColor="@color/textColor"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="12dp"/>
 
+    <!-- RecyclerView pour afficher les dons -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerViewDons"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp"/>
 </LinearLayout>
