@@ -8,4 +8,7 @@
     <color name="rectangleColor">#E0ECF4</color>
     <color name="red">#E70627</color>
     <color name="gray">@android:color/darker_gray</color>
+    <color name="profileButtonColor">#A1D6E2</color> <!-- Bleu clair en accord avec le fond -->
+    <color name="iconTintColor">#2A5676</color> <!-- Bleu plus foncé pour l’icône -->
+
 </resources>

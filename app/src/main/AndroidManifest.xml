@@ -65,6 +65,5 @@
         <activity
             android:name=".MonActiviteActivity"
             android:exported="true" />
-
     </application>
 </manifest>

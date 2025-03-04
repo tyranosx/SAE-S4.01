@@ -1,12 +1,12 @@
 package iut.dam.sae;
 
-public class itemAsso {
+public class ItemAsso {
     private String nom;
     private String description;
     private int imageResId;
     private String url;
 
-    public itemAsso(String nom, String description, int imageResId, String url) {
+    public ItemAsso(String nom, String description, int imageResId, String url) {
         this.nom = nom;
         this.description = description;
         this.imageResId = imageResId;

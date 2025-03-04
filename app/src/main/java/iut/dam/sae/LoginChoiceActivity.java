@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -14,6 +15,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 public class LoginChoiceActivity extends AppCompatActivity {
 
     private Button btnFaireDon, btnSeConnecter, btnSinscrire, btnAdminPanel, btnDeconnexion;
+    private ImageButton btnProfil;
     private FirebaseAuth mAuth;
     private FirebaseFirestore db;
 
@@ -32,6 +34,7 @@ public class LoginChoiceActivity extends AppCompatActivity {
         btnSinscrire = findViewById(R.id.btn_sinscrire);
         btnAdminPanel = findViewById(R.id.btn_admin_panel);
         btnDeconnexion = findViewById(R.id.btn_deconnexion); // Bouton Déconnexion
+        btnProfil = findViewById(R.id.btn_profil);
 
         // Vérifier l'état de connexion
         FirebaseUser currentUser = mAuth.getCurrentUser();
@@ -42,6 +45,7 @@ public class LoginChoiceActivity extends AppCompatActivity {
 
             // Afficher le bouton de déconnexion
             btnDeconnexion.setVisibility(View.VISIBLE);
+            btnProfil.setVisibility(View.VISIBLE);
 
             // Vérifier si l'utilisateur est admin dans Firestore
             db.collection("users").document(currentUser.getUid()).get()
@@ -58,6 +62,7 @@ public class LoginChoiceActivity extends AppCompatActivity {
             // Si aucun utilisateur connecté, cacher "Accès Admin" et le bouton de déconnexion
             btnAdminPanel.setVisibility(View.GONE);
             btnDeconnexion.setVisibility(View.GONE);
+            btnProfil.setVisibility(View.GONE);
         }
 
         // Rediriger vers l'activité de dons
@@ -69,6 +74,12 @@ public class LoginChoiceActivity extends AppCompatActivity {
         btnSeConnecter.setOnClickListener(v -> {
             startActivity(new Intent(LoginChoiceActivity.this, ConnexionActivity.class));
         });
+
+        // Rediriger vers la page de connexion
+        btnProfil.setOnClickListener(v -> {
+            startActivity(new Intent(LoginChoiceActivity.this, ProfilActivity.class));
+        });
+
 
         // Rediriger vers la page d'inscription
         btnSinscrire.setOnClickListener(v -> {
