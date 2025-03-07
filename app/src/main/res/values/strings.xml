@@ -55,6 +55,16 @@
     <string name="nombre_de_dons_r_alis_s">Nombre de dons réalisés</string>
     <string name="derniers_dons_re_us">Derniers dons reçus</string>
     <string name="date">Date</string>
+    <string name="payer">Payer</string>
+    <string name="infos_paiement_iban">Informations de paiement</string>
+    <string name="infoPaiment">Informations de paiment</string>
     <string name="d_connexion">Déconnexion</string>
+    <string name="valider_le_paiement">Valider le paiement</string>
+    <string name="nom_du_titulaire_du_compte">Nom du titulaire du compte</string>
+    <string name="iban">IBAN</string>
+    <string name="choix">On vous aide à choisir</string>
+    <string name="bic_swift">BIC / SWIFT</string>
+    <string name="nom_du_titulaire">Nom du titulaire</string>
+    <string name="cvv">CVV</string>
 
 </resources>

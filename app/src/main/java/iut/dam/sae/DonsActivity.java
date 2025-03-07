@@ -2,17 +2,15 @@ package iut.dam.sae;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.SearchView;
 import android.widget.Toast;
-
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,7 +21,7 @@ public class DonsActivity extends AppCompatActivity {
     private List<ItemAsso> associationList;
     private FirebaseAuth mAuth;
     private ImageButton btnRetour;
-    private SearchView searchView; // Ajout de la barre de recherche
+    private SearchView searchView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,9 +29,10 @@ public class DonsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_dons);
 
         ImageButton btnProfil = findViewById(R.id.btn_profil);
-        searchView = findViewById(R.id.search_view); // Initialisation du SearchView
+        Button btnChoisirAssociation = findViewById(R.id.btn_aidechoix); // Bouton ajouté
+        searchView = findViewById(R.id.search_view);
 
-        // Initialiser Firebase Auth
+        // Initialiser Firebase Auth 
         mAuth = FirebaseAuth.getInstance();
         FirebaseUser user = mAuth.getCurrentUser();
 
@@ -62,6 +61,7 @@ public class DonsActivity extends AppCompatActivity {
         // Associer l'Adapter au RecyclerView
         adapter = new ItemAssoAdapter(associationList, this);
         recyclerView.setAdapter(adapter);
+
         // Gestion du bouton retour
         btnRetour = findViewById(R.id.btn_retour);
         btnRetour.setOnClickListener(v -> {
@@ -72,6 +72,12 @@ public class DonsActivity extends AppCompatActivity {
 
         btnProfil.setOnClickListener(v -> {
             Intent intent = new Intent(DonsActivity.this, ProfilActivity.class);
+            startActivity(intent);
+        });
+
+        // Redirection vers la page des associations regroupées par catégories
+        btnChoisirAssociation.setOnClickListener(v -> {
+            Intent intent = new Intent(DonsActivity.this, ConseilChoixActivity.class);
             startActivity(intent);
         });
 

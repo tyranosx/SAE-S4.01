@@ -15,6 +15,8 @@ public class Don3Activity extends AppCompatActivity {
 
     private EditText etMontant;
     private String montantSelectionne = "";
+    private boolean paiementParCarteSelectionne = false;
+    private boolean paiementParIbanSelectionne = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,8 +54,17 @@ public class Don3Activity extends AppCompatActivity {
         LinearLayout btnCarte = findViewById(R.id.btn_carte);
         LinearLayout btnIban = findViewById(R.id.btn_iban);
 
-        btnCarte.setOnClickListener(v -> Toast.makeText(this, "Paiement par carte sélectionné", Toast.LENGTH_SHORT).show());
-        btnIban.setOnClickListener(v -> Toast.makeText(this, "Paiement par IBAN sélectionné", Toast.LENGTH_SHORT).show());
+        btnCarte.setOnClickListener(v -> {
+            paiementParCarteSelectionne = true;
+            paiementParIbanSelectionne = false;
+            Toast.makeText(this, "Paiement par carte sélectionné", Toast.LENGTH_SHORT).show();
+        });
+
+        btnIban.setOnClickListener(v -> {
+            paiementParIbanSelectionne = true;
+            paiementParCarteSelectionne = false;
+            Toast.makeText(this, "Paiement par IBAN sélectionné", Toast.LENGTH_SHORT).show();
+        });
 
         // Bouton "Donner"
         Button btnDonner = findViewById(R.id.btn_donner);
@@ -65,13 +76,18 @@ public class Don3Activity extends AppCompatActivity {
                 return;
             }
 
-            // Simuler un paiement réussi et redirection
-            Toast.makeText(Don3Activity.this, "Don de " + montant + "€ enregistré avec succès", Toast.LENGTH_SHORT).show();
-
-            // Retourner à LoginChoiceActivity après un don
-            Intent intent = new Intent(Don3Activity.this, LoginChoiceActivity.class);
-            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-            startActivity(intent);
+            // Vérifier quel mode de paiement est sélectionné
+            if (paiementParCarteSelectionne) {
+                Intent intent = new Intent(Don3Activity.this, PaimentCarteActivity.class);
+                intent.putExtra("montant", montant); // Passer le montant à la page suivante
+                startActivity(intent);
+            } else if (paiementParIbanSelectionne) {
+                Intent intent = new Intent(Don3Activity.this, PaimentRibActivity.class);
+                intent.putExtra("montant", montant); // Passer le montant à la page suivante
+                startActivity(intent);
+            } else {
+                Toast.makeText(Don3Activity.this, "Veuillez sélectionner un mode de paiement", Toast.LENGTH_SHORT).show();
+            }
         });
 
         btnProfil.setOnClickListener(v -> {

@@ -28,4 +28,8 @@ public class ItemAsso {
     public String getUrl() {
         return url;
     }
+
+    public String getSiteWeb() {
+        return null;
+    }
 }

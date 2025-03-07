@@ -12,23 +12,33 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.SAE"
         tools:targetApi="31">
-
-        <!-- Écran de lancement -->
+        <activity
+            android:name=".ItemAssociationActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ConseilChoixActivity"
+            android:exported="false" />
+        <activity
+            android:name=".PaimentRibActivity"
+            android:exported="false" />
+        <activity
+            android:name=".PaimentCarteActivity"
+            android:exported="false" />
+        <activity
+            android:name=".PaiementParCarteActivity"
+            android:exported="false" /> <!-- Écran de lancement -->
         <activity
             android:name=".SplashActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
-
-        <!-- Page de choix connexion/inscription -->
+        </activity> <!-- Page de choix connexion/inscription -->
         <activity
             android:name=".LoginChoiceActivity"
-            android:exported="true" />
-
-        <!-- Connexion & Inscription -->
+            android:exported="true" /> <!-- Connexion & Inscription -->
         <activity
             android:name=".ConnexionActivity"
             android:exported="true" />
@@ -37,9 +47,7 @@
             android:exported="true" />
         <activity
             android:name=".ForgotPasswordActivity"
-            android:exported="false" />
-
-        <!-- Activités liées aux dons -->
+            android:exported="false" /> <!-- Activités liées aux dons -->
         <activity
             android:name=".DonsActivity"
             android:exported="false" />
@@ -51,14 +59,10 @@
             android:exported="false" />
         <activity
             android:name=".Don3Activity"
-            android:exported="false" />
-
-        <!-- Activité profil -->
+            android:exported="false" /> <!-- Activité profil -->
         <activity
             android:name=".ProfilActivity"
-            android:exported="false" />
-
-        <!-- Interface admin (consultation statistiques dons) -->
+            android:exported="false" /> <!-- Interface admin (consultation statistiques dons) -->
         <activity
             android:name=".AdminActivity"
             android:exported="false" />
@@ -66,4 +70,5 @@
             android:name=".MonActiviteActivity"
             android:exported="true" />
     </application>
+
 </manifest>
