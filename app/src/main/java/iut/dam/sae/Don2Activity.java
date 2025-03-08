@@ -9,33 +9,37 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class Don2Activity extends AppCompatActivity {
 
+    private String nomAssociation;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_don2); // Assure-toi que le fichier XML est bien nommé
+        setContentView(R.layout.activity_don2);
 
-        // Initialisation des boutons
+        nomAssociation = getIntent().getStringExtra("nomAssociation");
+
         ImageButton btnProfil = findViewById(R.id.btn_profil);
         Button btnMensuels = findViewById(R.id.btn_don_mensuels);
         Button btnAnnuels = findViewById(R.id.btn_don_annuels);
-        ImageButton btnRetour = findViewById(R.id.btn_retour); // Ajout du bouton retour
+        ImageButton btnRetour = findViewById(R.id.btn_retour);
 
-        // Ajout des listeners pour rediriger vers Don3Activity
         btnMensuels.setOnClickListener(v -> {
             Intent intent = new Intent(Don2Activity.this, Don3Activity.class);
+            intent.putExtra("nomAssociation", nomAssociation);
             startActivity(intent);
         });
 
         btnAnnuels.setOnClickListener(v -> {
             Intent intent = new Intent(Don2Activity.this, Don3Activity.class);
+            intent.putExtra("nomAssociation", nomAssociation);
             startActivity(intent);
         });
 
-        // Gestion du bouton retour qui ramène à Don1Activity
         btnRetour.setOnClickListener(v -> {
             Intent intent = new Intent(Don2Activity.this, Don1Activity.class);
+            intent.putExtra("nomAssociation", nomAssociation);
             startActivity(intent);
-            finish(); // Ferme Don2Activity pour éviter un retour en boucle
+            finish();
         });
 
         btnProfil.setOnClickListener(v -> {

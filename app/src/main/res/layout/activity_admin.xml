@@ -86,6 +86,31 @@
         android:layout_width="match_parent"
         android:layout_height="20dp"/>
 
+    <!-- Texte "Total des dons réalisés" -->
+    <TextView
+        android:id="@+id/total_dons_realises"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Total des dons réalisés"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:textColor="@color/textColor"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="12dp"/>
+
+    <!-- Montant total des dons -->
+    <TextView
+        android:id="@+id/montant_total_dons"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="0€"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:textColor="#808080"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="4dp"/>
+
+
     <!-- Titre "Nombre de dons réalisés" -->
     <TextView
         android:layout_width="wrap_content"

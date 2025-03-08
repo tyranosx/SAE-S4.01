@@ -1,21 +1,45 @@
 package iut.dam.sae;
 
+import java.util.Date;
+
 public class DonItem {
-    private String montant;
-    private String date;
+    private int montant;
+    private Date date;
+    private String prenom;
 
-    public DonItem() { } // Constructeur vide requis pour Firebase
+    // Constructeur vide requis pour Firebase
+    public DonItem() { }
 
-    public DonItem(String montant, String date) {
+    // Constructeur avec paramètres
+    public DonItem(int montant, Date date, String prenom) {
         this.montant = montant;
         this.date = date;
+        this.prenom = prenom;
     }
 
-    public String getMontant() {
+    // Getters
+    public int getMontant() {
         return montant;
     }
 
-    public String getDate() {
+    public Date getDate() {
         return date;
+    }
+
+    public String getPrenom() {
+        return prenom;
+    }
+
+    // Setters (si jamais tu en as besoin)
+    public void setMontant(int montant) {
+        this.montant = montant;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
+
+    public void setPrenom(String prenom) {
+        this.prenom = prenom;
     }
 }
