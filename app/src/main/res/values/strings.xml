@@ -67,5 +67,6 @@
     <string name="nom_du_titulaire">Nom du titulaire</string>
     <string name="cvv">CVV</string>
     <string name="dons_pour">"Dons pour : "</string>
+    <string name="bienvenue">Bienvenue</string>
 
 </resources>

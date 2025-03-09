@@ -27,6 +27,20 @@
         app:backgroundTint="#A1D6E2"
         android:visibility="gone"/> <!-- Bouton caché par défaut -->
 
+    <!-- Message de bienvenue (NOUVEAU) -->
+    <TextView
+        android:id="@+id/txt_bienvenue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/bienvenue"
+        android:textSize="18sp"
+        android:textColor="@color/textColor"
+        android:fontFamily="@font/poppins_medium"
+        android:gravity="center"
+        android:lineSpacingExtra="4dp"
+        android:padding="10dp"
+        android:layout_marginBottom="10dp"
+        android:visibility="gone"/>
 
     <!-- Logo -->
     <ImageView

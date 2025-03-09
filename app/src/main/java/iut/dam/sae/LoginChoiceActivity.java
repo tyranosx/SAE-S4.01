@@ -5,17 +5,22 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.TextView;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 public class LoginChoiceActivity extends AppCompatActivity {
 
     private Button btnFaireDon, btnSeConnecter, btnSinscrire, btnAdminPanel, btnDeconnexion;
-    private ImageButton btnProfil; // Bouton Profil ajouté
+    private ImageButton btnProfil;
+    private TextView txtBienvenue; // Nouveau TextView pour le message de bienvenue
     private FirebaseAuth mAuth;
     private FirebaseFirestore db;
 
@@ -24,7 +29,6 @@ public class LoginChoiceActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login_choice);
 
-        // Initialisation Firebase
         mAuth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();
 
@@ -34,7 +38,8 @@ public class LoginChoiceActivity extends AppCompatActivity {
         btnSinscrire = findViewById(R.id.btn_sinscrire);
         btnAdminPanel = findViewById(R.id.btn_admin_panel);
         btnDeconnexion = findViewById(R.id.btn_deconnexion);
-        btnProfil = findViewById(R.id.btn_profil); // Bouton Profil ajouté
+        btnProfil = findViewById(R.id.btn_profil);  // Bouton profil
+        txtBienvenue = findViewById(R.id.txt_bienvenue);  // Nouveau TextView
 
         // Vérifier l'état de connexion
         FirebaseUser currentUser = mAuth.getCurrentUser();
@@ -43,57 +48,58 @@ public class LoginChoiceActivity extends AppCompatActivity {
             btnSeConnecter.setVisibility(View.GONE);
             btnSinscrire.setVisibility(View.GONE);
 
-            // Afficher les boutons de déconnexion et profil
+            // Afficher le bouton de déconnexion et le bouton profil
             btnDeconnexion.setVisibility(View.VISIBLE);
             btnProfil.setVisibility(View.VISIBLE);
 
-            // Vérifier si l'utilisateur est admin dans Firestore
+            // Récupérer les données de Firestore pour afficher le prénom
+            db.collection("users").document(currentUser.getUid()).get()
+                    .addOnSuccessListener(documentSnapshot -> {
+                        if (documentSnapshot.exists()) {
+                            String prenom = documentSnapshot.getString("prenom");
+                            if (prenom != null && !prenom.isEmpty()) {
+                                txtBienvenue.setText("Bienvenue, " + prenom);
+                                txtBienvenue.setVisibility(View.VISIBLE); // Affiche le message de bienvenue
+                            }
+                        }
+                    });
+
+            // Vérification du statut admin
             db.collection("users").document(currentUser.getUid()).get()
                     .addOnSuccessListener(documentSnapshot -> {
                         if (documentSnapshot.exists() && Boolean.TRUE.equals(documentSnapshot.getBoolean("isAdmin"))) {
-                            btnAdminPanel.setVisibility(View.VISIBLE);  // Si admin, affiche l'accès admin
+                            btnAdminPanel.setVisibility(View.VISIBLE);
                         } else {
-                            btnAdminPanel.setVisibility(View.GONE); // Sinon, cache l'accès admin
+                            btnAdminPanel.setVisibility(View.GONE);
                         }
                     });
+
         } else {
-            // Si non connecté, cacher les boutons admin, déconnexion et profil
+            // Si aucun utilisateur n'est connecté, cacher certains boutons
             btnAdminPanel.setVisibility(View.GONE);
             btnDeconnexion.setVisibility(View.GONE);
-            btnProfil.setVisibility(View.GONE);  // Bouton profil caché pour les non-connectés
+            btnProfil.setVisibility(View.GONE);
+            txtBienvenue.setVisibility(View.GONE); // Cache le message de bienvenue
         }
 
-        // Rediriger vers DonsActivity
-        btnFaireDon.setOnClickListener(v -> {
-            startActivity(new Intent(LoginChoiceActivity.this, DonsActivity.class));
-        });
-
-        // Rediriger vers ConnexionActivity
-        btnSeConnecter.setOnClickListener(v -> {
-            startActivity(new Intent(LoginChoiceActivity.this, ConnexionActivity.class));
-        });
-
-        // Rediriger vers InscriptionActivity
-        btnSinscrire.setOnClickListener(v -> {
-            startActivity(new Intent(LoginChoiceActivity.this, InscriptionActivity.class));
-        });
-
-        // Rediriger vers AdminActivity
-        btnAdminPanel.setOnClickListener(v -> {
-            startActivity(new Intent(LoginChoiceActivity.this, AdminActivity.class));
-        });
-
-        // Rediriger vers ProfilActivity
-        btnProfil.setOnClickListener(v -> {
-            startActivity(new Intent(LoginChoiceActivity.this, ProfilActivity.class));
-        });
+        // Gestion des redirections
+        btnFaireDon.setOnClickListener(v -> startActivity(new Intent(LoginChoiceActivity.this, DonsActivity.class)));
+        btnSeConnecter.setOnClickListener(v -> startActivity(new Intent(LoginChoiceActivity.this, ConnexionActivity.class)));
+        btnSinscrire.setOnClickListener(v -> startActivity(new Intent(LoginChoiceActivity.this, InscriptionActivity.class)));
+        btnAdminPanel.setOnClickListener(v -> startActivity(new Intent(LoginChoiceActivity.this, AdminActivity.class)));
 
         // Déconnexion
         btnDeconnexion.setOnClickListener(v -> {
             mAuth.signOut();
             Intent intent = new Intent(LoginChoiceActivity.this, LoginChoiceActivity.class);
             startActivity(intent);
-            finish(); // Ferme l'activité actuelle après déconnexion
+            finish();
+        });
+
+        // Rediriger vers ProfilActivity via le bouton Profil
+        btnProfil.setOnClickListener(v -> {
+            Intent intent = new Intent(LoginChoiceActivity.this, ProfilActivity.class);
+            startActivity(intent);
         });
     }
 }
