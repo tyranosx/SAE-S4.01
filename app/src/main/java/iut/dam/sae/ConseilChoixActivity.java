@@ -29,6 +29,14 @@ public class ConseilChoixActivity extends AppCompatActivity {
 
         // Initialisation de l'adapter
         adapter = new AssociationAdapter(associationList, this);
+
+        // Gestion du clic pour ouvrir Don1Activity avec le nom de l'association
+        adapter.setOnItemClickListener(item -> {
+            Intent intent = new Intent(ConseilChoixActivity.this, Don1Activity.class);
+            intent.putExtra("nomAssociation", item.getNom());
+            startActivity(intent);
+        });
+
         recyclerView.setAdapter(adapter);
 
         // Gestion du bouton retour
@@ -37,8 +45,6 @@ public class ConseilChoixActivity extends AppCompatActivity {
 
         // Gestion du bouton Profil
         ImageButton btnProfil = findViewById(R.id.btn_profil);
-        btnProfil.setOnClickListener(v -> finish());
-
         btnProfil.setOnClickListener(v -> {
             Intent intent = new Intent(ConseilChoixActivity.this, ProfilActivity.class);
             startActivity(intent);

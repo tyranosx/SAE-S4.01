@@ -181,9 +181,11 @@
                         android:layout_height="48dp"
                         android:hint="@string/date_naissance"
                         android:textColorHint="#A0A0A0"
-                        android:inputType="date"
+                        android:inputType="none"
+                        android:focusable="false"
                         android:background="@null"
                         android:textSize="16sp"/>
+
                 </LinearLayout>
 
                 <!-- Champ Mot de passe -->

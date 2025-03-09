@@ -8,8 +8,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,6 +20,11 @@ public class AssociationAdapter extends RecyclerView.Adapter<AssociationAdapter.
     private List<ItemAsso> associationList;
     private List<ItemAsso> associationListFull; // Liste complète pour la recherche
     private Context context;
+    private OnItemClickListener onItemClickListener; // Ajout de l'interface ici
+
+    public interface OnItemClickListener {
+        void onItemClick(ItemAsso item);  // Méthode à implémenter dans l'activité
+    }
 
     public AssociationAdapter(List<ItemAsso> associationList, Context context) {
         this.associationList = associationList;
@@ -35,22 +42,25 @@ public class AssociationAdapter extends RecyclerView.Adapter<AssociationAdapter.
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         ItemAsso association = associationList.get(position);
-
         holder.tvNom.setText(association.getNom());
         holder.tvDescription.setText(association.getDescription());
-        holder.ivLogo.setImageResource(association.getImageResId());
+        holder.ivLogo.setImageResource(R.drawable.logo);
 
-        // Redirection vers le site web de l'association
         holder.itemView.setOnClickListener(v -> {
-            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(association.getSiteWeb()));
-            context.startActivity(intent);
+            if (onItemClickListener != null) {
+                onItemClickListener.onItemClick(association);
+            }
         });
     }
-
 
     @Override
     public int getItemCount() {
         return associationList.size();
+    }
+
+    // Méthode pour définir le gestionnaire de clics
+    public void setOnItemClickListener(OnItemClickListener listener) {
+        this.onItemClickListener = listener;
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
@@ -73,7 +83,8 @@ public class AssociationAdapter extends RecyclerView.Adapter<AssociationAdapter.
         } else {
             String texteMinuscule = texte.toLowerCase();
             for (ItemAsso item : associationListFull) {
-                if (item.getNom().toLowerCase().contains(texteMinuscule) || item.getDescription().toLowerCase().contains(texteMinuscule)) {
+                if (item.getNom().toLowerCase().contains(texteMinuscule) ||
+                        item.getDescription().toLowerCase().contains(texteMinuscule)) {
                     associationList.add(item);
                 }
             }

@@ -50,6 +50,12 @@ public class ItemAssoAdapter extends RecyclerView.Adapter<ItemAssoAdapter.ViewHo
         return associationList.size();
     }
 
+    // Ajouter cette méthode dans ItemAssoAdapter
+    public void setFilteredList(List<ItemAsso> filteredList) {
+        this.associationList = filteredList;
+        notifyDataSetChanged();
+    }
+
     public static class ViewHolder extends RecyclerView.ViewHolder {
         TextView tvNom, tvDescription;
         ImageView ivLogo;

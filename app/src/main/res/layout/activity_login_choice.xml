@@ -24,7 +24,8 @@
         android:elevation="4dp"
         android:layout_gravity="end"
         android:layout_margin="16dp"
-        app:backgroundTint="#A1D6E2"/>
+        app:backgroundTint="#A1D6E2"
+        android:visibility="gone"/> <!-- Bouton caché par défaut -->
 
 
     <!-- Logo -->
