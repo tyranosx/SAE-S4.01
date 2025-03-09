@@ -13,15 +13,6 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.google.firebase.Timestamp;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.FirebaseFirestore;
-
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
-
 public class Don3Activity extends AppCompatActivity {
 
     private EditText etMontant;
@@ -30,24 +21,18 @@ public class Don3Activity extends AppCompatActivity {
     private boolean paiementParIbanSelectionne = false;
     private String nomAssociation = "INCONNU";  // Par défaut en cas d'erreur
 
-    private FirebaseFirestore db;
-    private FirebaseAuth mAuth;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_don3);
 
-        mAuth = FirebaseAuth.getInstance();
-        db = FirebaseFirestore.getInstance();
+        etMontant = findViewById(R.id.et_montant);
 
         // Récupération du nom de l'association via Intent
         String intentNomAssociation = getIntent().getStringExtra("nomAssociation");
         if (intentNomAssociation != null && !intentNomAssociation.isEmpty()) {
             nomAssociation = intentNomAssociation;
         }
-
-        etMontant = findViewById(R.id.et_montant);
 
         // Gestion des montants prédéfinis
         TextView btn10 = findViewById(R.id.btn_10);
@@ -56,7 +41,7 @@ public class Don3Activity extends AppCompatActivity {
 
         View.OnClickListener montantClickListener = v -> {
             montantSelectionne = ((TextView) v).getText().toString().replace("€", "").trim();
-            etMontant.setText(montantSelectionne);  // Affiche le montant sélectionné dans l'EditText
+            etMontant.setText(montantSelectionne);
         };
 
         btn10.setOnClickListener(montantClickListener);
@@ -94,37 +79,20 @@ public class Don3Activity extends AppCompatActivity {
                 return;
             }
 
-            // Préparation des données du don
-            Map<String, Object> donData = new HashMap<>();
-            donData.put("association", nomAssociation);  // Utilisation du bon nom
-            donData.put("montant", Integer.parseInt(montant));
-            donData.put("prenom", "ANONYME");
-            donData.put("date", new Timestamp(new Date()));
-
-            db.collection("dons")
-                    .add(donData)
-                    .addOnSuccessListener(documentReference -> {
-                        Toast.makeText(Don3Activity.this, "Don enregistré avec succès", Toast.LENGTH_SHORT).show();
-
-                        // Redirige vers la page adéquate en fonction du mode de paiement choisi
-                        if (paiementParCarteSelectionne) {
-                            Intent intent = new Intent(Don3Activity.this, PaimentCarteActivity.class);
-                            intent.putExtra("montant", montant);
-                            intent.putExtra("nomAssociation", nomAssociation);
-                            startActivity(intent);
-                        } else if (paiementParIbanSelectionne) {
-                            Intent intent = new Intent(Don3Activity.this, PaimentRibActivity.class);
-                            intent.putExtra("montant", montant);
-                            intent.putExtra("nomAssociation", nomAssociation);
-                            startActivity(intent);
-                        } else {
-                            Toast.makeText(Don3Activity.this, "Veuillez sélectionner un mode de paiement", Toast.LENGTH_SHORT).show();
-                        }
-                    })
-                    .addOnFailureListener(e -> {
-                        Toast.makeText(Don3Activity.this, "Erreur lors de l'enregistrement du don", Toast.LENGTH_SHORT).show();
-                        Log.e("FirestoreError", "Erreur lors de l'ajout du don", e);
-                    });
+            // Redirige vers la page adéquate en fonction du mode de paiement choisi
+            if (paiementParCarteSelectionne) {
+                Intent intent = new Intent(Don3Activity.this, PaimentCarteActivity.class);
+                intent.putExtra("montant", montant);
+                intent.putExtra("nomAssociation", nomAssociation);
+                startActivity(intent);
+            } else if (paiementParIbanSelectionne) {
+                Intent intent = new Intent(Don3Activity.this, PaimentRibActivity.class);
+                intent.putExtra("montant", montant);
+                intent.putExtra("nomAssociation", nomAssociation);
+                startActivity(intent);
+            } else {
+                Toast.makeText(Don3Activity.this, "Veuillez sélectionner un mode de paiement", Toast.LENGTH_SHORT).show();
+            }
         });
 
         // Gestion du bouton retour
