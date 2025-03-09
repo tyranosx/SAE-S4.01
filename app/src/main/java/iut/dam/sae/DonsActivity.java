@@ -34,14 +34,6 @@ public class DonsActivity extends AppCompatActivity {
 
         associationList = new ArrayList<>();
         adapter = new ItemAssoAdapter(associationList, this);
-
-        // Ajout du gestionnaire de clic pour ouvrir Don1Activity
-        adapter.setOnItemClickListener(item -> {
-            Intent intent = new Intent(DonsActivity.this, Don1Activity.class);
-            intent.putExtra("nomAssociation", item.getNom());
-            startActivity(intent);
-        });
-
         recyclerView.setAdapter(adapter);
 
         chargerAssociations();
