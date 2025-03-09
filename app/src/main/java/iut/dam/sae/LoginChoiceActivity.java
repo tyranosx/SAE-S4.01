@@ -38,28 +38,25 @@ public class LoginChoiceActivity extends AppCompatActivity {
         btnSinscrire = findViewById(R.id.btn_sinscrire);
         btnAdminPanel = findViewById(R.id.btn_admin_panel);
         btnDeconnexion = findViewById(R.id.btn_deconnexion);
-        btnProfil = findViewById(R.id.btn_profil);  // Bouton profil
-        txtBienvenue = findViewById(R.id.txt_bienvenue);  // Nouveau TextView
+        btnProfil = findViewById(R.id.btn_profil);
+        txtBienvenue = findViewById(R.id.txt_bienvenue);
 
         // Vérifier l'état de connexion
         FirebaseUser currentUser = mAuth.getCurrentUser();
         if (currentUser != null) {
-            // Si connecté, cacher les boutons "Se connecter" et "S'inscrire"
             btnSeConnecter.setVisibility(View.GONE);
             btnSinscrire.setVisibility(View.GONE);
-
-            // Afficher le bouton de déconnexion et le bouton profil
             btnDeconnexion.setVisibility(View.VISIBLE);
             btnProfil.setVisibility(View.VISIBLE);
 
-            // Récupérer les données de Firestore pour afficher le prénom
+            // Récupération du prénom
             db.collection("users").document(currentUser.getUid()).get()
                     .addOnSuccessListener(documentSnapshot -> {
                         if (documentSnapshot.exists()) {
                             String prenom = documentSnapshot.getString("prenom");
                             if (prenom != null && !prenom.isEmpty()) {
                                 txtBienvenue.setText("Bienvenue, " + prenom);
-                                txtBienvenue.setVisibility(View.VISIBLE); // Affiche le message de bienvenue
+                                txtBienvenue.setVisibility(View.VISIBLE);
                             }
                         }
                     });
@@ -75,15 +72,25 @@ public class LoginChoiceActivity extends AppCompatActivity {
                     });
 
         } else {
-            // Si aucun utilisateur n'est connecté, cacher certains boutons
             btnAdminPanel.setVisibility(View.GONE);
             btnDeconnexion.setVisibility(View.GONE);
             btnProfil.setVisibility(View.GONE);
-            txtBienvenue.setVisibility(View.GONE); // Cache le message de bienvenue
+            txtBienvenue.setVisibility(View.GONE);
         }
 
         // Gestion des redirections
-        btnFaireDon.setOnClickListener(v -> startActivity(new Intent(LoginChoiceActivity.this, DonsActivity.class)));
+        btnFaireDon.setOnClickListener(v -> {
+            if (currentUser != null) {
+                // Si connecté → Envoyer directement vers Don3Activity
+                Intent intent = new Intent(LoginChoiceActivity.this, DonsActivity.class);
+                startActivity(intent);
+            } else {
+                // Si non connecté → Demander prénom ou don anonyme
+                Intent intent = new Intent(LoginChoiceActivity.this, DemandePrenomActivity.class);
+                startActivity(intent);
+            }
+        });
+
         btnSeConnecter.setOnClickListener(v -> startActivity(new Intent(LoginChoiceActivity.this, ConnexionActivity.class)));
         btnSinscrire.setOnClickListener(v -> startActivity(new Intent(LoginChoiceActivity.this, InscriptionActivity.class)));
         btnAdminPanel.setOnClickListener(v -> startActivity(new Intent(LoginChoiceActivity.this, AdminActivity.class)));

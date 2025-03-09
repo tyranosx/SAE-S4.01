@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/root_view"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background_splash"
+    android:orientation="vertical"
+    android:padding="20dp"
+    android:gravity="top|center_horizontal"
+    tools:context=".DemandePrenomActivity">
+
+    <!-- Bouton retour -->
+    <ImageButton
+        android:id="@+id/btn_retour"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:background="@drawable/round_button_back"
+        android:src="@drawable/ic_back"
+        android:contentDescription="@string/retour"
+        android:elevation="4dp"
+        android:layout_gravity="start"
+        android:layout_marginTop="20dp"
+        android:layout_marginStart="20dp"
+        app:backgroundTint="#008F99"/>
+
+    <!-- Titre -->
+    <TextView
+        android:id="@+id/tv_titre"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/entrez_prenom"
+        android:textSize="22sp"
+        android:textStyle="bold"
+        android:textColor="#00757D"
+        android:fontFamily="sans-serif-medium"
+        android:gravity="center"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="30dp"
+        android:layout_marginBottom="20dp"/>
+
+    <!-- Champ prénom -->
+    <EditText
+        android:id="@+id/et_prenom"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:hint="@string/entrez_votre_pr_nom"
+        android:background="@drawable/input_background"
+        android:inputType="textPersonName"
+        android:textSize="16sp"
+        android:padding="12dp"
+        android:textColor="#007980"
+        android:textColorHint="#A0A0A0"
+        android:layout_marginBottom="20dp"/>
+
+    <!-- Bouton "Valider" -->
+    <Button
+        android:id="@+id/btn_valider"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:text="@string/valider"
+        android:textSize="18sp"
+        android:background="@drawable/button_rounded"
+        android:textColor="@color/buttonTextColor"
+        android:layout_gravity="center"
+        android:layout_marginBottom="10dp"
+        app:backgroundTint="@color/buttonColor"/>
+
+    <!-- Bouton "Don Anonyme" -->
+    <Button
+        android:id="@+id/btn_anonyme"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:text="@string/faire_un_don_anonyme"
+        android:textSize="18sp"
+        android:background="@drawable/button_rounded"
+        android:textColor="@color/buttonTextColor"
+        android:layout_gravity="center"
+        app:backgroundTint="@color/buttonColor"/>
+
+</LinearLayout>

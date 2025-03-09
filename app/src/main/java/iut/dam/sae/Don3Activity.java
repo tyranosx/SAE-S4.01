@@ -11,28 +11,65 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.firebase.Timestamp;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+
 public class Don3Activity extends AppCompatActivity {
+
+    private static final int REQUEST_PRENOM = 1;
 
     private EditText etMontant;
     private String montantSelectionne = "";
     private boolean paiementParCarteSelectionne = false;
     private boolean paiementParIbanSelectionne = false;
-    private String nomAssociation = "INCONNU";  // Par défaut en cas d'erreur
+    private String nomAssociation = "INCONNU";
+    private String prenomUtilisateur = "ANONYME";  // Par défaut à "ANONYME"
+
+    private FirebaseFirestore db;
+    private FirebaseAuth mAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_don3);
 
-        etMontant = findViewById(R.id.et_montant);
+        mAuth = FirebaseAuth.getInstance();
+        db = FirebaseFirestore.getInstance();
 
-        // Récupération du nom de l'association via Intent
+        FirebaseUser user = mAuth.getCurrentUser();
+
+        // Récupération du prénom via Intent ou valeur par défaut
+        String prenom = getIntent().getStringExtra("prenom");
+        prenomUtilisateur = (prenom != null) ? prenom : "ANONYME";
+
+        // Si l'utilisateur est connecté, récupérer son prénom depuis Firestore
+        if (user != null) {
+            db.collection("users").document(user.getUid()).get()
+                    .addOnSuccessListener(documentSnapshot -> {
+                        if (documentSnapshot.exists()) {
+                            prenomUtilisateur = documentSnapshot.getString("prenom");
+                        }
+                    })
+                    .addOnFailureListener(e -> Log.e("FirestoreError", "Erreur lors de la récupération du prénom", e));
+        }
+
+        // Récupération du nom de l'association
         String intentNomAssociation = getIntent().getStringExtra("nomAssociation");
         if (intentNomAssociation != null && !intentNomAssociation.isEmpty()) {
             nomAssociation = intentNomAssociation;
         }
+
+        etMontant = findViewById(R.id.et_montant);
 
         // Gestion des montants prédéfinis
         TextView btn10 = findViewById(R.id.btn_10);
@@ -79,35 +116,34 @@ public class Don3Activity extends AppCompatActivity {
                 return;
             }
 
-            // Redirige vers la page adéquate en fonction du mode de paiement choisi
+            // Envoyer les données vers l'activité de paiement avec le prénom
+            Intent intent;
             if (paiementParCarteSelectionne) {
-                Intent intent = new Intent(Don3Activity.this, PaimentCarteActivity.class);
-                intent.putExtra("montant", montant);
-                intent.putExtra("nomAssociation", nomAssociation);
-                startActivity(intent);
+                intent = new Intent(Don3Activity.this, PaimentCarteActivity.class);
             } else if (paiementParIbanSelectionne) {
-                Intent intent = new Intent(Don3Activity.this, PaimentRibActivity.class);
-                intent.putExtra("montant", montant);
-                intent.putExtra("nomAssociation", nomAssociation);
-                startActivity(intent);
+                intent = new Intent(Don3Activity.this, PaimentRibActivity.class);
             } else {
                 Toast.makeText(Don3Activity.this, "Veuillez sélectionner un mode de paiement", Toast.LENGTH_SHORT).show();
+                return;
             }
+
+            intent.putExtra("montant", montant);
+            intent.putExtra("nomAssociation", nomAssociation);
+            intent.putExtra("prenom", prenomUtilisateur);
+            startActivity(intent);
         });
 
         // Gestion du bouton retour
         ImageButton btnRetour = findViewById(R.id.btn_retour);
-        btnRetour.setOnClickListener(v -> {
-            Intent intent = new Intent(Don3Activity.this, Don1Activity.class);
-            startActivity(intent);
-            finish();
-        });
+        btnRetour.setOnClickListener(v -> finish());
+    }
 
-        // Gestion du bouton Profil
-        ImageButton btnProfil = findViewById(R.id.btn_profil);
-        btnProfil.setOnClickListener(v -> {
-            Intent intent = new Intent(Don3Activity.this, ProfilActivity.class);
-            startActivity(intent);
-        });
+    // Récupérer les données du prénom depuis DemandePrenomActivity
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQUEST_PRENOM && resultCode == RESULT_OK && data != null) {
+            prenomUtilisateur = data.getStringExtra("prenom");
+        }
     }
 }

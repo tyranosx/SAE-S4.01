@@ -12,6 +12,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
@@ -25,20 +27,25 @@ public class DonsActivity extends AppCompatActivity {
     private List<ItemAsso> associationList;
     private List<ItemAsso> filteredList;
     private FirebaseFirestore db;
+    private FirebaseAuth mAuth; // Gestion de l'état de connexion
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dons);
 
+        mAuth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();
+
         recyclerView = findViewById(R.id.recyclerViewAssociations);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         associationList = new ArrayList<>();
         filteredList = new ArrayList<>();
 
-        adapter = new ItemAssoAdapter(filteredList, this);  // Utiliser la filteredList pour afficher les résultats filtrés
+        String prenom = getIntent().getStringExtra("prenom");
+
+        adapter = new ItemAssoAdapter(filteredList, this);
         recyclerView.setAdapter(adapter);
 
         chargerAssociations();
@@ -78,6 +85,30 @@ public class DonsActivity extends AppCompatActivity {
                 return true;
             }
         });
+
+        // Gestion du clic sur une association
+        adapter.setOnItemClickListener(association -> {
+            FirebaseUser currentUser = mAuth.getCurrentUser();
+
+            Intent intent;
+            if (currentUser != null) {
+                // Utilisateur connecté → Rediriger vers Don1Activity
+                intent = new Intent(DonsActivity.this, Don1Activity.class);
+            } else {
+                // Utilisateur non connecté → Rediriger vers Don3Activity
+                intent = new Intent(DonsActivity.this, Don3Activity.class);
+
+                // Vérifie si le prénom est déjà défini (anonyme ou prénom saisi)
+                if (prenom != null) {
+                    intent.putExtra("prenom", prenom);
+                } else {
+                    intent.putExtra("prenom", "ANONYME");
+                }
+            }
+
+            intent.putExtra("nomAssociation", association.getNom());
+            startActivity(intent);
+        });
     }
 
     // Méthode pour charger les associations depuis Firestore
@@ -86,7 +117,7 @@ public class DonsActivity extends AppCompatActivity {
                 .get()
                 .addOnSuccessListener(queryDocumentSnapshots -> {
                     associationList.clear();
-                    filteredList.clear();  // Assurez-vous de vider la liste filtrée pour éviter les doublons
+                    filteredList.clear();
                     for (DocumentSnapshot document : queryDocumentSnapshots) {
                         String nom = document.getString("nom");
                         String description = document.getString("description");
@@ -94,7 +125,7 @@ public class DonsActivity extends AppCompatActivity {
 
                         ItemAsso association = new ItemAsso(nom, description, R.drawable.logo, url);
                         associationList.add(association);
-                        filteredList.add(association); // Ajouter à la liste filtrée aussi
+                        filteredList.add(association);
                     }
                     adapter.notifyDataSetChanged();
                 })
@@ -106,7 +137,7 @@ public class DonsActivity extends AppCompatActivity {
 
     // Méthode pour filtrer les associations
     private void filtrerAssociations(String query) {
-        if (query == null) query = ""; // Vérification pour éviter les valeurs nulles
+        if (query == null) query = "";
         filteredList.clear();
 
         for (ItemAsso association : associationList) {
@@ -118,5 +149,4 @@ public class DonsActivity extends AppCompatActivity {
 
         adapter.notifyDataSetChanged();
     }
-
 }
