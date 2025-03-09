@@ -134,5 +134,12 @@ public class Don3Activity extends AppCompatActivity {
             startActivity(intent);
             finish();
         });
+
+        // Gestion du bouton Profil
+        ImageButton btnProfil = findViewById(R.id.btn_profil);
+        btnProfil.setOnClickListener(v -> {
+            Intent intent = new Intent(Don3Activity.this, ProfilActivity.class);
+            startActivity(intent);
+        });
     }
 }
