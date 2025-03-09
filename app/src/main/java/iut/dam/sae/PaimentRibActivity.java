@@ -35,8 +35,16 @@ public class PaimentRibActivity extends AppCompatActivity {
         Intent intent = getIntent();
         final String montant = intent.getStringExtra("montant");
         final String association = intent.getStringExtra("nomAssociation");
+        final String prenom = intent.getStringExtra("prenom"); // Récupération du prénom
 
-        // Récupérer le prénom de l'utilisateur connecté
+        // Gestion du prénom transmis ou par défaut
+        if (prenom != null && !prenom.equals("ANONYME")) {
+            prenomUtilisateur = prenom; // Utiliser le prénom transmis s'il est valide
+        } else {
+            prenomUtilisateur = "ANONYME"; // Par défaut à "ANONYME"
+        }
+
+        // Récupérer le prénom de l'utilisateur connecté si disponible
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         if (user != null) {
             db.collection("users").document(user.getUid()).get()
@@ -48,6 +56,7 @@ public class PaimentRibActivity extends AppCompatActivity {
                     .addOnFailureListener(e -> Log.e("FirestoreError", "Erreur lors de la récupération du prénom : " + e.getMessage()));
         }
 
+        // Gestion du bouton de paiement
         Button btnPayerRIB = findViewById(R.id.btn_valider);
         btnPayerRIB.setOnClickListener(v -> {
             ajouterDocumentDon(Double.parseDouble(montant), association, prenomUtilisateur);
@@ -60,10 +69,12 @@ public class PaimentRibActivity extends AppCompatActivity {
             finish();
         });
 
+        // Gestion du bouton retour
         ImageButton btnRetour = findViewById(R.id.btn_retour);
         btnRetour.setOnClickListener(v -> finish());
     }
 
+    // Méthode pour ajouter le don dans la base de données Firestore
     private void ajouterDocumentDon(double montant, String association, String prenom) {
         Map<String, Object> donData = new HashMap<>();
         donData.put("association", association);

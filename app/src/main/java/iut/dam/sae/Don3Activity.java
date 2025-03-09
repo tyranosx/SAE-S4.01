@@ -50,7 +50,11 @@ public class Don3Activity extends AppCompatActivity {
 
         // Récupération du prénom via Intent ou valeur par défaut
         String prenom = getIntent().getStringExtra("prenom");
-        prenomUtilisateur = (prenom != null) ? prenom : "ANONYME";
+        if (prenom != null && !prenom.equals("ANONYME")) {
+            prenomUtilisateur = prenom; // Utilise le prénom transmis uniquement s'il est valide
+        } else {
+            prenomUtilisateur = "ANONYME"; // Par défaut à "ANONYME"
+        }
 
         // Si l'utilisateur est connecté, récupérer son prénom depuis Firestore
         if (user != null) {

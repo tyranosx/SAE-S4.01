@@ -40,6 +40,12 @@ public class PaimentCarteActivity extends AppCompatActivity {
         final String association = intent.getStringExtra("nomAssociation");
         final String prenom = intent.getStringExtra("prenom"); // Récupération du prénom
 
+        if (prenom != null && !prenom.equals("ANONYME")) {
+            prenomUtilisateur = prenom; // Utilise le prénom transmis uniquement s'il est valide
+        } else {
+            prenomUtilisateur = "ANONYME"; // Par défaut à "ANONYME"
+        }
+
         etNumeroCarte = findViewById(R.id.et_card_number);
         etDateExpiration = findViewById(R.id.et_expiry_date);
         etCVV = findViewById(R.id.et_cvv);
