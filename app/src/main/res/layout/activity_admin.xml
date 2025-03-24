@@ -122,10 +122,17 @@
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="12dp"/>
 
-    <!-- Espacement avant les autres stats -->
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="40dp"/>
+    <!-- Nombre total de dons réalisés -->
+    <TextView
+        android:id="@+id/nombre_total_dons"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="0"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:textColor="#808080"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="4dp"/>
 
     <!-- Titre "Derniers dons reçus" -->
     <TextView

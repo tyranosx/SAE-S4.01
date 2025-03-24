@@ -25,6 +25,7 @@ public class AdminActivity extends AppCompatActivity {
     private String adminAssociation;
     private TextView titreAssociation;
     private TextView montantTotalDons;
+    private TextView nombreTotalDons;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +40,7 @@ public class AdminActivity extends AppCompatActivity {
         titreAssociation = findViewById(R.id.nom_association_admin);
         recyclerView = findViewById(R.id.recyclerViewDons);
         montantTotalDons = findViewById(R.id.montant_total_dons);
+        nombreTotalDons = findViewById(R.id.nombre_total_dons);
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         donList = new ArrayList<>();
@@ -79,7 +81,8 @@ public class AdminActivity extends AppCompatActivity {
         db.collection("dons").whereEqualTo("association", adminAssociation).get()
                 .addOnSuccessListener(queryDocumentSnapshots -> {
                     donList.clear();
-                    int total = 0;
+                    int totalMontant = 0;
+                    int totalDons = 0; // Compteur du nombre total de dons
 
                     for (QueryDocumentSnapshot document : queryDocumentSnapshots) {
                         int montant = document.getLong("montant").intValue();
@@ -88,11 +91,13 @@ public class AdminActivity extends AppCompatActivity {
                         String category = document.getString("category"); // Récupération de la catégorie
 
                         donList.add(new DonItem(montant, document.getTimestamp("date").toDate(), prenom, category));
-                        total += montant;
+                        totalMontant += montant;
+                        totalDons++; // Incrémentation du nombre total de dons
                     }
 
                     donAdapter.notifyDataSetChanged();
-                    montantTotalDons.setText(total + " €");
+                    montantTotalDons.setText(totalMontant + " €");
+                    nombreTotalDons.setText(totalDons + " dons"); // Affichage du nombre total de dons
 
                 }).addOnFailureListener(e ->
                         Toast.makeText(AdminActivity.this, "Erreur lors du chargement des dons", Toast.LENGTH_SHORT).show()
