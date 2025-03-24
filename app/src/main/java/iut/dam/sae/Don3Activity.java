@@ -48,6 +48,16 @@ public class Don3Activity extends AppCompatActivity {
 
         FirebaseUser user = mAuth.getCurrentUser();
 
+        // Gestion du bouton Profil
+        ImageButton btnProfil = findViewById(R.id.btn_profil);
+        if (user == null) {
+            btnProfil.setVisibility(ImageButton.GONE); // Masquer si l'utilisateur n'est pas connecté
+        } else {
+            btnProfil.setOnClickListener(v -> {
+                startActivity(new Intent(Don3Activity.this, ProfilActivity.class));
+            });
+        }
+
         // Récupération du prénom via Intent ou valeur par défaut
         String prenom = getIntent().getStringExtra("prenom");
         if (prenom != null && !prenom.equals("ANONYME")) {

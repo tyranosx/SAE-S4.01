@@ -28,6 +28,7 @@ public class DonsActivity extends AppCompatActivity {
     private List<ItemAsso> filteredList;
     private FirebaseFirestore db;
     private FirebaseAuth mAuth; // Gestion de l'état de connexion
+    private ImageButton btnProfil; // Déclaration du bouton profil
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,10 +60,14 @@ public class DonsActivity extends AppCompatActivity {
         });
 
         // Bouton Profil
-        ImageButton btnProfil = findViewById(R.id.btn_profil);
-        btnProfil.setOnClickListener(v -> {
-            startActivity(new Intent(DonsActivity.this, ProfilActivity.class));
-        });
+        btnProfil = findViewById(R.id.btn_profil);
+        if (mAuth.getCurrentUser() == null) {
+            btnProfil.setVisibility(ImageButton.GONE);  // Masquer si l'utilisateur n'est pas connecté
+        } else {
+            btnProfil.setOnClickListener(v -> {
+                startActivity(new Intent(DonsActivity.this, ProfilActivity.class));
+            });
+        }
 
         // Bouton "On vous aide à choisir"
         Button btnAideChoix = findViewById(R.id.btn_aidechoix);
