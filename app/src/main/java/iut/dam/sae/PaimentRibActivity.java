@@ -76,11 +76,15 @@ public class PaimentRibActivity extends AppCompatActivity {
 
     // Méthode pour ajouter le don dans la base de données Firestore
     private void ajouterDocumentDon(double montant, String association, String prenom) {
+        String category = getIntent().getStringExtra("category");
+        if (category == null) category = "donUnique";  // Par défaut à donUnique si rien n'est spécifié
+
         Map<String, Object> donData = new HashMap<>();
         donData.put("association", association);
         donData.put("date", new Timestamp(new Date()));
         donData.put("montant", montant);
         donData.put("prenom", prenom);
+        donData.put("category", category); // Ajout de la catégorie
 
         db.collection("dons").add(donData)
                 .addOnSuccessListener(documentReference -> {
@@ -92,4 +96,5 @@ public class PaimentRibActivity extends AppCompatActivity {
                     Toast.makeText(this, "Erreur lors de l'ajout du don", Toast.LENGTH_SHORT).show();
                 });
     }
+
 }
