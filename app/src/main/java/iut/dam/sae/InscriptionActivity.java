@@ -85,6 +85,18 @@ public class InscriptionActivity extends AppCompatActivity {
                 return;
             }
 
+            if (!isValidEmail(email)) {
+                Toast.makeText(InscriptionActivity.this, "Format d'email invalide", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            if (!isValidPassword(password)) {
+                Toast.makeText(InscriptionActivity.this,
+                        "Le mot de passe doit contenir au moins 8 caractères, avec une majuscule, une minuscule, un chiffre et un caractère spécial.",
+                        Toast.LENGTH_LONG).show();
+                return;
+            }
+
             mAuth.createUserWithEmailAndPassword(email, password)
                     .addOnCompleteListener(task -> {
                         if (task.isSuccessful()) {
@@ -99,7 +111,7 @@ public class InscriptionActivity extends AppCompatActivity {
                                 userData.put("association", "NONE"); // Valeur par défaut
                                 userData.put("isAdmin", false);     // Valeur par défaut
 
-                                // Enregistrement dans Firestore avec l'UID de l'utilisateur comme ID du document
+                                // Enregistrement dans Firestore
                                 db.collection("users").document(user.getUid())
                                         .set(userData)
                                         .addOnSuccessListener(aVoid -> {
@@ -124,4 +136,18 @@ public class InscriptionActivity extends AppCompatActivity {
             finish();
         });
     }
+
+    // Vérification du format de l'email
+    private boolean isValidEmail(String email) {
+        return android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches();
+    }
+
+    // Vérification de la sécurité du mot de passe
+    private boolean isValidPassword(String password) {
+        // Minimum 8 caractères, une majuscule, une minuscule, un chiffre et un caractère spécial
+        String passwordPattern = "^(?=.*[A-Z])(?=.*[a-z])(?=.*\\d)(?=.*[@#$%^&+=!]).{8,}$";
+        return password.matches(passwordPattern);
+    }
+
+
 }
