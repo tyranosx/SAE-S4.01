@@ -6,11 +6,14 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+import java.text.SimpleDateFormat;
 import java.util.List;
+import java.util.Locale;
 
 public class DonAdapter extends RecyclerView.Adapter<DonAdapter.DonViewHolder> {
 
-    private List<DonItem> donList;
+    private final List<DonItem> donList;
+    private final SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.getDefault());
 
     public DonAdapter(List<DonItem> donList) {
         this.donList = donList;
@@ -25,9 +28,12 @@ public class DonAdapter extends RecyclerView.Adapter<DonAdapter.DonViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull DonViewHolder holder, int position) {
-        DonItem don = donList.get(position);
-        holder.montantText.setText("Montant : " + don.getMontant() + " €");
-        holder.dateText.setText("Date : " + don.getDate());
+        DonItem donItem = donList.get(position);
+
+        holder.prenomDon.setText("Prénom : " + donItem.getPrenom());
+        holder.montantDon.setText("Montant : " + donItem.getMontant() + "€");
+        holder.dateDon.setText("Date : " + dateFormat.format(donItem.getDate()));
+        holder.categorieDon.setText("Catégorie : " + donItem.getCategory()); // Affichage de la catégorie
     }
 
     @Override
@@ -36,12 +42,14 @@ public class DonAdapter extends RecyclerView.Adapter<DonAdapter.DonViewHolder> {
     }
 
     public static class DonViewHolder extends RecyclerView.ViewHolder {
-        TextView montantText, dateText;
+        TextView prenomDon, montantDon, dateDon, categorieDon;
 
         public DonViewHolder(@NonNull View itemView) {
             super(itemView);
-            montantText = itemView.findViewById(R.id.montant_don);
-            dateText = itemView.findViewById(R.id.date_don);
+            prenomDon = itemView.findViewById(R.id.prenom_don);
+            montantDon = itemView.findViewById(R.id.montant_don);
+            dateDon = itemView.findViewById(R.id.date_don);
+            categorieDon = itemView.findViewById(R.id.categorie_don);
         }
     }
 }

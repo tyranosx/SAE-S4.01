@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -9,10 +8,19 @@
     android:layout_margin="8dp">
 
     <TextView
+        android:id="@+id/prenom_don"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Prénom"
+        android:textSize="16sp"
+        android:textColor="@android:color/black"
+        android:textStyle="bold"/>
+
+    <TextView
         android:id="@+id/montant_don"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/montant"
+        android:text="Montant"
         android:textSize="18sp"
         android:textStyle="bold"
         android:textColor="@android:color/black"/>
@@ -21,7 +29,15 @@
         android:id="@+id/date_don"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/date"
+        android:text="Date"
         android:textSize="16sp"
         android:textColor="@android:color/darker_gray"/>
+
+    <TextView
+        android:id="@+id/categorie_don"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Catégorie"
+        android:textSize="16sp"
+        android:textColor="@android:color/holo_blue_dark"/>
 </LinearLayout>

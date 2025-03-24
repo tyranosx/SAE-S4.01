@@ -85,14 +85,17 @@ public class AdminActivity extends AppCompatActivity {
                         int montant = document.getLong("montant").intValue();
                         String prenom = document.getString("prenom");
                         String date = document.getTimestamp("date").toDate().toString();
+                        String category = document.getString("category"); // Récupération de la catégorie
 
-                        donList.add(new DonItem(montant, document.getTimestamp("date").toDate(), prenom));
+                        donList.add(new DonItem(montant, document.getTimestamp("date").toDate(), prenom, category));
                         total += montant;
                     }
 
                     donAdapter.notifyDataSetChanged();
                     montantTotalDons.setText(total + " €");
 
-                }).addOnFailureListener(e -> Toast.makeText(AdminActivity.this, "Erreur lors du chargement des dons", Toast.LENGTH_SHORT).show());
+                }).addOnFailureListener(e ->
+                        Toast.makeText(AdminActivity.this, "Erreur lors du chargement des dons", Toast.LENGTH_SHORT).show()
+                );
     }
 }
