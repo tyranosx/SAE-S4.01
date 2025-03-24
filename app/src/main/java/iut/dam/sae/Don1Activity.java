@@ -37,12 +37,14 @@ public class Don1Activity extends AppCompatActivity {
         btnOui.setOnClickListener(v -> {
             Intent intent = new Intent(Don1Activity.this, Don2Activity.class);
             intent.putExtra("nomAssociation", nomAssociation);
+            intent.putExtra("category", "donRegulier");  // Catégorie pour les dons réguliers
             startActivity(intent);
         });
 
         btnNon.setOnClickListener(v -> {
             Intent intent = new Intent(Don1Activity.this, Don3Activity.class);
             intent.putExtra("nomAssociation", nomAssociation);
+            intent.putExtra("category", "donUnique");  // Catégorie pour les dons uniques
             startActivity(intent);
         });
 

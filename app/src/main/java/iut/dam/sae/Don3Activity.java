@@ -117,8 +117,10 @@ public class Don3Activity extends AppCompatActivity {
 
         // Gestion du bouton "Donner"
         Button btnDonner = findViewById(R.id.btn_donner);
+        // Gestion du bouton "Donner"
         btnDonner.setOnClickListener(v -> {
             String montant = etMontant.getText().toString().trim();
+            String category = getIntent().getStringExtra("category");
 
             if (montant.isEmpty()) {
                 Toast.makeText(Don3Activity.this, "Veuillez entrer un montant", Toast.LENGTH_SHORT).show();
@@ -130,7 +132,6 @@ public class Don3Activity extends AppCompatActivity {
                 return;
             }
 
-            // Envoyer les données vers l'activité de paiement avec le prénom
             Intent intent;
             if (paiementParCarteSelectionne) {
                 intent = new Intent(Don3Activity.this, PaimentCarteActivity.class);
@@ -144,6 +145,7 @@ public class Don3Activity extends AppCompatActivity {
             intent.putExtra("montant", montant);
             intent.putExtra("nomAssociation", nomAssociation);
             intent.putExtra("prenom", prenomUtilisateur);
+            intent.putExtra("category", category); // Ajout de la catégorie
             startActivity(intent);
         });
 

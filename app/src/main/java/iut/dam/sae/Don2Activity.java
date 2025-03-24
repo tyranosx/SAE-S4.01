@@ -26,12 +26,14 @@ public class Don2Activity extends AppCompatActivity {
         btnMensuels.setOnClickListener(v -> {
             Intent intent = new Intent(Don2Activity.this, Don3Activity.class);
             intent.putExtra("nomAssociation", nomAssociation);
+            intent.putExtra("category", "donMensuel");  // Catégorie pour les dons mensuels
             startActivity(intent);
         });
 
         btnAnnuels.setOnClickListener(v -> {
             Intent intent = new Intent(Don2Activity.this, Don3Activity.class);
             intent.putExtra("nomAssociation", nomAssociation);
+            intent.putExtra("category", "donAnnuel");  // Catégorie pour les dons annuels
             startActivity(intent);
         });
 
