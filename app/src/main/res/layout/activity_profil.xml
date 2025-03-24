@@ -51,7 +51,7 @@
         app:backgroundTint="@color/buttonColor"
         tools:ignore="RtlHardcoded" />
     <Button
-        android:id="@+id/btn_faire_un_non"
+        android:id="@+id/btn_faire_un_don"
         android:layout_width="wrap_content"
         android:layout_height="50dp"
         android:minWidth="250dp"

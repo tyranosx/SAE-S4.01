@@ -5,9 +5,11 @@ import android.os.Bundle;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.Toast;
+
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 public class ProfilActivity extends AppCompatActivity {
 
@@ -23,7 +25,7 @@ public class ProfilActivity extends AppCompatActivity {
 
         // Récupération des boutons
         Button btnConsulterActivite = findViewById(R.id.btn_consulteractivite);
-        Button btnFaireDon = findViewById(R.id.btn_faire_un_non);
+        Button btnFaireDon = findViewById(R.id.btn_faire_un_don);  // Correction du nom du bouton
         Button btnDeconnexion = findViewById(R.id.btn_deconnexion);
         ImageButton btnRetour = findViewById(R.id.btn_retour);
 
@@ -33,9 +35,16 @@ public class ProfilActivity extends AppCompatActivity {
             startActivity(intent);
         });
 
-        // Rediriger vers LoginChoiceActivity
+        // Rediriger vers DonsActivity en tant qu'utilisateur connecté
         btnFaireDon.setOnClickListener(v -> {
-            Intent intent = new Intent(ProfilActivity.this, LoginChoiceActivity.class);
+            FirebaseUser user = mAuth.getCurrentUser();
+            Intent intent = new Intent(ProfilActivity.this, DonsActivity.class);
+
+            if (user != null) {
+                // Récupère le prénom de l'utilisateur connecté et le transmet
+                intent.putExtra("prenom", user.getDisplayName() != null ? user.getDisplayName() : "Utilisateur");
+            }
+
             startActivity(intent);
         });
 
