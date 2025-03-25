@@ -1,11 +1,16 @@
 package iut.dam.sae;
 
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.SearchView;
+import androidx.appcompat.widget.SearchView;
+
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -77,6 +82,21 @@ public class DonsActivity extends AppCompatActivity {
 
         // Barre de recherche
         SearchView searchView = findViewById(R.id.search_view);
+        searchView.setIconifiedByDefault(false);  // Garde le champ ouvert par défaut
+        // Modifier la couleur du texte et du hint dans le SearchView
+        EditText searchEditText = searchView.findViewById(androidx.appcompat.R.id.search_src_text);
+        searchEditText.setHint("Rechercher une association"); // Redéfinir le hint au cas où il aurait été effacé
+        searchEditText.setHintTextColor(Color.parseColor("#7A7A7A")); // Couleur plus visible
+        if (searchEditText != null) {
+            searchEditText.setTextColor(Color.parseColor("#007980"));
+            searchEditText.setHintTextColor(Color.parseColor("#7A7A7A"));
+        }
+
+        // Modifier la couleur de l'icône de la loupe (en option)
+        ImageView searchIcon = searchView.findViewById(androidx.appcompat.R.id.search_mag_icon);
+        if (searchIcon != null) {
+            searchIcon.setColorFilter(Color.parseColor("#007980"), PorterDuff.Mode.SRC_IN);
+        }
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {

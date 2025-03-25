@@ -51,7 +51,7 @@
         android:textSize="16sp"
         android:padding="12dp"
         android:textColor="#007980"
-        android:textColorHint="#A0A0A0"
+        android:textColorHint="#7A7A7A"
         android:layout_marginBottom="20dp"/>
 
     <!-- Bouton "Valider" -->

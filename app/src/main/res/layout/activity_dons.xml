@@ -54,13 +54,13 @@
         android:layout_gravity="center_horizontal"/>
 
     <!-- Barre de recherche avec SearchView -->
-    <SearchView
+    <androidx.appcompat.widget.SearchView
         android:id="@+id/search_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/input_background"
         android:iconifiedByDefault="false"
-        android:queryHint="@string/chercher"
+        android:queryHint="Rechercher une association"
         android:layout_marginBottom="8dp"/>
 
     <Button
