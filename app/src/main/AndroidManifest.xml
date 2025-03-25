@@ -16,6 +16,12 @@
         android:theme="@style/Theme.SAE"
         tools:targetApi="31">
         <activity
+            android:name=".DonsUniqueActivity"
+            android:exported="false" />
+        <activity
+            android:name=".DonsAnnuelActivity"
+            android:exported="false" />
+        <activity
             android:name=".DemandePrenomActivity"
             android:exported="false" />
         <activity
@@ -69,7 +75,8 @@
             android:exported="false" /> <!-- Activité profil -->
         <activity
             android:name=".ProfilActivity"
-            android:exported="false" /> <!-- Interface admin (consultation statistiques dons) -->
+            android:exported="false"
+            android:launchMode="singleTop" /> <!-- Interface admin (consultation statistiques dons) -->
         <activity
             android:name=".AdminActivity"
             android:exported="false" />

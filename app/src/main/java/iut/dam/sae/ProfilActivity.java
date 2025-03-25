@@ -25,23 +25,66 @@ public class ProfilActivity extends AppCompatActivity {
 
         // Récupération des boutons
         Button btnConsulterActivite = findViewById(R.id.btn_consulteractivite);
-        Button btnFaireDon = findViewById(R.id.btn_faire_un_don);  // Correction du nom du bouton
+        Button btnConsulterDonsAnnuels = findViewById(R.id.btn_consulter_dons_annuels);
+        Button btnConsulterDonsUniques = findViewById(R.id.btn_consulter_dons_uniques); // Nouveau bouton
+        Button btnFaireDon = findViewById(R.id.btn_faire_un_don);
         Button btnDeconnexion = findViewById(R.id.btn_deconnexion);
         ImageButton btnRetour = findViewById(R.id.btn_retour);
 
         // Rediriger vers MonActiviteActivity
         btnConsulterActivite.setOnClickListener(v -> {
             Intent intent = new Intent(ProfilActivity.this, MonActiviteActivity.class);
-            startActivity(intent);
+            String prenom = getIntent().getStringExtra("prenom");
+
+            if (prenom != null && !prenom.isEmpty()) {
+                intent.putExtra("prenom", prenom); // Transmission du prénom
+                startActivity(intent);
+            } else {
+                Toast.makeText(this, "Prénom introuvable, retour à l'accueil", Toast.LENGTH_SHORT).show();
+                Intent retourIntent = new Intent(ProfilActivity.this, LoginChoiceActivity.class);
+                retourIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                startActivity(retourIntent);
+            }
         });
 
-        // Rediriger vers DonsActivity en tant qu'utilisateur connecté
+        // Rediriger vers DonsAnnuelActivity
+        btnConsulterDonsAnnuels.setOnClickListener(v -> {
+            Intent intent = new Intent(ProfilActivity.this, DonsAnnuelActivity.class);
+            String prenom = getIntent().getStringExtra("prenom");
+
+            if (prenom != null && !prenom.isEmpty()) {
+                intent.putExtra("prenom", prenom); // Transmission du prénom
+                startActivity(intent);
+            } else {
+                Toast.makeText(this, "Prénom introuvable, retour à l'accueil", Toast.LENGTH_SHORT).show();
+                Intent retourIntent = new Intent(ProfilActivity.this, LoginChoiceActivity.class);
+                retourIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                startActivity(retourIntent);
+            }
+        });
+
+        // Rediriger vers DonsUniqueActivity
+        btnConsulterDonsUniques.setOnClickListener(v -> {
+            Intent intent = new Intent(ProfilActivity.this, DonsUniqueActivity.class);
+            String prenom = getIntent().getStringExtra("prenom");
+
+            if (prenom != null && !prenom.isEmpty()) {
+                intent.putExtra("prenom", prenom); // Transmission du prénom
+                startActivity(intent);
+            } else {
+                Toast.makeText(this, "Prénom introuvable, retour à l'accueil", Toast.LENGTH_SHORT).show();
+                Intent retourIntent = new Intent(ProfilActivity.this, LoginChoiceActivity.class);
+                retourIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                startActivity(retourIntent);
+            }
+        });
+
+        // Rediriger vers DonsActivity
         btnFaireDon.setOnClickListener(v -> {
             FirebaseUser user = mAuth.getCurrentUser();
             Intent intent = new Intent(ProfilActivity.this, DonsActivity.class);
 
             if (user != null) {
-                // Récupère le prénom de l'utilisateur connecté et le transmet
                 intent.putExtra("prenom", user.getDisplayName() != null ? user.getDisplayName() : "Utilisateur");
             }
 
@@ -50,14 +93,13 @@ public class ProfilActivity extends AppCompatActivity {
 
         // Déconnexion
         btnDeconnexion.setOnClickListener(v -> {
-            mAuth.signOut(); // Déconnexion Firebase
+            mAuth.signOut();
             Toast.makeText(ProfilActivity.this, "Déconnecté avec succès", Toast.LENGTH_SHORT).show();
 
-            // Rediriger vers LoginChoiceActivity après déconnexion
             Intent intent = new Intent(ProfilActivity.this, LoginChoiceActivity.class);
-            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK); // Efface l'historique de navigation
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(intent);
-            finish(); // Fermer ProfilActivity
+            finish();
         });
 
         // Bouton retour -> Redirige vers LoginChoiceActivity

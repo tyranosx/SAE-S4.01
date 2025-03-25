@@ -13,65 +13,50 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
-
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
-
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.Timestamp;
 
-import android.util.Log;
-import android.widget.Toast;
-
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
-public class MonActiviteActivity extends AppCompatActivity {
+public class DonsAnnuelActivity extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
     private FirebaseFirestore db;
-    private RecyclerView recyclerViewDonsMensuels;
+    private RecyclerView recyclerViewDonsAnnuels;
     private MonActiviteDonAdapter monActiviteDonAdapter;
-    private List<MonActiviteDonItem> donMensuelList;
+    private List<MonActiviteDonItem> donAnnuelList;
+    private TextView txtNombreDonsAnnuels, txtMontantTotalAnnuels, txtPrenomUtilisateur;
     private String prenomUtilisateur = "";
-    private TextView montantTotalDons;
-    private TextView nombreTotalDons;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_mon_activite);
-
-        montantTotalDons = findViewById(R.id.montant_total_dons);
-        nombreTotalDons = findViewById(R.id.nombre_total_dons);
-
-        montantTotalDons.setText("Montant total des dons : 0€");
-        nombreTotalDons.setText("Nombre total de dons : 0");
+        setContentView(R.layout.activity_dons_annuel);
 
         mAuth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();
 
-        recyclerViewDonsMensuels = findViewById(R.id.recyclerViewDonsMensuels);
-        recyclerViewDonsMensuels.setLayoutManager(new LinearLayoutManager(this));
+        recyclerViewDonsAnnuels = findViewById(R.id.recyclerViewDonsAnnuels);
+        recyclerViewDonsAnnuels.setLayoutManager(new LinearLayoutManager(this));
 
-        donMensuelList = new ArrayList<>();
-        monActiviteDonAdapter = new MonActiviteDonAdapter(donMensuelList);
-        recyclerViewDonsMensuels.setAdapter(monActiviteDonAdapter);
+        txtNombreDonsAnnuels = findViewById(R.id.txt_nombre_dons_annuels);
+        txtMontantTotalAnnuels = findViewById(R.id.txt_montant_total_annuels);
+        txtPrenomUtilisateur = findViewById(R.id.txt_prenom_utilisateur);
+
+        donAnnuelList = new ArrayList<>();
+        monActiviteDonAdapter = new MonActiviteDonAdapter(donAnnuelList);
+        recyclerViewDonsAnnuels.setAdapter(monActiviteDonAdapter);
 
         ImageButton btnRetour = findViewById(R.id.btn_retour);
         ImageButton btnProfil = findViewById(R.id.btn_profil);
-        TextView txtPrenomUtilisateur = findViewById(R.id.txt_prenom_utilisateur);
 
         btnRetour.setOnClickListener(v -> finish());
 
         btnProfil.setOnClickListener(v -> {
-            startActivity(new Intent(MonActiviteActivity.this, ProfilActivity.class));
+            startActivity(new Intent(DonsAnnuelActivity.this, ProfilActivity.class));
         });
 
         // Récupérer le prénom depuis l'Intent
@@ -79,25 +64,25 @@ public class MonActiviteActivity extends AppCompatActivity {
 
         if (prenomUtilisateur != null && !prenomUtilisateur.isEmpty()) {
             txtPrenomUtilisateur.setText("Prénom : " + prenomUtilisateur); // Affichage du prénom
-            recupererDonsMensuels(prenomUtilisateur);
+            recupererDonsAnnuels(prenomUtilisateur);
         } else {
             txtPrenomUtilisateur.setText("Prénom : Introuvable");
             Toast.makeText(this, "Prénom introuvable", Toast.LENGTH_SHORT).show();
         }
     }
 
-    private void recupererDonsMensuels(String prenomUtilisateur) {
+    private void recupererDonsAnnuels(String prenomUtilisateur) {
         db.collection("dons")
                 .whereEqualTo("prenom", prenomUtilisateur)
-                .whereEqualTo("category", "donMensuel") // Filtrer les dons mensuels
+                .whereEqualTo("category", "donAnnuel") // Filtrer les dons annuels
                 .get()
                 .addOnSuccessListener(queryDocumentSnapshots -> {
-                    donMensuelList.clear();
+                    donAnnuelList.clear();
                     int totalMontant = 0;
-                    int totalDons = 0; // Compteur du nombre total de dons
+                    int totalDons = 0;
 
                     if (queryDocumentSnapshots.isEmpty()) {
-                        Toast.makeText(this, "Aucun don mensuel trouvé", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(this, "Aucun don annuel trouvé", Toast.LENGTH_SHORT).show();
                     } else {
                         for (QueryDocumentSnapshot document : queryDocumentSnapshots) {
                             String association = document.getString("association");
@@ -105,21 +90,19 @@ public class MonActiviteActivity extends AppCompatActivity {
                             Date date = document.getTimestamp("date").toDate();
 
                             MonActiviteDonItem don = new MonActiviteDonItem(association, montant, date);
-                            donMensuelList.add(don);
+                            donAnnuelList.add(don);
 
                             totalMontant += montant;
                             totalDons++;
-                            montantTotalDons.setText("Montant total des dons : " + totalMontant + "€");
-                            nombreTotalDons.setText("Nombre total de dons : " + totalDons);
-                            Log.d("DonMensuel", "Association: " + association + " | Montant: " + montant + "€ | Date: " + date);
                         }
 
                         monActiviteDonAdapter.notifyDataSetChanged();
 
                         // Affichage du total des montants et du nombre de dons
-                        Toast.makeText(this, "Total des dons mensuels : " + totalDons + " dons | Montant total : " + totalMontant + "€", Toast.LENGTH_LONG).show();
+                        txtNombreDonsAnnuels.setText("Nombre total de dons : " + totalDons);
+                        txtMontantTotalAnnuels.setText("Montant total des dons : " + totalMontant + "€");
                     }
                 })
-                .addOnFailureListener(e -> Log.e("Firestore", "Erreur lors de la récupération des dons mensuels", e));
+                .addOnFailureListener(e -> Log.e("Firestore", "Erreur lors de la récupération des dons annuels", e));
     }
 }

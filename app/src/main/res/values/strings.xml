@@ -26,7 +26,7 @@
     <string name="aiderasso">Je veux aider une association</string>
     <string name="date_naissance">Date de naissance</string>
     <string name="chercher">Rechercher une association</string>
-    <string name="consulter">Consulter mon activité</string>
+    <string name="consulter">Consulter mes dons mensuels</string>
     <string name="fairedon">Faire un don</string>
     <string name="choisirasso">Choississez une association</string>
     <string name="acc_s_admin">Accès Admin</string>
@@ -74,5 +74,9 @@
     <string name="faire_un_don_anonyme">Faire un don anonyme</string>
     <string name="entrez_votre_pr_nom">Entrez votre prénom</string>
     <string name="toggle_password">Afficher/Masquer mot de passe</string>
+    <string name="consulter_mes_dons_annuels">Consulter mes dons annuels</string>
+    <string name="nombre_total_de_dons_0_dons">Nombre total de dons : 0 dons</string>
+    <string name="_0">Montant total des dons : 0 €</string>
+    <string name="consulter_mes_dons_uniques">Consulter mes dons uniques</string>
 
 </resources>

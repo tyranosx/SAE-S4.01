@@ -1,0 +1,43 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="12dp"
+    android:background="@android:color/white"
+    android:elevation="4dp"
+    android:layout_margin="8dp">
+
+    <TextView
+        android:id="@+id/txt_association"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Association"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:textColor="@android:color/black"/>
+
+    <TextView
+        android:id="@+id/txt_montant"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Montant"
+        android:textSize="16sp"
+        android:textColor="@android:color/darker_gray"/>
+
+    <TextView
+        android:id="@+id/txt_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Date"
+        android:textSize="16sp"
+        android:textColor="@android:color/darker_gray"/>
+
+    <Button
+        android:id="@+id/btn_annuler"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Annuler"
+        android:backgroundTint="@color/colorAccent"
+        android:textColor="@android:color/white"
+        android:layout_gravity="end"/>
+</LinearLayout>

@@ -105,8 +105,41 @@ public class LoginChoiceActivity extends AppCompatActivity {
 
         // Rediriger vers ProfilActivity via le bouton Profil
         btnProfil.setOnClickListener(v -> {
-            Intent intent = new Intent(LoginChoiceActivity.this, ProfilActivity.class);
-            startActivity(intent);
+            FirebaseUser user = mAuth.getCurrentUser();
+            if (user != null) {
+                db.collection("users").document(user.getUid()).get()
+                        .addOnSuccessListener(documentSnapshot -> {
+                            if (documentSnapshot.exists()) {
+                                String prenom = documentSnapshot.getString("prenom");
+                                Intent intent = new Intent(LoginChoiceActivity.this, ProfilActivity.class);
+
+                                // Envoi du prénom via l'intent
+                                intent.putExtra("prenom", prenom);
+
+                                // Empêche ProfilActivity de se relancer plusieurs fois
+                                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+
+                                startActivity(intent);
+                            } else {
+                                Toast.makeText(this, "Prénom introuvable", Toast.LENGTH_SHORT).show();
+                            }
+                        })
+                        .addOnFailureListener(e -> {
+                            Toast.makeText(this, "Erreur lors de la récupération du prénom", Toast.LENGTH_SHORT).show();
+
+                            // Empêche les doublons d'activités
+                            Intent intent = new Intent(LoginChoiceActivity.this, ProfilActivity.class);
+                            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                            startActivity(intent);
+                        });
+            } else {
+                Intent intent = new Intent(LoginChoiceActivity.this, ProfilActivity.class);
+
+                // Empêche les doublons d'activités
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                startActivity(intent);
+            }
         });
+
     }
 }

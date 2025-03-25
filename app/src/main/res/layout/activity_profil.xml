@@ -50,6 +50,41 @@
         android:layout_marginBottom="15dp"
         app:backgroundTint="@color/buttonColor"
         tools:ignore="RtlHardcoded" />
+
+    <Button
+        android:id="@+id/btn_consulter_dons_annuels"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:minWidth="250dp"
+        android:maxWidth="320dp"
+        android:layout_gravity="center"
+        android:text="@string/consulter_mes_dons_annuels"
+        android:textSize="16sp"
+        android:textColor="@color/buttonTextColor"
+        android:background="@drawable/button_rounded"
+        android:gravity="center"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="15dp"
+        app:backgroundTint="@color/buttonColor"
+        tools:ignore="RtlHardcoded" />
+
+    <Button
+        android:id="@+id/btn_consulter_dons_uniques"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:minWidth="250dp"
+        android:maxWidth="320dp"
+        android:layout_gravity="center"
+        android:text="@string/consulter_mes_dons_uniques"
+        android:textSize="16sp"
+        android:textColor="@color/buttonTextColor"
+        android:background="@drawable/button_rounded"
+        android:gravity="center"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="15dp"
+        app:backgroundTint="@color/buttonColor"
+        tools:ignore="RtlHardcoded" />
+
     <Button
         android:id="@+id/btn_faire_un_don"
         android:layout_width="wrap_content"
