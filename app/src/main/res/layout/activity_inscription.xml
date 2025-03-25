@@ -210,14 +210,23 @@
 
                     <EditText
                         android:id="@+id/input_password"
-                        android:layout_width="match_parent"
+                        android:layout_width="0dp"
                         android:layout_height="48dp"
+                        android:layout_weight="1"
                         android:hint="@string/mot_de_passe"
                         android:textColor="#007980"
                         android:textColorHint="#7A7A7A"
                         android:inputType="textPassword"
                         android:background="@null"
                         android:textSize="16sp"/>
+
+                    <ImageButton
+                        android:id="@+id/btn_toggle_password"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:src="@drawable/ic_eye_closed"
+                        android:background="?attr/selectableItemBackground"
+                        android:contentDescription="@string/toggle_password"/>
                 </LinearLayout>
 
                 <!-- Bouton S'inscrire -->

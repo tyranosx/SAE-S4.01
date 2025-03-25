@@ -3,6 +3,7 @@ package iut.dam.sae;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.InputType;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -28,9 +29,10 @@ public class InscriptionActivity extends AppCompatActivity {
 
     private EditText inputEmail, inputPassword, inputPrenom, inputNom, inputDateNaissance;
     private Button btnSinscrire;
-    private ImageButton btnRetour;
+    private ImageButton btnRetour, btnTogglePassword;
 
     private Calendar calendar;
+    private boolean isPasswordVisible = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +50,7 @@ public class InscriptionActivity extends AppCompatActivity {
 
         btnSinscrire = findViewById(R.id.btn_inscription);
         btnRetour = findViewById(R.id.btn_retour);
+        btnTogglePassword = findViewById(R.id.btn_toggle_password);
 
         calendar = Calendar.getInstance();
 
@@ -71,6 +74,8 @@ public class InscriptionActivity extends AppCompatActivity {
             datePickerDialog.getDatePicker().setMaxDate(System.currentTimeMillis());
             datePickerDialog.show();
         });
+
+        btnTogglePassword.setOnClickListener(v -> togglePasswordVisibility());
 
         // Gestion de l'inscription
         btnSinscrire.setOnClickListener(v -> {
@@ -149,5 +154,16 @@ public class InscriptionActivity extends AppCompatActivity {
         return password.matches(passwordPattern);
     }
 
+    private void togglePasswordVisibility() {
+        if (isPasswordVisible) {
+            inputPassword.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+            btnTogglePassword.setImageResource(R.drawable.ic_eye_closed); // Icône rouge
+        } else {
+            inputPassword.setInputType(InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
+            btnTogglePassword.setImageResource(R.drawable.ic_eye_open); // Icône verte
+        }
 
+        inputPassword.setSelection(inputPassword.getText().length());
+        isPasswordVisible = !isPasswordVisible;
+    }
 }

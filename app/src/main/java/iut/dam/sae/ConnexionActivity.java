@@ -2,6 +2,7 @@ package iut.dam.sae;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.InputType;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -20,8 +21,9 @@ public class ConnexionActivity extends AppCompatActivity {
     private FirebaseFirestore db;
     private EditText inputEmail, inputPassword;
     private Button btnConnexion;
-    private ImageButton btnRetour;
+    private ImageButton btnRetour, btnTogglePassword;
     private TextView txtMdpOublie, txtSinscrire;
+    private boolean isPasswordVisible = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +41,9 @@ public class ConnexionActivity extends AppCompatActivity {
         btnRetour = findViewById(R.id.btn_retour);
         txtMdpOublie = findViewById(R.id.txt_mdp_oublie);
         txtSinscrire = findViewById(R.id.txt_sinscrire);
+        btnTogglePassword = findViewById(R.id.btn_toggle_password);
+
+        btnTogglePassword.setOnClickListener(v -> togglePasswordVisibility());
 
         // Gérer la connexion
         btnConnexion.setOnClickListener(v -> {
@@ -85,5 +90,18 @@ public class ConnexionActivity extends AppCompatActivity {
             startActivity(intent);
             finish();
         });
+    }
+
+    private void togglePasswordVisibility() {
+        if (isPasswordVisible) {
+            inputPassword.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+            btnTogglePassword.setImageResource(R.drawable.ic_eye_closed); // Icône rouge (fermé)
+        } else {
+            inputPassword.setInputType(InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
+            btnTogglePassword.setImageResource(R.drawable.ic_eye_open); // Icône verte (ouvert)
+        }
+
+        inputPassword.setSelection(inputPassword.getText().length());
+        isPasswordVisible = !isPasswordVisible;
     }
 }

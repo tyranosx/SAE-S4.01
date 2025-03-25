@@ -73,5 +73,6 @@
     <string name="entrez_prenom">Entrez votre prénom</string>
     <string name="faire_un_don_anonyme">Faire un don anonyme</string>
     <string name="entrez_votre_pr_nom">Entrez votre prénom</string>
+    <string name="toggle_password">Afficher/Masquer mot de passe</string>
 
 </resources>
