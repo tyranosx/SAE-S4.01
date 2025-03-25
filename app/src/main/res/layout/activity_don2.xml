@@ -14,18 +14,27 @@
         android:layout_height="0dp"
         android:layout_weight="1"/>
 
-    <ImageButton
-        android:id="@+id/btn_profil"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:background="@drawable/round_button_back"
-        android:src="@drawable/utilisateur_24"
-        android:contentDescription="@string/retour"
-        android:elevation="6dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="20dp"
-        app:backgroundTint="#D1D1D1"
-        android:layout_gravity="top|end"/>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/btn_profil"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/utilisateur_24"
+            android:contentDescription="@string/retour"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="20dp"
+            app:backgroundTint="#4A9B9F"
+            app:fabSize="normal"
+            app:elevation="8dp"
+            app:maxImageSize="40dp"
+            app:borderWidth="0dp"
+            app:shapeAppearanceOverlay="@style/RoundedFAB"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <!-- Logo -->
     <ImageView

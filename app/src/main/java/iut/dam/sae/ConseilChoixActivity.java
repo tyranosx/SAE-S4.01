@@ -8,12 +8,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class ConseilChoixActivity extends AppCompatActivity {
-
     private RecyclerView recyclerView;
-    private AssociationAdapter adapter;
+    private ItemAssoAdapter adapter;
     private List<ItemAsso> associationList;
 
     @Override
@@ -28,7 +29,7 @@ public class ConseilChoixActivity extends AppCompatActivity {
         initialiserAssociations();
 
         // Initialisation de l'adapter
-        adapter = new AssociationAdapter(associationList, this);
+        adapter = new ItemAssoAdapter(associationList, this);
 
         // Gestion du clic pour ouvrir Don1Activity avec le nom de l'association
         adapter.setOnItemClickListener(item -> {
@@ -68,9 +69,13 @@ public class ConseilChoixActivity extends AppCompatActivity {
 
     private void initialiserAssociations() {
         associationList = new ArrayList<>();
-        associationList.add(new ItemAsso("AAAVAM", "Défense des victimes d’accidents médicamenteux", R.drawable.logo, "https://www.aaavam.eu/"));
-        associationList.add(new ItemAsso("Actions Traitements", "Aide aux usagers du système de santé", R.drawable.logo, "https://www.actions-traitements.org/"));
-        associationList.add(new ItemAsso("AIDES", "Lutte contre le SIDA", R.drawable.logo, "https://www.aides.org/"));
-        associationList.add(new ItemAsso("France Alzheimer", "Aide aux malades d'Alzheimer", R.drawable.logo, "https://www.francealzheimer.org/"));
+
+        // Santé
+        associationList.add(new ItemAsso("AAAVAM", "Défense des victimes d'accidents médicamenteux", R.drawable.logo, "https://www.aaavam.eu/", "Santé"));
+        associationList.add(new ItemAsso("Actions Traitements", "Aide aux usagers du système de santé", R.drawable.logo, "https://www.actions-traitements.org/", "Santé"));
+        associationList.add(new ItemAsso("AIDES", "Lutte contre le SIDA", R.drawable.logo, "https://www.aides.org/", "Santé"));
+        associationList.add(new ItemAsso("France Alzheimer", "Aide aux malades d'Alzheimer", R.drawable.logo, "https://www.francealzheimer.org/", "Santé"));
+
+        // Vous pouvez ajouter d'autres catégories ici
     }
 }

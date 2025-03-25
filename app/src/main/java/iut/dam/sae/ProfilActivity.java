@@ -11,11 +11,17 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+import android.view.View;
+import android.view.View.OnClickListener;
+
 public class ProfilActivity extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
+    private Button btnQrCode;
 
     @Override
+
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profil);
@@ -28,6 +34,7 @@ public class ProfilActivity extends AppCompatActivity {
         Button btnFaireDon = findViewById(R.id.btn_faire_un_don);  // Correction du nom du bouton
         Button btnDeconnexion = findViewById(R.id.btn_deconnexion);
         ImageButton btnRetour = findViewById(R.id.btn_retour);
+        Button btnQrCode = findViewById(R.id.btn_qr_code);
 
         // Rediriger vers MonActiviteActivity
         btnConsulterActivite.setOnClickListener(v -> {
@@ -66,5 +73,16 @@ public class ProfilActivity extends AppCompatActivity {
             startActivity(intent);
             finish();
         });
+
+        // Gestion du clic sur le bouton QR Code
+        btnQrCode.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Ouvrir l'activité de génération de QR Code
+                Intent intent = new Intent(ProfilActivity.this, ProfileQrCodeActivity.class);
+                startActivity(intent);
+            }
+        });
+
     }
 }

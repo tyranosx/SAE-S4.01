@@ -16,10 +16,21 @@
         android:theme="@style/Theme.SAE"
         tools:targetApi="31">
         <activity
-            android:name=".DemandePrenomActivity"
+            android:name=".ProfileQrCodeActivity"
             android:exported="false" />
+
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="${applicationId}.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
+
         <activity
-            android:name=".PaiementParCarteActivity"
+            android:name=".DemandePrenomActivity"
             android:exported="false" />
         <activity
             android:name=".ItemAssociationActivity"

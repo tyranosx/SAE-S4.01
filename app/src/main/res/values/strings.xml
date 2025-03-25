@@ -73,5 +73,9 @@
     <string name="entrez_prenom">Entrez votre prénom</string>
     <string name="faire_un_don_anonyme">Faire un don anonyme</string>
     <string name="entrez_votre_pr_nom">Entrez votre prénom</string>
+    <string name="scanner_qrcode">Scannez ce QR Code pour télécharger l\'application</string>
+    <string name="partager_le_qr_code">Partager le QR Code</string>
+    <string name="partagez_l_application">Partagez l\'application</string>
+    <string name="g_n_rer_qr_code">Générer QR Code</string>
 
 </resources>
