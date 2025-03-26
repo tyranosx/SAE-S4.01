@@ -78,5 +78,9 @@
     <string name="nombre_total_de_dons_0_dons">Nombre total de dons : 0 dons</string>
     <string name="_0">Montant total des dons : 0 €</string>
     <string name="consulter_mes_dons_uniques">Consulter mes dons uniques</string>
+    <string name="scanner_qrcode">Scannez ce QR Code pour télécharger l\'application</string>
+    <string name="partager_le_qr_code">Partager le QR Code</string>
+    <string name="partagez_l_application">Partagez l\'application</string>
+    <string name="g_n_rer_qr_code">Générer QR Code</string>
 
 </resources>
