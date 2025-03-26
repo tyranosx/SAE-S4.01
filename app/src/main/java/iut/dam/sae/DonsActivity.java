@@ -147,8 +147,9 @@ public class DonsActivity extends AppCompatActivity {
                         String nom = document.getString("nom");
                         String description = document.getString("description");
                         String url = document.getString("url");
+                        String category = document.getString("category");
 
-                        ItemAsso association = new ItemAsso(nom, description, R.drawable.logo, url);
+                        ItemAsso association = new ItemAsso(nom, description, R.drawable.logo, url, category);
                         associationList.add(association);
                         filteredList.add(association);
                     }

@@ -3,18 +3,18 @@ package iut.dam.sae;
 public class ItemAsso {
     private String nom;
     private String description;
-    private int imageResId;  // Nouvelle variable pour l'image
-    private String siteWeb;  // Nouvelle variable pour l'URL du site web
+    private int imageResId;
+    private String siteWeb;
+    private String category; // Ajout de la catégorie
 
-    // Constructeur avec toutes les variables
-    public ItemAsso(String nom, String description, int imageResId, String siteWeb) {
+    public ItemAsso(String nom, String description, int imageResId, String siteWeb, String category) {
         this.nom = nom;
         this.description = description;
         this.imageResId = imageResId;
         this.siteWeb = siteWeb;
+        this.category = category;
     }
 
-    // Getters
     public String getNom() {
         return nom;
     }
@@ -24,14 +24,17 @@ public class ItemAsso {
     }
 
     public int getImageResId() {
-        return imageResId;   // Retourne l'ID de l'image
+        return imageResId;
     }
 
     public String getSiteWeb() {
-        return siteWeb;   // Retourne l'URL du site web
+        return siteWeb;
     }
 
-    // Setters (au cas où tu en aurais besoin)
+    public String getCategory() {
+        return category;
+    }
+
     public void setNom(String nom) {
         this.nom = nom;
     }
@@ -46,5 +49,9 @@ public class ItemAsso {
 
     public void setSiteWeb(String siteWeb) {
         this.siteWeb = siteWeb;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
     }
 }

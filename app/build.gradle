@@ -49,6 +49,13 @@ dependencies {
     implementation libs.activity.v172
     implementation libs.recyclerview
 
+    //  Ajout de ZXing (scanneur QR code)
+    implementation libs.zxing.android.embedded
+    implementation libs.core
+
+    //  PAS besoin de zxing core en plus, zxing-android-embedded l’embarque déjà
+    // Mais si besoin absolu :
+
     // Testing
     testImplementation libs.junit
     androidTestImplementation libs.junit.v115
