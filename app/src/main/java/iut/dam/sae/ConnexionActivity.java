@@ -78,6 +78,8 @@ public class ConnexionActivity extends AppCompatActivity {
 
         // Gérer la connexion
         btnConnexion.setOnClickListener(v -> {
+            v.startAnimation(AnimationUtils.loadAnimation(this, R.anim.click_scale));
+
             String email = inputEmail.getText().toString().trim();
             String password = inputPassword.getText().toString().trim();
 
@@ -138,6 +140,7 @@ public class ConnexionActivity extends AppCompatActivity {
         btnRetour.setOnClickListener(v -> {
             Intent intent = new Intent(ConnexionActivity.this, LoginChoiceActivity.class);
             startActivity(intent);
+            overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
             finish();
         });
     }

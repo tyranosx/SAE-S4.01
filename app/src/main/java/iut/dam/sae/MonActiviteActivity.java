@@ -3,6 +3,8 @@ package iut.dam.sae;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -68,9 +70,31 @@ public class MonActiviteActivity extends AppCompatActivity {
         ImageButton btnProfil = findViewById(R.id.btn_profil);
         TextView txtPrenomUtilisateur = findViewById(R.id.txt_prenom_utilisateur);
 
-        btnRetour.setOnClickListener(v -> finish());
+        // === ANIMATIONS ===
+        Animation clickScale = AnimationUtils.loadAnimation(this, R.anim.click_scale);
+        Animation fadeIn = AnimationUtils.loadAnimation(this, R.anim.fade_in);
+        Animation slideIn = AnimationUtils.loadAnimation(this, R.anim.slide_in_bottom);
+
+        // Appliquer les animations aux éléments principaux
+        findViewById(R.id.titre_mon_activite).startAnimation(slideIn);
+        findViewById(R.id.txt_prenom_utilisateur).startAnimation(fadeIn);
+        findViewById(R.id.montant_total_dons).startAnimation(fadeIn);
+        findViewById(R.id.nombre_total_dons).startAnimation(fadeIn);
+
+        // Appliquer une animation au RecyclerView → cascade
+        recyclerViewDonsMensuels.setLayoutAnimation(
+                AnimationUtils.loadLayoutAnimation(this, R.anim.layout_fade_in)
+        );
+
+
+        btnRetour.setOnClickListener(v -> {
+            v.startAnimation(clickScale);
+            overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
+            finish();
+        });
 
         btnProfil.setOnClickListener(v -> {
+            v.startAnimation(clickScale);
             startActivity(new Intent(MonActiviteActivity.this, ProfilActivity.class));
         });
 

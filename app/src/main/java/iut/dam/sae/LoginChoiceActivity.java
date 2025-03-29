@@ -62,11 +62,11 @@ public class LoginChoiceActivity extends AppCompatActivity {
         introText.startAnimation(fadeIn);
 
         // Boutons → slide up
-        btnFaireDon.startAnimation(slideUp);
-        btnSeConnecter.startAnimation(slideUp);
-        btnSinscrire.startAnimation(slideUp);
-        btnAdminPanel.startAnimation(slideUp);
-        btnDeconnexion.startAnimation(slideUp);
+        if (btnFaireDon != null) btnFaireDon.startAnimation(slideUp);
+        if (btnSeConnecter != null) btnSeConnecter.startAnimation(slideUp);
+        if (btnSinscrire != null) btnSinscrire.startAnimation(slideUp);
+        if (btnAdminPanel != null) btnAdminPanel.startAnimation(slideUp);
+        if (btnDeconnexion != null) btnDeconnexion.startAnimation(slideUp);
 
         // Bouton profil → slide depuis le haut s’il est visible
         if (btnProfil.getVisibility() == View.VISIBLE) {

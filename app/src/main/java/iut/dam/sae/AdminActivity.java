@@ -2,6 +2,8 @@ package iut.dam.sae;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -31,6 +33,18 @@ public class AdminActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin);
+
+        // Charger les animations
+        Animation fadeIn = AnimationUtils.loadAnimation(this, R.anim.fade_in);
+        Animation slideUp = AnimationUtils.loadAnimation(this, R.anim.slide_up);
+        Animation clickScale = AnimationUtils.loadAnimation(this, R.anim.click_scale);
+
+        // Appliquer les animations aux éléments
+        findViewById(R.id.nom_association_admin).startAnimation(fadeIn);
+        findViewById(R.id.total_dons_realises).startAnimation(slideUp);
+        findViewById(R.id.montant_total_dons).startAnimation(slideUp);
+        findViewById(R.id.nombre_total_dons).startAnimation(slideUp);
+        findViewById(R.id.recyclerViewDons).startAnimation(fadeIn);
 
         mAuth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();
@@ -68,7 +82,9 @@ public class AdminActivity extends AppCompatActivity {
         }
 
         btnRetour.setOnClickListener(v -> {
+            v.startAnimation(clickScale);
             startActivity(new Intent(AdminActivity.this, LoginChoiceActivity.class));
+            overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
             finish();
         });
 

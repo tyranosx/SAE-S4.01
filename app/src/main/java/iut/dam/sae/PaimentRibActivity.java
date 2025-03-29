@@ -51,6 +51,7 @@ public class PaimentRibActivity extends AppCompatActivity {
         ImageButton btnRetour = findViewById(R.id.btn_retour);
 
         // ✨ Animations
+        Animation clickScale = AnimationUtils.loadAnimation(this, R.anim.click_scale);
         Animation fadeIn = AnimationUtils.loadAnimation(this, R.anim.fade_in);
         Animation zoomIn = AnimationUtils.loadAnimation(this, R.anim.zoom_in);
         Animation shake = AnimationUtils.loadAnimation(this, R.anim.shake);
@@ -64,6 +65,7 @@ public class PaimentRibActivity extends AppCompatActivity {
 
         // 🔙 Bouton retour
         btnRetour.setOnClickListener(v -> {
+            v.startAnimation(clickScale);
             finish();
             overridePendingTransition(R.anim.slide_in_left, R.anim.fade_out);
         });
@@ -92,6 +94,7 @@ public class PaimentRibActivity extends AppCompatActivity {
 
         // 💳 Bouton de paiement
         btnValider.setOnClickListener(v -> {
+            v.startAnimation(clickScale);
             if (validateIbanInformation()) {
                 ajouterDocumentDon(Double.parseDouble(montant), association, prenomUtilisateur);
                 Toast.makeText(this, "Paiement de " + montant + "€ effectué via IBAN !", Toast.LENGTH_LONG).show();

@@ -31,13 +31,4 @@
         android:text="Date"
         android:textSize="16sp"
         android:textColor="@android:color/darker_gray"/>
-
-    <Button
-        android:id="@+id/btn_annuler"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Annuler"
-        android:backgroundTint="@color/colorAccent"
-        android:textColor="@android:color/white"
-        android:layout_gravity="end"/>
 </LinearLayout>

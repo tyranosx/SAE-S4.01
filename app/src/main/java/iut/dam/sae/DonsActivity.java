@@ -73,6 +73,7 @@ public class DonsActivity extends AppCompatActivity {
         String prenom = getIntent().getStringExtra("prenom");
 
         // 🔥 Animations
+        Animation clickScale = AnimationUtils.loadAnimation(this, R.anim.click_scale);
         Animation fadeIn = AnimationUtils.loadAnimation(this, R.anim.fade_in);
         Animation slideUp = AnimationUtils.loadAnimation(this, R.anim.slide_up);
         Animation zoomIn = AnimationUtils.loadAnimation(this, R.anim.zoom_in);
@@ -86,6 +87,7 @@ public class DonsActivity extends AppCompatActivity {
         chargerAssociations();
 
         btnRetour.setOnClickListener(v -> {
+            v.startAnimation(clickScale);
             Intent intent = new Intent(DonsActivity.this, LoginChoiceActivity.class);
             startActivity(intent);
             overridePendingTransition(R.anim.slide_in_left, R.anim.fade_out);
@@ -96,6 +98,7 @@ public class DonsActivity extends AppCompatActivity {
             btnProfil.setVisibility(ImageButton.GONE);
         } else {
             btnProfil.setOnClickListener(v -> {
+                v.startAnimation(clickScale);
                 Intent intent = new Intent(DonsActivity.this, ProfilActivity.class);
                 startActivity(intent);
                 overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
@@ -103,6 +106,7 @@ public class DonsActivity extends AppCompatActivity {
         }
 
         btnAideChoix.setOnClickListener(v -> {
+            v.startAnimation(clickScale);
             Intent intent = new Intent(DonsActivity.this, ConseilChoixActivity.class);
             startActivity(intent);
             overridePendingTransition(R.anim.slide_in_right, R.anim.fade_out);

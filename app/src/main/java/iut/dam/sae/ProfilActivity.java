@@ -1,18 +1,20 @@
 package iut.dam.sae;
 
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-
-import android.view.View;
-import android.view.View.OnClickListener;
 
 public class ProfilActivity extends AppCompatActivity {
 
@@ -24,104 +26,99 @@ public class ProfilActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profil);
 
-        // Initialisation de Firebase Auth
         mAuth = FirebaseAuth.getInstance();
 
         // Récupération des boutons
         Button btnConsulterActivite = findViewById(R.id.btn_consulteractivite);
         Button btnConsulterDonsAnnuels = findViewById(R.id.btn_consulter_dons_annuels);
-        Button btnConsulterDonsUniques = findViewById(R.id.btn_consulter_dons_uniques); // Nouveau bouton
+        Button btnConsulterDonsUniques = findViewById(R.id.btn_consulter_dons_uniques);
         Button btnFaireDon = findViewById(R.id.btn_faire_un_don);
         Button btnDeconnexion = findViewById(R.id.btn_deconnexion);
         ImageButton btnRetour = findViewById(R.id.btn_retour);
-        Button btnQrCode = findViewById(R.id.btn_qr_code);
+        btnQrCode = findViewById(R.id.btn_qr_code);
+        ImageView logo = findViewById(R.id.logo);
 
-        // Rediriger vers MonActiviteActivity
-        btnConsulterActivite.setOnClickListener(v -> {
-            Intent intent = new Intent(ProfilActivity.this, MonActiviteActivity.class);
-            String prenom = getIntent().getStringExtra("prenom");
+        // ✨ Animations
+        Animation clickScale = AnimationUtils.loadAnimation(this, R.anim.click_scale);
+        Animation slideUp = AnimationUtils.loadAnimation(this, R.anim.slide_up);
+        Animation fadeIn = AnimationUtils.loadAnimation(this, R.anim.fade_in);
+        Animation zoomIn = AnimationUtils.loadAnimation(this, R.anim.zoom_in);
 
-            if (prenom != null && !prenom.isEmpty()) {
-                intent.putExtra("prenom", prenom); // Transmission du prénom
-                startActivity(intent);
-            } else {
-                Toast.makeText(this, "Prénom introuvable, retour à l'accueil", Toast.LENGTH_SHORT).show();
-                Intent retourIntent = new Intent(ProfilActivity.this, LoginChoiceActivity.class);
-                retourIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                startActivity(retourIntent);
+        logo.startAnimation(zoomIn);
+        btnConsulterActivite.startAnimation(slideUp);
+        btnConsulterDonsAnnuels.startAnimation(slideUp);
+        btnConsulterDonsUniques.startAnimation(slideUp);
+        btnFaireDon.startAnimation(slideUp);
+        btnQrCode.startAnimation(slideUp);
+        btnDeconnexion.startAnimation(slideUp);
+
+        // Redirection avec prénom
+        String prenom = getIntent().getStringExtra("prenom");
+
+        View.OnClickListener redirectWithPrenom = view -> {
+            view.startAnimation(clickScale);
+            Class<?> target = null;
+            if (view == btnConsulterActivite) target = MonActiviteActivity.class;
+            else if (view == btnConsulterDonsAnnuels) target = DonsAnnuelActivity.class;
+            else if (view == btnConsulterDonsUniques) target = DonsUniqueActivity.class;
+
+            if (target != null) {
+                if (prenom != null && !prenom.isEmpty()) {
+                    Intent intent = new Intent(this, target);
+                    intent.putExtra("prenom", prenom);
+                    startActivity(intent);
+                } else {
+                    Toast.makeText(this, "Prénom introuvable, retour à l'accueil", Toast.LENGTH_SHORT).show();
+                    startActivity(new Intent(this, LoginChoiceActivity.class));
+                }
             }
-        });
+        };
 
-        // Rediriger vers DonsAnnuelActivity
-        btnConsulterDonsAnnuels.setOnClickListener(v -> {
-            Intent intent = new Intent(ProfilActivity.this, DonsAnnuelActivity.class);
-            String prenom = getIntent().getStringExtra("prenom");
+        btnConsulterActivite.setOnClickListener(redirectWithPrenom);
+        btnConsulterDonsAnnuels.setOnClickListener(redirectWithPrenom);
+        btnConsulterDonsUniques.setOnClickListener(redirectWithPrenom);
 
-            if (prenom != null && !prenom.isEmpty()) {
-                intent.putExtra("prenom", prenom); // Transmission du prénom
-                startActivity(intent);
-            } else {
-                Toast.makeText(this, "Prénom introuvable, retour à l'accueil", Toast.LENGTH_SHORT).show();
-                Intent retourIntent = new Intent(ProfilActivity.this, LoginChoiceActivity.class);
-                retourIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                startActivity(retourIntent);
-            }
-        });
-
-        // Rediriger vers DonsUniqueActivity
-        btnConsulterDonsUniques.setOnClickListener(v -> {
-            Intent intent = new Intent(ProfilActivity.this, DonsUniqueActivity.class);
-            String prenom = getIntent().getStringExtra("prenom");
-
-            if (prenom != null && !prenom.isEmpty()) {
-                intent.putExtra("prenom", prenom); // Transmission du prénom
-                startActivity(intent);
-            } else {
-                Toast.makeText(this, "Prénom introuvable, retour à l'accueil", Toast.LENGTH_SHORT).show();
-                Intent retourIntent = new Intent(ProfilActivity.this, LoginChoiceActivity.class);
-                retourIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                startActivity(retourIntent);
-            }
-        });
-
-        // Rediriger vers DonsActivity
         btnFaireDon.setOnClickListener(v -> {
+            v.startAnimation(clickScale);
             FirebaseUser user = mAuth.getCurrentUser();
-            Intent intent = new Intent(ProfilActivity.this, DonsActivity.class);
-
-            if (user != null) {
-                intent.putExtra("prenom", user.getDisplayName() != null ? user.getDisplayName() : "Utilisateur");
+            Intent intent = new Intent(this, DonsActivity.class);
+            if (user != null && user.getDisplayName() != null) {
+                intent.putExtra("prenom", user.getDisplayName());
             }
-
             startActivity(intent);
         });
 
-        // Déconnexion
-        btnDeconnexion.setOnClickListener(v -> {
-            mAuth.signOut();
-            Toast.makeText(ProfilActivity.this, "Déconnecté avec succès", Toast.LENGTH_SHORT).show();
-
-            Intent intent = new Intent(ProfilActivity.this, LoginChoiceActivity.class);
-            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        // 🚀 QR Code
+        btnQrCode.setOnClickListener(v -> {
+            v.startAnimation(clickScale);
+            Intent intent = new Intent(this, ProfileQrCodeActivity.class);
             startActivity(intent);
-            finish();
         });
 
-        // Bouton retour -> Redirige vers LoginChoiceActivity
+        // 🔙 Retour
         btnRetour.setOnClickListener(v -> {
-            Intent intent = new Intent(ProfilActivity.this, LoginChoiceActivity.class);
-            startActivity(intent);
+            v.startAnimation(clickScale);
+            startActivity(new Intent(this, LoginChoiceActivity.class));
+            overridePendingTransition(R.anim.slide_in_left, R.anim.fade_out);
             finish();
         });
 
-        // Gestion du clic sur le bouton QR Code
-        btnQrCode.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Ouvrir l'activité de génération de QR Code
-                Intent intent = new Intent(ProfilActivity.this, ProfileQrCodeActivity.class);
+        // 🔐 Déconnexion avec popup animée
+        btnDeconnexion.setOnClickListener(v -> {
+            v.startAnimation(clickScale);
+            AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.CustomDialogTheme);
+            builder.setTitle("Déconnexion");
+            builder.setMessage("Souhaitez-vous vraiment vous déconnecter ?");
+            builder.setPositiveButton("Oui", (dialog, which) -> {
+                mAuth.signOut();
+                Intent intent = new Intent(this, LoginChoiceActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intent);
-            }
+                finish();
+            });
+            builder.setNegativeButton("Annuler", null);
+            AlertDialog dialog = builder.create();
+            dialog.show();
         });
     }
 }

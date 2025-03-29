@@ -111,6 +111,14 @@ public class CategorizedAssociationAdapter extends RecyclerView.Adapter<Recycler
                 intent.putExtra("nomAssociation", item.getNom());
                 context.startActivity(intent);
             });
+
+            // ✅ Animation de fade-in avec effet cascade
+            holder.itemView.setAlpha(0f);
+            holder.itemView.animate()
+                    .alpha(1f)
+                    .setDuration(400)
+                    .setStartDelay(position * 30) // ajustable si tu veux plus rapide ou plus lent
+                    .start();
         }
     }
 

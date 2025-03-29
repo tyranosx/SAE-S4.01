@@ -2,12 +2,16 @@ package iut.dam.sae;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.VibrationEffect;
+import android.os.Vibrator;
+import android.view.SoundEffectConstants;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class DemandePrenomActivity extends AppCompatActivity {
@@ -26,33 +30,71 @@ public class DemandePrenomActivity extends AppCompatActivity {
         btnAnonyme = findViewById(R.id.btn_anonyme);
         btnRetour = findViewById(R.id.btn_retour);
 
-        // Gestion du bouton retour
-        btnRetour.setOnClickListener(v -> finish());
+        // Charger les animations
+        Animation fadeIn = AnimationUtils.loadAnimation(this, R.anim.fade_in);
+        Animation slideIn = AnimationUtils.loadAnimation(this, R.anim.slide_in_bottom);
+        Animation clickScale = AnimationUtils.loadAnimation(this, R.anim.click_scale);
 
-        // Gestion du bouton "Valider"
+        // Appliquer les animations d’apparition
+        findViewById(R.id.tv_titre).startAnimation(fadeIn);
+        etPrenom.startAnimation(slideIn);
+        btnValider.startAnimation(slideIn);
+        btnAnonyme.startAnimation(slideIn);
+
+        // Gestion du bouton retour
+        btnRetour.setOnClickListener(v -> {
+            v.startAnimation(clickScale); // 👈 Animation de clic
+            Intent intent = new Intent(DemandePrenomActivity.this, LoginChoiceActivity.class);
+            startActivity(intent);
+            overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
+            finish();
+        });
+
+        // Bouton "Valider"
         btnValider.setOnClickListener(v -> {
+            v.startAnimation(clickScale); // 👈 Animation de clic
+
             String prenom = etPrenom.getText().toString().trim();
 
             if (prenom.isEmpty()) {
+                // Animation shake
+                Animation shake = AnimationUtils.loadAnimation(DemandePrenomActivity.this, R.anim.shake);
+                etPrenom.startAnimation(shake);
+
+                // Vibration
+                Vibrator vibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
+                if (vibrator != null) {
+                    if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+                        vibrator.vibrate(VibrationEffect.createOneShot(150, VibrationEffect.DEFAULT_AMPLITUDE));
+                    } else {
+                        vibrator.vibrate(150);
+                    }
+                }
+
+                // Son d’erreur
+                etPrenom.playSoundEffect(SoundEffectConstants.CLICK);
+
+                // Message
                 Toast.makeText(DemandePrenomActivity.this, "Veuillez entrer votre prénom", Toast.LENGTH_SHORT).show();
                 return;
             }
 
-            // Redirige vers DonsActivity avec le prénom choisi
+            // Redirige vers DonsActivity
             Intent intent = new Intent(DemandePrenomActivity.this, DonsActivity.class);
             intent.putExtra("prenom", prenom);
             startActivity(intent);
             finish();
         });
 
-        // Gestion du bouton "Don Anonyme"
+        // Bouton "Anonyme"
         btnAnonyme.setOnClickListener(v -> {
-            Intent intent = new Intent(DemandePrenomActivity.this, DonsActivity.class);
-            intent.putExtra("prenom", "ANONYME");  // Transmettre "ANONYME"
-            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK); // Supprimer les activités précédentes
-            startActivity(intent);
-            finish(); // Termine l'activité actuelle pour éviter qu'elle ne se relance
-        });
+            v.startAnimation(clickScale); // 👈 Animation de clic
 
+            Intent intent = new Intent(DemandePrenomActivity.this, DonsActivity.class);
+            intent.putExtra("prenom", "ANONYME");
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            startActivity(intent);
+            finish();
+        });
     }
 }

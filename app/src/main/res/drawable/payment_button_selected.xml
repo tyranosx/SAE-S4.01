@@ -1,0 +1,4 @@
+<shape xmlns:android="http://schemas.android.com/apk/res/android" android:shape="rectangle">
+    <solid android:color="#CCEFF0"/> <!-- Couleur plus claire pour l’état sélectionné -->
+    <corners android:radius="20dp"/>
+</shape>

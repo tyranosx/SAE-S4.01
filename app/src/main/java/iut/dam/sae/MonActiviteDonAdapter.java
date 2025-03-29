@@ -45,14 +45,12 @@ public class MonActiviteDonAdapter extends RecyclerView.Adapter<MonActiviteDonAd
 
     public static class DonViewHolder extends RecyclerView.ViewHolder {
         TextView txtAssociation, txtMontant, txtDate;
-        Button btnAnnuler;
 
         public DonViewHolder(@NonNull View itemView) {
             super(itemView);
             txtAssociation = itemView.findViewById(R.id.txt_association);
             txtMontant = itemView.findViewById(R.id.txt_montant);
             txtDate = itemView.findViewById(R.id.txt_date);
-            btnAnnuler = itemView.findViewById(R.id.btn_annuler);
         }
     }
 }

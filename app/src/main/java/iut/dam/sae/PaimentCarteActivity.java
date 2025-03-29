@@ -81,6 +81,7 @@ public class PaimentCarteActivity extends AppCompatActivity {
         TextView titre = findViewById(R.id.tv_paiement_info);
 
         // ✨ Animations
+        Animation clickScale = AnimationUtils.loadAnimation(this, R.anim.click_scale);
         Animation fadeIn = AnimationUtils.loadAnimation(this, R.anim.fade_in);
         Animation zoomIn = AnimationUtils.loadAnimation(this, R.anim.zoom_in);
         Animation shake = AnimationUtils.loadAnimation(this, R.anim.shake);
@@ -95,6 +96,7 @@ public class PaimentCarteActivity extends AppCompatActivity {
 
         // 🔙 Retour
         btnRetour.setOnClickListener(v -> {
+            v.startAnimation(clickScale);
             finish();
             overridePendingTransition(R.anim.slide_in_left, R.anim.fade_out);
         });
@@ -126,6 +128,7 @@ public class PaimentCarteActivity extends AppCompatActivity {
 
         // 🧾 Paiement
         btnPayerCarte.setOnClickListener(v -> {
+            v.startAnimation(clickScale);
             if (validatePaymentInformation()) {
                 ajouterDocumentDon(Double.parseDouble(montant), association, prenomUtilisateur);
 

@@ -4,6 +4,9 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -31,11 +34,13 @@ public class ConseilChoixActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private FirebaseFirestore db;
     private List<ItemAsso> allAssociations;
+    private ImageButton btnRetour;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_conseil_choix);
+
 
         mAuth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();
@@ -48,10 +53,29 @@ public class ConseilChoixActivity extends AppCompatActivity {
         adapter = new CategorizedAssociationAdapter(categorizedData, this);
         recyclerView.setAdapter(adapter);
 
+        // Charger les animations
+        Animation fadeIn = AnimationUtils.loadAnimation(this, R.anim.fade_in);
+        Animation slideIn = AnimationUtils.loadAnimation(this, R.anim.slide_in_bottom);
+        Animation clickScale = AnimationUtils.loadAnimation(this, R.anim.click_scale);
+
+        // Appliquer des animations aux éléments principaux
+        findViewById(R.id.logo).startAnimation(fadeIn);
+        findViewById(R.id.search_view).startAnimation(slideIn);
+        recyclerView.startAnimation(fadeIn);
+
+        recyclerView.setLayoutAnimation(AnimationUtils.loadLayoutAnimation(this, R.anim.layout_fade_in));
+
         chargerAssociationsDepuisFirestore();
 
+        btnRetour = findViewById(R.id.btn_retour);
         // Bouton retour
-        findViewById(R.id.btn_retour).setOnClickListener(v -> finish());
+        btnRetour.setOnClickListener(v -> {
+            v.startAnimation(clickScale);
+            Intent intent = new Intent(ConseilChoixActivity.this, DonsActivity.class);
+            startActivity(intent);
+            overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
+            finish();
+        });
 
         // Bouton profil
         ImageButton btnProfil = findViewById(R.id.btn_profil);

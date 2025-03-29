@@ -78,6 +78,7 @@ public class InscriptionActivity extends AppCompatActivity {
         Animation shake = AnimationUtils.loadAnimation(this, R.anim.shake); // pour erreurs
         Animation bounce = AnimationUtils.loadAnimation(this, R.anim.bounce);
         Animation pulse = AnimationUtils.loadAnimation(this, R.anim.pulse);
+        Animation clickScale = AnimationUtils.loadAnimation(this, R.anim.click_scale);
 
         ImageView logo = findViewById(R.id.logo);
         LinearLayout container = findViewById(R.id.inscription_container);
@@ -116,6 +117,7 @@ public class InscriptionActivity extends AppCompatActivity {
 
         // Gestion de l'inscription
         btnSinscrire.setOnClickListener(v -> {
+            v.startAnimation(clickScale);
             String email = inputEmail.getText().toString().trim();
             String password = inputPassword.getText().toString().trim();
             String prenom = inputPrenom.getText().toString().trim();
@@ -214,6 +216,7 @@ public class InscriptionActivity extends AppCompatActivity {
 
         // Gestion du bouton retour
         btnRetour.setOnClickListener(v -> {
+            v.startAnimation(clickScale);
             Intent intent = new Intent(InscriptionActivity.this, LoginChoiceActivity.class);
             startActivity(intent);
             overridePendingTransition(android.R.anim.fade_in, R.anim.slide_out_right);

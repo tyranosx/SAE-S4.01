@@ -33,6 +33,7 @@ public class Don2Activity extends AppCompatActivity {
         Animation fadeIn = AnimationUtils.loadAnimation(this, R.anim.fade_in);
         Animation slideUp = AnimationUtils.loadAnimation(this, R.anim.slide_up);
         Animation zoomIn = AnimationUtils.loadAnimation(this, R.anim.zoom_in);
+        Animation clickScale = AnimationUtils.loadAnimation(this, R.anim.click_scale);
 
         logo.startAnimation(zoomIn);
         introText.startAnimation(slideUp);
@@ -41,6 +42,7 @@ public class Don2Activity extends AppCompatActivity {
 
         // 👇 Boutons listeners
         btnMensuels.setOnClickListener(v -> {
+            v.startAnimation(clickScale);
             Intent intent = new Intent(Don2Activity.this, Don3Activity.class);
             intent.putExtra("nomAssociation", nomAssociation);
             intent.putExtra("category", "donMensuel");
@@ -49,6 +51,7 @@ public class Don2Activity extends AppCompatActivity {
         });
 
         btnAnnuels.setOnClickListener(v -> {
+            v.startAnimation(clickScale);
             Intent intent = new Intent(Don2Activity.this, Don3Activity.class);
             intent.putExtra("nomAssociation", nomAssociation);
             intent.putExtra("category", "donAnnuel");
@@ -57,6 +60,7 @@ public class Don2Activity extends AppCompatActivity {
         });
 
         btnRetour.setOnClickListener(v -> {
+            v.startAnimation(clickScale);
             Intent intent = new Intent(Don2Activity.this, Don1Activity.class);
             intent.putExtra("nomAssociation", nomAssociation);
             startActivity(intent);
@@ -65,6 +69,7 @@ public class Don2Activity extends AppCompatActivity {
         });
 
         btnProfil.setOnClickListener(v -> {
+            v.startAnimation(clickScale);
             Intent intent = new Intent(Don2Activity.this, ProfilActivity.class);
             startActivity(intent);
             overridePendingTransition(R.anim.fade_in, R.anim.fade_out);

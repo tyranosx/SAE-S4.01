@@ -68,6 +68,7 @@ public class Don3Activity extends AppCompatActivity {
         etMontant = findViewById(R.id.et_montant);
 
         // 🎞️ Animations
+        Animation clickScale = AnimationUtils.loadAnimation(this, R.anim.click_scale);
         Animation fadeIn = AnimationUtils.loadAnimation(this, R.anim.fade_in);
         Animation slideUp = AnimationUtils.loadAnimation(this, R.anim.slide_up);
         Animation zoomIn = AnimationUtils.loadAnimation(this, R.anim.zoom_in);
@@ -115,6 +116,7 @@ public class Don3Activity extends AppCompatActivity {
 
         // 💶 Montants prédéfinis
         View.OnClickListener montantClickListener = v -> {
+            v.startAnimation(clickScale);
             montantSelectionne = ((TextView) v).getText().toString().replace("€", "").trim();
             etMontant.setText(montantSelectionne);
         };
@@ -125,19 +127,26 @@ public class Don3Activity extends AppCompatActivity {
 
         // 💳 Modes de paiement
         btnCarte.setOnClickListener(v -> {
+            v.startAnimation(clickScale);
             paiementParCarteSelectionne = true;
             paiementParIbanSelectionne = false;
+            btnCarte.setBackgroundResource(R.drawable.payment_button_selected);
+            btnIban.setBackgroundResource(R.drawable.payment_button);
             Toast.makeText(this, "Paiement par carte sélectionné", Toast.LENGTH_SHORT).show();
         });
 
         btnIban.setOnClickListener(v -> {
+            v.startAnimation(clickScale);
             paiementParIbanSelectionne = true;
             paiementParCarteSelectionne = false;
+            btnIban.setBackgroundResource(R.drawable.payment_button_selected);
+            btnCarte.setBackgroundResource(R.drawable.payment_button);
             Toast.makeText(this, "Paiement par IBAN sélectionné", Toast.LENGTH_SHORT).show();
         });
 
         // 🎁 Donner
         btnDonner.setOnClickListener(v -> {
+            v.startAnimation(clickScale);
             String montant = etMontant.getText().toString().trim();
             String category = getIntent().getStringExtra("category");
 

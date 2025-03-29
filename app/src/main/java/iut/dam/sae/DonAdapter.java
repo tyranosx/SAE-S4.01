@@ -3,6 +3,8 @@ package iut.dam.sae;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -34,6 +36,9 @@ public class DonAdapter extends RecyclerView.Adapter<DonAdapter.DonViewHolder> {
         holder.montantDon.setText("Montant : " + donItem.getMontant() + "€");
         holder.dateDon.setText("Date : " + dateFormat.format(donItem.getDate()));
         holder.categorieDon.setText("Catégorie : " + donItem.getCategory()); // Affichage de la catégorie
+
+        Animation fadeIn = AnimationUtils.loadAnimation(holder.itemView.getContext(), R.anim.fade_in);
+        holder.itemView.startAnimation(fadeIn);
     }
 
     @Override

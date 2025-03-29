@@ -33,16 +33,17 @@ public class Don1Activity extends AppCompatActivity {
         Animation fadeIn = AnimationUtils.loadAnimation(this, R.anim.fade_in);
         Animation slideUp = AnimationUtils.loadAnimation(this, R.anim.slide_up);
         Animation zoomIn = AnimationUtils.loadAnimation(this, R.anim.zoom_in);
+        Animation clickScale = AnimationUtils.loadAnimation(this, R.anim.click_scale);
 
+        // Apparition
         logo.startAnimation(zoomIn);
         nomAssociationView.startAnimation(fadeIn);
         introText.startAnimation(slideUp);
         btnOui.startAnimation(fadeIn);
         btnNon.startAnimation(fadeIn);
 
-        // 🔁 Récupérer l’association
+        // 🔁 Récupération du nom d'association
         nomAssociation = getIntent().getStringExtra("nomAssociation");
-
         if (nomAssociation != null) {
             nomAssociationView.setText(nomAssociation);
         } else {
@@ -51,6 +52,7 @@ public class Don1Activity extends AppCompatActivity {
 
         // ✅ Oui → Don2Activity
         btnOui.setOnClickListener(v -> {
+            v.startAnimation(clickScale);
             Intent intent = new Intent(Don1Activity.this, Don2Activity.class);
             intent.putExtra("nomAssociation", nomAssociation);
             intent.putExtra("category", "donRegulier");
@@ -60,6 +62,7 @@ public class Don1Activity extends AppCompatActivity {
 
         // ❌ Non → Don3Activity
         btnNon.setOnClickListener(v -> {
+            v.startAnimation(clickScale);
             Intent intent = new Intent(Don1Activity.this, Don3Activity.class);
             intent.putExtra("nomAssociation", nomAssociation);
             intent.putExtra("category", "donUnique");
@@ -69,14 +72,16 @@ public class Don1Activity extends AppCompatActivity {
 
         // 🔙 Retour → DonsActivity
         btnRetour.setOnClickListener(v -> {
+            v.startAnimation(clickScale);
             Intent intent = new Intent(Don1Activity.this, DonsActivity.class);
             startActivity(intent);
             overridePendingTransition(R.anim.slide_in_left, R.anim.fade_out);
             finish();
         });
 
-        // 👤 Profil
+        // 👤 Accès au profil
         btnProfil.setOnClickListener(v -> {
+            v.startAnimation(clickScale);
             Intent intent = new Intent(Don1Activity.this, ProfilActivity.class);
             startActivity(intent);
             overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
