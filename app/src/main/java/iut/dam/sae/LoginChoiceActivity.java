@@ -3,8 +3,11 @@ package iut.dam.sae;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -29,6 +32,7 @@ public class LoginChoiceActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login_choice);
 
+
         mAuth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();
 
@@ -40,6 +44,38 @@ public class LoginChoiceActivity extends AppCompatActivity {
         btnDeconnexion = findViewById(R.id.btn_deconnexion);
         btnProfil = findViewById(R.id.btn_profil);
         txtBienvenue = findViewById(R.id.txt_bienvenue);
+
+        // Appliquer des animations
+        ImageView logo = findViewById(R.id.logo);
+        TextView introText = findViewById(R.id.intro_text);
+
+        Animation fadeIn = AnimationUtils.loadAnimation(this, R.anim.fade_in);
+        Animation zoomIn = AnimationUtils.loadAnimation(this, R.anim.zoom_in);
+        Animation slideUp = AnimationUtils.loadAnimation(this, R.anim.slide_up);
+        Animation slideDown = AnimationUtils.loadAnimation(this, R.anim.slide_down);
+
+        // Logo → zoom + fade
+        logo.startAnimation(zoomIn);
+
+        // Message d’intro → fade
+        introText.startAnimation(fadeIn);
+
+        // Boutons → slide up
+        btnFaireDon.startAnimation(slideUp);
+        btnSeConnecter.startAnimation(slideUp);
+        btnSinscrire.startAnimation(slideUp);
+        btnAdminPanel.startAnimation(slideUp);
+        btnDeconnexion.startAnimation(slideUp);
+
+        // Bouton profil → slide depuis le haut s’il est visible
+        if (btnProfil.getVisibility() == View.VISIBLE) {
+            btnProfil.startAnimation(slideDown);
+        }
+
+        // Bienvenue → fade-in s’il est visible
+        if (txtBienvenue.getVisibility() == View.VISIBLE) {
+            txtBienvenue.startAnimation(fadeIn);
+        }
 
         // Vérifier l'état de connexion
         FirebaseUser currentUser = mAuth.getCurrentUser();
@@ -80,6 +116,7 @@ public class LoginChoiceActivity extends AppCompatActivity {
 
         // Gestion des redirections
         btnFaireDon.setOnClickListener(v -> {
+            animateButtonClick(v);
             if (currentUser != null) {
                 // Si connecté → Envoyer directement vers Don3Activity
                 Intent intent = new Intent(LoginChoiceActivity.this, DonsActivity.class);
@@ -91,20 +128,31 @@ public class LoginChoiceActivity extends AppCompatActivity {
             }
         });
 
-        btnSeConnecter.setOnClickListener(v -> startActivity(new Intent(LoginChoiceActivity.this, ConnexionActivity.class)));
-        btnSinscrire.setOnClickListener(v -> startActivity(new Intent(LoginChoiceActivity.this, InscriptionActivity.class)));
-        btnAdminPanel.setOnClickListener(v -> startActivity(new Intent(LoginChoiceActivity.this, AdminActivity.class)));
+        btnSeConnecter.setOnClickListener(v -> {
+            animateButtonClick(v);
+            startActivity(new Intent(LoginChoiceActivity.this, ConnexionActivity.class));
+        });
 
-        // Déconnexion
+        btnSinscrire.setOnClickListener(v -> {
+            animateButtonClick(v);
+            startActivity(new Intent(LoginChoiceActivity.this, InscriptionActivity.class));
+        });
+
+        btnAdminPanel.setOnClickListener(v -> {
+            animateButtonClick(v);
+            startActivity(new Intent(LoginChoiceActivity.this, AdminActivity.class));
+        });
+
         btnDeconnexion.setOnClickListener(v -> {
+            animateButtonClick(v);
             mAuth.signOut();
-            Intent intent = new Intent(LoginChoiceActivity.this, LoginChoiceActivity.class);
-            startActivity(intent);
+            startActivity(new Intent(LoginChoiceActivity.this, LoginChoiceActivity.class));
             finish();
         });
 
         // Rediriger vers ProfilActivity via le bouton Profil
         btnProfil.setOnClickListener(v -> {
+            animateButtonClick(v);
             FirebaseUser user = mAuth.getCurrentUser();
             if (user != null) {
                 db.collection("users").document(user.getUid()).get()
@@ -141,5 +189,10 @@ public class LoginChoiceActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    private void animateButtonClick(View view) {
+        Animation clickAnim = AnimationUtils.loadAnimation(this, R.anim.click_scale);
+        view.startAnimation(clickAnim);
     }
 }
