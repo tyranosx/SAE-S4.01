@@ -12,6 +12,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -145,10 +146,23 @@ public class LoginChoiceActivity extends AppCompatActivity {
 
         btnDeconnexion.setOnClickListener(v -> {
             animateButtonClick(v);
-            mAuth.signOut();
-            startActivity(new Intent(LoginChoiceActivity.this, LoginChoiceActivity.class));
-            finish();
+
+            AlertDialog.Builder builder = new AlertDialog.Builder(LoginChoiceActivity.this, R.style.CustomDialogTheme);
+            builder.setTitle("Déconnexion");
+            builder.setMessage("Êtes-vous sûr de vouloir vous déconnecter ?");
+            builder.setPositiveButton("Oui", (dialog, which) -> {
+                mAuth.signOut();
+                Intent intent = new Intent(LoginChoiceActivity.this, LoginChoiceActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+                finish();
+            });
+            builder.setNegativeButton("Annuler", null);
+
+            AlertDialog dialog = builder.create();
+            dialog.show();
         });
+
 
         // Rediriger vers ProfilActivity via le bouton Profil
         btnProfil.setOnClickListener(v -> {

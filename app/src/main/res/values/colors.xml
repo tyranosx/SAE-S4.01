@@ -11,4 +11,5 @@
     <color name="profileButtonColor">#A1D6E2</color> <!-- Bleu clair en accord avec le fond -->
     <color name="iconTintColor">#2A5676</color> <!-- Bleu plus foncé pour l’icône -->
     <color name="colorAccent">#00BCD4</color> <!-- Exemple de bleu cyan vif -->
+    <color name="teal_700">#007980</color>
 </resources>
