@@ -82,5 +82,6 @@
     <string name="partager_le_qr_code">Partager le QR Code</string>
     <string name="partagez_l_application">Partagez l\'application</string>
     <string name="g_n_rer_qr_code">Générer QR Code</string>
+    <string name="connexion_en_cours">Connexion en cours...</string>
 
 </resources>

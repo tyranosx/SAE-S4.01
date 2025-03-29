@@ -58,6 +58,35 @@
         android:paddingTop="60dp"
         android:paddingBottom="60dp">
 
+        <LinearLayout
+            android:id="@+id/loading_container"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:visibility="gone">
+
+            <ProgressBar
+                android:id="@+id/progress_connexion"
+                style="?android:attr/progressBarStyleSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:indeterminate="true"
+                android:layout_marginEnd="10dp"
+                android:indeterminateTint="#00757D" />
+
+            <TextView
+                android:id="@+id/text_loading"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/connexion_en_cours"
+                android:textColor="#00757D"
+                android:textSize="14sp"
+                android:fontFamily="sans-serif-medium"/>
+        </LinearLayout>
+
         <!-- Titre "Se connecter" -->
         <TextView
             android:id="@+id/title_connexion"
