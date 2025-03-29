@@ -4,9 +4,12 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -14,15 +17,9 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.google.firebase.Timestamp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
 
 public class Don3Activity extends AppCompatActivity {
 
@@ -33,7 +30,7 @@ public class Don3Activity extends AppCompatActivity {
     private boolean paiementParCarteSelectionne = false;
     private boolean paiementParIbanSelectionne = false;
     private String nomAssociation = "INCONNU";
-    private String prenomUtilisateur = "ANONYME";  // Par défaut à "ANONYME"
+    private String prenomUtilisateur = "ANONYME";
 
     private FirebaseFirestore db;
     private FirebaseAuth mAuth;
@@ -48,25 +45,53 @@ public class Don3Activity extends AppCompatActivity {
 
         FirebaseUser user = mAuth.getCurrentUser();
 
-        // Gestion du bouton Profil
         ImageButton btnProfil = findViewById(R.id.btn_profil);
+        ImageButton btnRetour = findViewById(R.id.btn_retour);
+        Button btnDonner = findViewById(R.id.btn_donner);
+        LinearLayout btnCarte = findViewById(R.id.btn_carte);
+        LinearLayout btnIban = findViewById(R.id.btn_iban);
+        ImageView logo = findViewById(R.id.logo);
+
+        TextView choixMontant = findViewById(R.id.choixmontant);
+        TextView saisieMontantLabel = findViewById(R.id.saisiemontant);
+        TextView modePaiementLabel = findViewById(R.id.modepaiement);
+
+        TextView btn10 = findViewById(R.id.btn_10);
+        TextView btn20 = findViewById(R.id.btn_20);
+        TextView btn50 = findViewById(R.id.btn_50);
+        etMontant = findViewById(R.id.et_montant);
+
+        // 🎞️ Animations
+        Animation fadeIn = AnimationUtils.loadAnimation(this, R.anim.fade_in);
+        Animation slideUp = AnimationUtils.loadAnimation(this, R.anim.slide_up);
+        Animation zoomIn = AnimationUtils.loadAnimation(this, R.anim.zoom_in);
+
+        logo.startAnimation(zoomIn);
+        choixMontant.startAnimation(slideUp);
+        saisieMontantLabel.startAnimation(slideUp);
+        modePaiementLabel.startAnimation(slideUp);
+        btn10.startAnimation(fadeIn);
+        btn20.startAnimation(fadeIn);
+        btn50.startAnimation(fadeIn);
+        btnCarte.startAnimation(fadeIn);
+        btnIban.startAnimation(fadeIn);
+        btnDonner.startAnimation(fadeIn);
+
+        // 🔒 Auth / profil
         if (user == null) {
-            btnProfil.setVisibility(ImageButton.GONE); // Masquer si l'utilisateur n'est pas connecté
+            btnProfil.setVisibility(ImageButton.GONE);
         } else {
             btnProfil.setOnClickListener(v -> {
                 startActivity(new Intent(Don3Activity.this, ProfilActivity.class));
+                overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
             });
         }
 
-        // Récupération du prénom via Intent ou valeur par défaut
         String prenom = getIntent().getStringExtra("prenom");
         if (prenom != null && !prenom.equals("ANONYME")) {
-            prenomUtilisateur = prenom; // Utilise le prénom transmis uniquement s'il est valide
-        } else {
-            prenomUtilisateur = "ANONYME"; // Par défaut à "ANONYME"
+            prenomUtilisateur = prenom;
         }
 
-        // Si l'utilisateur est connecté, récupérer son prénom depuis Firestore
         if (user != null) {
             db.collection("users").document(user.getUid()).get()
                     .addOnSuccessListener(documentSnapshot -> {
@@ -74,22 +99,15 @@ public class Don3Activity extends AppCompatActivity {
                             prenomUtilisateur = documentSnapshot.getString("prenom");
                         }
                     })
-                    .addOnFailureListener(e -> Log.e("FirestoreError", "Erreur lors de la récupération du prénom", e));
+                    .addOnFailureListener(e -> Log.e("FirestoreError", "Erreur prénom", e));
         }
 
-        // Récupération du nom de l'association
         String intentNomAssociation = getIntent().getStringExtra("nomAssociation");
         if (intentNomAssociation != null && !intentNomAssociation.isEmpty()) {
             nomAssociation = intentNomAssociation;
         }
 
-        etMontant = findViewById(R.id.et_montant);
-
-        // Gestion des montants prédéfinis
-        TextView btn10 = findViewById(R.id.btn_10);
-        TextView btn20 = findViewById(R.id.btn_20);
-        TextView btn50 = findViewById(R.id.btn_50);
-
+        // 💶 Montants prédéfinis
         View.OnClickListener montantClickListener = v -> {
             montantSelectionne = ((TextView) v).getText().toString().replace("€", "").trim();
             etMontant.setText(montantSelectionne);
@@ -99,10 +117,7 @@ public class Don3Activity extends AppCompatActivity {
         btn20.setOnClickListener(montantClickListener);
         btn50.setOnClickListener(montantClickListener);
 
-        // Gestion des modes de paiement
-        LinearLayout btnCarte = findViewById(R.id.btn_carte);
-        LinearLayout btnIban = findViewById(R.id.btn_iban);
-
+        // 💳 Modes de paiement
         btnCarte.setOnClickListener(v -> {
             paiementParCarteSelectionne = true;
             paiementParIbanSelectionne = false;
@@ -115,20 +130,18 @@ public class Don3Activity extends AppCompatActivity {
             Toast.makeText(this, "Paiement par IBAN sélectionné", Toast.LENGTH_SHORT).show();
         });
 
-        // Gestion du bouton "Donner"
-        Button btnDonner = findViewById(R.id.btn_donner);
-        // Gestion du bouton "Donner"
+        // 🎁 Donner
         btnDonner.setOnClickListener(v -> {
             String montant = etMontant.getText().toString().trim();
             String category = getIntent().getStringExtra("category");
 
             if (montant.isEmpty()) {
-                Toast.makeText(Don3Activity.this, "Veuillez entrer un montant", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Veuillez entrer un montant", Toast.LENGTH_SHORT).show();
                 return;
             }
 
             if (nomAssociation == null || nomAssociation.isEmpty()) {
-                Toast.makeText(Don3Activity.this, "Erreur : Nom de l'association manquant", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Erreur : Nom de l'association manquant", Toast.LENGTH_SHORT).show();
                 return;
             }
 
@@ -138,23 +151,25 @@ public class Don3Activity extends AppCompatActivity {
             } else if (paiementParIbanSelectionne) {
                 intent = new Intent(Don3Activity.this, PaimentRibActivity.class);
             } else {
-                Toast.makeText(Don3Activity.this, "Veuillez sélectionner un mode de paiement", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Veuillez sélectionner un mode de paiement", Toast.LENGTH_SHORT).show();
                 return;
             }
 
             intent.putExtra("montant", montant);
             intent.putExtra("nomAssociation", nomAssociation);
             intent.putExtra("prenom", prenomUtilisateur);
-            intent.putExtra("category", category); // Ajout de la catégorie
+            intent.putExtra("category", category);
             startActivity(intent);
+            overridePendingTransition(R.anim.slide_in_right, R.anim.fade_out);
         });
 
-        // Gestion du bouton retour
-        ImageButton btnRetour = findViewById(R.id.btn_retour);
-        btnRetour.setOnClickListener(v -> finish());
+        // 🔙 Retour
+        btnRetour.setOnClickListener(v -> {
+            finish();
+            overridePendingTransition(R.anim.slide_in_left, R.anim.fade_out);
+        });
     }
 
-    // Récupérer les données du prénom depuis DemandePrenomActivity
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
