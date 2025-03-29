@@ -1,7 +1,11 @@
 package iut.dam.sae;
 
 import android.content.Intent;
+import android.media.MediaPlayer;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.VibrationEffect;
+import android.os.Vibrator;
 import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
@@ -35,6 +39,8 @@ public class Don3Activity extends AppCompatActivity {
     private FirebaseFirestore db;
     private FirebaseAuth mAuth;
 
+    private LinearLayout btnCarte, btnIban;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,8 +54,8 @@ public class Don3Activity extends AppCompatActivity {
         ImageButton btnProfil = findViewById(R.id.btn_profil);
         ImageButton btnRetour = findViewById(R.id.btn_retour);
         Button btnDonner = findViewById(R.id.btn_donner);
-        LinearLayout btnCarte = findViewById(R.id.btn_carte);
-        LinearLayout btnIban = findViewById(R.id.btn_iban);
+        btnCarte = findViewById(R.id.btn_carte);
+        btnIban = findViewById(R.id.btn_iban);
         ImageView logo = findViewById(R.id.logo);
 
         TextView choixMontant = findViewById(R.id.choixmontant);
@@ -65,6 +71,7 @@ public class Don3Activity extends AppCompatActivity {
         Animation fadeIn = AnimationUtils.loadAnimation(this, R.anim.fade_in);
         Animation slideUp = AnimationUtils.loadAnimation(this, R.anim.slide_up);
         Animation zoomIn = AnimationUtils.loadAnimation(this, R.anim.zoom_in);
+        Animation shake = AnimationUtils.loadAnimation(this, R.anim.shake); // Tremblement 👊
 
         logo.startAnimation(zoomIn);
         choixMontant.startAnimation(slideUp);
@@ -77,7 +84,6 @@ public class Don3Activity extends AppCompatActivity {
         btnIban.startAnimation(fadeIn);
         btnDonner.startAnimation(fadeIn);
 
-        // 🔒 Auth / profil
         if (user == null) {
             btnProfil.setVisibility(ImageButton.GONE);
         } else {
@@ -136,6 +142,9 @@ public class Don3Activity extends AppCompatActivity {
             String category = getIntent().getStringExtra("category");
 
             if (montant.isEmpty()) {
+                etMontant.startAnimation(shake);
+                vibrateError();
+                playErrorSound();
                 Toast.makeText(this, "Veuillez entrer un montant", Toast.LENGTH_SHORT).show();
                 return;
             }
@@ -145,15 +154,17 @@ public class Don3Activity extends AppCompatActivity {
                 return;
             }
 
-            Intent intent;
-            if (paiementParCarteSelectionne) {
-                intent = new Intent(Don3Activity.this, PaimentCarteActivity.class);
-            } else if (paiementParIbanSelectionne) {
-                intent = new Intent(Don3Activity.this, PaimentRibActivity.class);
-            } else {
+            if (!paiementParCarteSelectionne && !paiementParIbanSelectionne) {
+                btnCarte.startAnimation(shake);
+                btnIban.startAnimation(shake);
+                vibrateError();
+                playErrorSound();
                 Toast.makeText(this, "Veuillez sélectionner un mode de paiement", Toast.LENGTH_SHORT).show();
                 return;
             }
+
+            Intent intent = new Intent(Don3Activity.this,
+                    paiementParCarteSelectionne ? PaimentCarteActivity.class : PaimentRibActivity.class);
 
             intent.putExtra("montant", montant);
             intent.putExtra("nomAssociation", nomAssociation);
@@ -176,5 +187,22 @@ public class Don3Activity extends AppCompatActivity {
         if (requestCode == REQUEST_PRENOM && resultCode == RESULT_OK && data != null) {
             prenomUtilisateur = data.getStringExtra("prenom");
         }
+    }
+
+    private void vibrateError() {
+        Vibrator vibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
+        if (vibrator != null && vibrator.hasVibrator()) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                vibrator.vibrate(VibrationEffect.createOneShot(200, VibrationEffect.DEFAULT_AMPLITUDE));
+            } else {
+                vibrator.vibrate(200);
+            }
+        }
+    }
+
+    private void playErrorSound() {
+        MediaPlayer mediaPlayer = MediaPlayer.create(this, R.raw.error_sound);
+        mediaPlayer.setOnCompletionListener(MediaPlayer::release);
+        mediaPlayer.start();
     }
 }
