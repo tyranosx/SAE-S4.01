@@ -5,13 +5,18 @@ import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import androidx.appcompat.widget.SearchView;
-
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
+import androidx.appcompat.widget.SearchView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -32,8 +37,11 @@ public class DonsActivity extends AppCompatActivity {
     private List<ItemAsso> associationList;
     private List<ItemAsso> filteredList;
     private FirebaseFirestore db;
-    private FirebaseAuth mAuth; // Gestion de l'état de connexion
-    private ImageButton btnProfil; // Déclaration du bouton profil
+    private FirebaseAuth mAuth;
+    private ImageButton btnProfil;
+    private LinearLayout loadingContainer;
+    private ProgressBar progressBar;
+    private TextView textLoading;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,57 +54,72 @@ public class DonsActivity extends AppCompatActivity {
         recyclerView = findViewById(R.id.recyclerViewAssociations);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
+        SearchView searchView = findViewById(R.id.search_view);
+        ImageView logo = findViewById(R.id.logo);
+        Button btnAideChoix = findViewById(R.id.btn_aidechoix);
+        ImageButton btnRetour = findViewById(R.id.btn_retour);
+        btnProfil = findViewById(R.id.btn_profil);
+
+        loadingContainer = findViewById(R.id.loading_container);
+        progressBar = findViewById(R.id.progress_dons);
+        textLoading = findViewById(R.id.text_loading_dons);
+
         associationList = new ArrayList<>();
         filteredList = new ArrayList<>();
-
-        String prenom = getIntent().getStringExtra("prenom");
 
         adapter = new ItemAssoAdapter(filteredList, this);
         recyclerView.setAdapter(adapter);
 
+        String prenom = getIntent().getStringExtra("prenom");
+
+        // 🔥 Animations
+        Animation fadeIn = AnimationUtils.loadAnimation(this, R.anim.fade_in);
+        Animation slideUp = AnimationUtils.loadAnimation(this, R.anim.slide_up);
+        Animation zoomIn = AnimationUtils.loadAnimation(this, R.anim.zoom_in);
+
+        logo.startAnimation(zoomIn);
+        searchView.startAnimation(fadeIn);
+        btnAideChoix.startAnimation(slideUp);
+        recyclerView.startAnimation(fadeIn);
+
+        showLoading(true);
         chargerAssociations();
 
-        // Bouton retour
-        ImageButton btnRetour = findViewById(R.id.btn_retour);
         btnRetour.setOnClickListener(v -> {
             Intent intent = new Intent(DonsActivity.this, LoginChoiceActivity.class);
             startActivity(intent);
+            overridePendingTransition(R.anim.slide_in_left, R.anim.fade_out);
             finish();
         });
 
-        // Bouton Profil
-        btnProfil = findViewById(R.id.btn_profil);
         if (mAuth.getCurrentUser() == null) {
-            btnProfil.setVisibility(ImageButton.GONE);  // Masquer si l'utilisateur n'est pas connecté
+            btnProfil.setVisibility(ImageButton.GONE);
         } else {
             btnProfil.setOnClickListener(v -> {
-                startActivity(new Intent(DonsActivity.this, ProfilActivity.class));
+                Intent intent = new Intent(DonsActivity.this, ProfilActivity.class);
+                startActivity(intent);
+                overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
             });
         }
 
-        // Bouton "On vous aide à choisir"
-        Button btnAideChoix = findViewById(R.id.btn_aidechoix);
         btnAideChoix.setOnClickListener(v -> {
-            startActivity(new Intent(DonsActivity.this, ConseilChoixActivity.class));
+            Intent intent = new Intent(DonsActivity.this, ConseilChoixActivity.class);
+            startActivity(intent);
+            overridePendingTransition(R.anim.slide_in_right, R.anim.fade_out);
         });
 
-        // Barre de recherche
-        SearchView searchView = findViewById(R.id.search_view);
-        searchView.setIconifiedByDefault(false);  // Garde le champ ouvert par défaut
-        // Modifier la couleur du texte et du hint dans le SearchView
+        searchView.setIconifiedByDefault(false);
         EditText searchEditText = searchView.findViewById(androidx.appcompat.R.id.search_src_text);
-        searchEditText.setHint("Rechercher une association"); // Redéfinir le hint au cas où il aurait été effacé
-        searchEditText.setHintTextColor(Color.parseColor("#7A7A7A")); // Couleur plus visible
         if (searchEditText != null) {
             searchEditText.setTextColor(Color.parseColor("#007980"));
             searchEditText.setHintTextColor(Color.parseColor("#7A7A7A"));
+            searchEditText.setHint("Rechercher une association");
         }
-
-        // Modifier la couleur de l'icône de la loupe (en option)
         ImageView searchIcon = searchView.findViewById(androidx.appcompat.R.id.search_mag_icon);
         if (searchIcon != null) {
             searchIcon.setColorFilter(Color.parseColor("#007980"), PorterDuff.Mode.SRC_IN);
         }
+
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
@@ -111,68 +134,64 @@ public class DonsActivity extends AppCompatActivity {
             }
         });
 
-        // Gestion du clic sur une association
         adapter.setOnItemClickListener(association -> {
             FirebaseUser currentUser = mAuth.getCurrentUser();
-
             Intent intent;
             if (currentUser != null) {
-                // Utilisateur connecté → Rediriger vers Don1Activity
                 intent = new Intent(DonsActivity.this, Don1Activity.class);
             } else {
-                // Utilisateur non connecté → Rediriger vers Don3Activity
                 intent = new Intent(DonsActivity.this, Don3Activity.class);
-
-                // Vérifie si le prénom est déjà défini (anonyme ou prénom saisi)
-                if (prenom != null) {
-                    intent.putExtra("prenom", prenom);
-                } else {
-                    intent.putExtra("prenom", "ANONYME");
-                }
+                intent.putExtra("prenom", (prenom != null) ? prenom : "ANONYME");
             }
-
             intent.putExtra("nomAssociation", association.getNom());
             startActivity(intent);
+            overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
         });
     }
 
-    // Méthode pour charger les associations depuis Firestore
     private void chargerAssociations() {
         db.collection("associations")
                 .get()
                 .addOnSuccessListener(queryDocumentSnapshots -> {
                     associationList.clear();
                     filteredList.clear();
-                    for (DocumentSnapshot document : queryDocumentSnapshots) {
-                        String nom = document.getString("nom");
-                        String description = document.getString("description");
-                        String url = document.getString("url");
-                        String category = document.getString("category");
+                    for (DocumentSnapshot doc : queryDocumentSnapshots) {
+                        String nom = doc.getString("nom");
+                        String description = doc.getString("description");
+                        String url = doc.getString("url");
+                        String category = doc.getString("category");
 
-                        ItemAsso association = new ItemAsso(nom, description, R.drawable.logo, url, category);
-                        associationList.add(association);
-                        filteredList.add(association);
+                        ItemAsso asso = new ItemAsso(nom, description, R.drawable.logo, url, category);
+                        associationList.add(asso);
+                        filteredList.add(asso);
                     }
                     adapter.notifyDataSetChanged();
+                    showLoading(false);
                 })
                 .addOnFailureListener(e -> {
-                    Log.e("FirestoreError", "Erreur lors du chargement des associations", e);
-                    Toast.makeText(DonsActivity.this, "Erreur lors du chargement des associations", Toast.LENGTH_SHORT).show();
+                    Log.e("FirestoreError", "Erreur chargement associations", e);
+                    Toast.makeText(this, "Erreur lors du chargement des associations", Toast.LENGTH_SHORT).show();
+                    showLoading(false);
                 });
     }
 
-    // Méthode pour filtrer les associations
+    private void showLoading(boolean isLoading) {
+        loadingContainer.setVisibility(isLoading ? View.VISIBLE : View.GONE);
+        recyclerView.setVisibility(isLoading ? View.GONE : View.VISIBLE);
+    }
+
     private void filtrerAssociations(String query) {
         if (query == null) query = "";
         filteredList.clear();
 
-        for (ItemAsso association : associationList) {
-            if (association.getNom() != null &&
-                    association.getNom().toLowerCase().contains(query.toLowerCase())) {
-                filteredList.add(association);
+        for (ItemAsso asso : associationList) {
+            if (asso.getNom() != null &&
+                    asso.getNom().toLowerCase().contains(query.toLowerCase())) {
+                filteredList.add(asso);
             }
         }
 
         adapter.notifyDataSetChanged();
+        recyclerView.startAnimation(AnimationUtils.loadAnimation(this, R.anim.fade_in));
     }
 }

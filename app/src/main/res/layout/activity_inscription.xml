@@ -246,6 +246,34 @@
                     android:layout_marginBottom="5dp"
                     app:backgroundTint="@color/buttonColor"
                     tools:ignore="RtlHardcoded" />
+
+                <LinearLayout
+                    android:id="@+id/loading_container"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="10dp"
+                    android:visibility="gone">
+
+                    <ProgressBar
+                        android:id="@+id/progress_inscription"
+                        style="?android:attr/progressBarStyleSmall"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:indeterminateTint="#00757D"
+                        android:layout_marginEnd="10dp"/>
+
+                    <TextView
+                        android:id="@+id/text_loading"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Inscription en cours..."
+                        android:textColor="#00757D"
+                        android:textSize="14sp"
+                        android:fontFamily="sans-serif-medium"/>
+                </LinearLayout>
             </LinearLayout>
         </LinearLayout>
     </ScrollView>

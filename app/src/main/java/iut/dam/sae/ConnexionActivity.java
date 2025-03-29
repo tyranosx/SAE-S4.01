@@ -82,6 +82,16 @@ public class ConnexionActivity extends AppCompatActivity {
             String password = inputPassword.getText().toString().trim();
 
             if (email.isEmpty() || password.isEmpty()) {
+                if (password.isEmpty()) {
+                    inputPassword.startAnimation(shake);
+                    vibrateError();
+                    playErrorSound();
+                }
+                if (email.isEmpty()) {
+                    inputEmail.startAnimation(shake);
+                    vibrateError();
+                    playErrorSound();
+                }
                 Toast.makeText(ConnexionActivity.this, "Veuillez remplir tous les champs", Toast.LENGTH_SHORT).show();
                 return;
             }
@@ -98,6 +108,7 @@ public class ConnexionActivity extends AppCompatActivity {
                                 // Retourner à LoginChoiceActivity au lieu d'aller directement à AdminActivity
                                 Intent intent = new Intent(ConnexionActivity.this, LoginChoiceActivity.class);
                                 startActivity(intent);
+                                overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
                                 finish();
                             }
                         } else {
@@ -120,6 +131,7 @@ public class ConnexionActivity extends AppCompatActivity {
         txtSinscrire.setOnClickListener(v -> {
             Intent intent = new Intent(ConnexionActivity.this, InscriptionActivity.class);
             startActivity(intent);
+            overridePendingTransition(android.R.anim.fade_in, R.anim.slide_out_right);
         });
 
         // Bouton retour vers LoginChoiceActivity
@@ -144,7 +156,16 @@ public class ConnexionActivity extends AppCompatActivity {
     }
 
     private void showLoading(boolean isLoading) {
-        loadingContainer.setVisibility(isLoading ? View.VISIBLE : View.GONE);
+        if (isLoading) {
+            btnConnexion.setText("Connexion...");
+            btnConnexion.startAnimation(AnimationUtils.loadAnimation(this, R.anim.fade_out));
+            loadingContainer.setVisibility(View.VISIBLE);
+        } else {
+            btnConnexion.setText(getString(R.string.connexion)); // ← "Se connecter"
+            btnConnexion.startAnimation(AnimationUtils.loadAnimation(this, R.anim.fade_in));
+            loadingContainer.setVisibility(View.GONE);
+        }
+
         btnConnexion.setEnabled(!isLoading);
         inputEmail.setEnabled(!isLoading);
         inputPassword.setEnabled(!isLoading);

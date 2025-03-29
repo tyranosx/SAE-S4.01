@@ -90,6 +90,33 @@
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="10dp"/>
 
+    <LinearLayout
+        android:id="@+id/loading_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:layout_marginTop="16dp"
+        android:visibility="gone">
+
+        <ProgressBar
+            android:id="@+id/progress_dons"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:indeterminate="true"
+            android:indeterminateTint="#00757D"
+            android:layout_marginEnd="10dp" />
+
+        <TextView
+            android:id="@+id/text_loading_dons"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Chargement en cours..."
+            android:textSize="16sp"
+            android:textColor="#00757D"
+            android:fontFamily="sans-serif-medium" />
+    </LinearLayout>
+
     <!-- RecyclerView pour afficher la liste des associations -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerViewAssociations"
