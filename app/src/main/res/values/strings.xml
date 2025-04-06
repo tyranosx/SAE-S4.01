@@ -83,5 +83,7 @@
     <string name="partagez_l_application">Partagez l\'application</string>
     <string name="g_n_rer_qr_code">Générer QR Code</string>
     <string name="connexion_en_cours">Connexion en cours...</string>
+    <string name="total_dons_realises">Total des dons réalisés</string>
+    <string name="choix2">Que choisir ?</string>
 
 </resources>

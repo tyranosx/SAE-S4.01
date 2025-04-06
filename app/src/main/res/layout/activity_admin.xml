@@ -91,7 +91,7 @@
         android:id="@+id/total_dons_realises"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Total des dons réalisés"
+        android:text="@string/total_dons_realises"
         android:textSize="18sp"
         android:textStyle="bold"
         android:textColor="@color/textColor"
