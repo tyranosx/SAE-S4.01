@@ -20,7 +20,7 @@ import java.util.List;
 public class AdminActivity extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
-    private FirebaseFirestore db;
+    private FirebaseFirestore db; // Création base de données
     private RecyclerView recyclerView;
     private DonAdapter donAdapter;
     private List<DonItem> donList;
