@@ -108,6 +108,7 @@ public class DonsActivity extends AppCompatActivity {
         btnAideChoix.setOnClickListener(v -> {
             v.startAnimation(clickScale);
             Intent intent = new Intent(DonsActivity.this, ConseilChoixActivity.class);
+            intent.putExtra("prenom", prenom);
             startActivity(intent);
             overridePendingTransition(R.anim.slide_in_right, R.anim.fade_out);
         });

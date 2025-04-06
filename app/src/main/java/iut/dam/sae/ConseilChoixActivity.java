@@ -41,6 +41,7 @@ public class ConseilChoixActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_conseil_choix);
 
+        String prenom = getIntent().getStringExtra("prenom");
 
         mAuth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();
@@ -50,7 +51,7 @@ public class ConseilChoixActivity extends AppCompatActivity {
 
         allAssociations = new ArrayList<>();
         categorizedData = new HashMap<>();
-        adapter = new CategorizedAssociationAdapter(categorizedData, this);
+        adapter = new CategorizedAssociationAdapter(categorizedData, this, prenom);
         recyclerView.setAdapter(adapter);
 
         // Charger les animations

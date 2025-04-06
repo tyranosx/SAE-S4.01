@@ -29,9 +29,12 @@ public class CategorizedAssociationAdapter extends RecyclerView.Adapter<Recycler
     private Context context;
     private Map<String, List<ItemAsso>> fullCategorizedData; // Pour reset les filtres
 
-    public CategorizedAssociationAdapter(Map<String, List<ItemAsso>> categorizedData, Context context) {
+    private String prenom;
+
+    public CategorizedAssociationAdapter(Map<String, List<ItemAsso>> categorizedData, Context context, String prenom) {
         this.context = context;
         this.fullCategorizedData = categorizedData;
+        this.prenom = prenom;
         buildItemList(categorizedData);
     }
 
@@ -106,7 +109,7 @@ public class CategorizedAssociationAdapter extends RecyclerView.Adapter<Recycler
                     intent = new Intent(context, Don1Activity.class);
                 } else {
                     intent = new Intent(context, Don3Activity.class);
-                    intent.putExtra("prenom", "ANONYME");
+                    intent.putExtra("prenom", prenom != null && !prenom.isEmpty() ? prenom : "ANONYME");
                 }
                 intent.putExtra("nomAssociation", item.getNom());
                 context.startActivity(intent);
