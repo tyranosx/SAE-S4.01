@@ -3,6 +3,7 @@ package iut.dam.sae;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.Vibrator;
 import android.os.VibrationEffect;
 import android.text.InputType;
@@ -37,6 +38,7 @@ public class ConnexionActivity extends AppCompatActivity {
     private LinearLayout loadingContainer;
     private ProgressBar progressConnexion;
     private TextView textLoading;
+    private Runnable timeoutRunnable;
 
 
     @Override
@@ -159,14 +161,27 @@ public class ConnexionActivity extends AppCompatActivity {
     }
 
     private void showLoading(boolean isLoading) {
+        Handler handler = new Handler();
         if (isLoading) {
             btnConnexion.setText("Connexion...");
             btnConnexion.startAnimation(AnimationUtils.loadAnimation(this, R.anim.fade_out));
             loadingContainer.setVisibility(View.VISIBLE);
+
+            // Lancer un timeout de 10 secondes
+            timeoutRunnable = () -> {
+                textLoading.setText("⚠️ Connexion Internet requise");
+                textLoading.setTextColor(getResources().getColor(android.R.color.holo_red_dark));
+            };
+            handler.postDelayed(timeoutRunnable, 10000); // 10 sec
         } else {
             btnConnexion.setText(getString(R.string.connexion)); // ← "Se connecter"
             btnConnexion.startAnimation(AnimationUtils.loadAnimation(this, R.anim.fade_in));
             loadingContainer.setVisibility(View.GONE);
+
+            // Annuler le timeout si on quitte le loading
+            if (timeoutRunnable != null) handler.removeCallbacks(timeoutRunnable);
+            textLoading.setText(getString(R.string.connexion_en_cours)); // ou "" si tu préfères
+            textLoading.setTextColor(getResources().getColor(android.R.color.black)); // ou autre couleur par défaut
         }
 
         btnConnexion.setEnabled(!isLoading);
