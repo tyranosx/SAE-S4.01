@@ -85,5 +85,25 @@
     <string name="connexion_en_cours">Connexion en cours...</string>
     <string name="total_dons_realises">Total des dons réalisés</string>
     <string name="choix2">Que choisir ?</string>
+    <string name="chargement_en_cours">Chargement en cours...</string>
+    <string name="dons_annuels">Dons annuels</string>
+    <string name="mon_activit">Mon activité</string>
+    <string name="montant_total_des_dons_0">Montant total des dons : 0€</string>
+    <string name="nombre_total_de_dons_0">Nombre total de dons : 0</string>
+    <string name="pr_nom">Prénom :</string>
+    <string name="montant_total_des_dons_0_euro">Montant total des dons : 0€</string>
+    <string name="nombre_total_de_dons_0_euro">Nombre total de dons : 0</string>
+    <string name="dons_uniques">Dons uniques</string>
+    <string name="mot_de_passe_oubli">Mot de passe oublié</string>
+    <string name="pr_nom_">Prénom :</string>
+    <string name="envoyer_un_mail_de_r_initialisation">Envoyer un mail de réinitialisation</string>
+    <string name="votre_adresse_mail">Votre adresse mail</string>
+    <string name="inscription_en_cours">Inscription en cours...</string>
+    <string name="dons_mensuels">Dons mensuels</string>
+    <string name="num_ro_de_carte">Numéro de carte</string>
+    <string name="donner_">Donner</string>
+    <string name="nom_association">Nom Association</string>
+    <string name="description">Description</string>
+    <string name="cat_gorie">Catégorie</string>
 
 </resources>

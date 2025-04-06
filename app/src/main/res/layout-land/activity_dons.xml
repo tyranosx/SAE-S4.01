@@ -126,7 +126,7 @@
                 android:id="@+id/text_loading_dons"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Chargement en cours..."
+                android:text="@string/chargement_en_cours"
                 android:textSize="16sp"
                 android:textColor="#00757D"
                 android:fontFamily="sans-serif-medium" />

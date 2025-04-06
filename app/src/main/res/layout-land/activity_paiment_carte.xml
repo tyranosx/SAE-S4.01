@@ -76,7 +76,7 @@
                 android:id="@+id/et_card_number"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:hint="Numéro de carte"
+                android:hint="@string/num_ro_de_carte"
                 android:textColor="#007980"
                 android:textColorHint="#7A7A7A"
                 android:inputType="number"

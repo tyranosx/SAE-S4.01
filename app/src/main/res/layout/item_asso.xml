@@ -32,7 +32,7 @@
                 android:id="@+id/nom_association"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Nom Association"
+                android:text="@string/nom_association"
                 android:textSize="18sp"
                 android:textColor="@color/black"
                 android:textStyle="bold"/>
@@ -41,7 +41,7 @@
                 android:id="@+id/tv_description_association"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Description"
+                android:text="@string/description"
                 android:textSize="14sp"
                 android:textColor="@color/gray"/>
 
@@ -49,7 +49,7 @@
                 android:id="@+id/tv_categorie_association"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Catégorie"
+                android:text="@string/cat_gorie"
                 android:textSize="13sp"
                 android:textColor="#00757D"
                 android:textStyle="italic"
@@ -61,7 +61,7 @@
         android:id="@+id/btn_donner"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Donner"
+        android:text="@string/donner_"
         android:textSize="16sp"
         android:textColor="@android:color/white"
         android:backgroundTint="@color/red"
