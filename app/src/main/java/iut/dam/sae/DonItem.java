@@ -6,7 +6,7 @@ public class DonItem {
     private int montant;
     private Date date;
     private String prenom;
-    private String category; // Nouveau champ pour la catégorie du don
+    private String category;
 
     // Constructeur vide requis pour Firebase
     public DonItem() { }

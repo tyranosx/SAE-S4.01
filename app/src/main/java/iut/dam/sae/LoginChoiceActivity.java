@@ -24,7 +24,7 @@ public class LoginChoiceActivity extends AppCompatActivity {
 
     private Button btnFaireDon, btnSeConnecter, btnSinscrire, btnAdminPanel, btnDeconnexion;
     private ImageButton btnProfil;
-    private TextView txtBienvenue; // Nouveau TextView pour le message de bienvenue
+    private TextView txtBienvenue;
     private FirebaseAuth mAuth;
     private FirebaseFirestore db;
 
@@ -119,11 +119,11 @@ public class LoginChoiceActivity extends AppCompatActivity {
         btnFaireDon.setOnClickListener(v -> {
             animateButtonClick(v);
             if (currentUser != null) {
-                // Si connecté → Envoyer directement vers Don3Activity
+                // Si connecté -> Envoyer directement vers Don3Activity
                 Intent intent = new Intent(LoginChoiceActivity.this, DonsActivity.class);
                 startActivity(intent);
             } else {
-                // Si non connecté → Demander prénom ou don anonyme
+                // Si non connecté -> Demander prénom ou don anonyme
                 Intent intent = new Intent(LoginChoiceActivity.this, DemandePrenomActivity.class);
                 startActivity(intent);
             }

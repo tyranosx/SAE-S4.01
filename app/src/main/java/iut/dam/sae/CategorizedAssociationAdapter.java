@@ -25,7 +25,7 @@ public class CategorizedAssociationAdapter extends RecyclerView.Adapter<Recycler
     private static final int TYPE_CATEGORY = 0;
     private static final int TYPE_ASSOCIATION = 1;
 
-    private List<Object> items; // Can be String (category) or ItemAsso
+    private List<Object> items;
     private Context context;
     private Map<String, List<ItemAsso>> fullCategorizedData; // Pour reset les filtres
 
@@ -120,7 +120,7 @@ public class CategorizedAssociationAdapter extends RecyclerView.Adapter<Recycler
             holder.itemView.animate()
                     .alpha(1f)
                     .setDuration(400)
-                    .setStartDelay(position * 30) // ajustable si tu veux plus rapide ou plus lent
+                    .setStartDelay(position * 30)
                     .start();
         }
     }

@@ -70,7 +70,7 @@ public class MonActiviteActivity extends AppCompatActivity {
         ImageButton btnProfil = findViewById(R.id.btn_profil);
         TextView txtPrenomUtilisateur = findViewById(R.id.txt_prenom_utilisateur);
 
-        // === ANIMATIONS ===
+        // Animations
         Animation clickScale = AnimationUtils.loadAnimation(this, R.anim.click_scale);
         Animation fadeIn = AnimationUtils.loadAnimation(this, R.anim.fade_in);
         Animation slideIn = AnimationUtils.loadAnimation(this, R.anim.slide_in_bottom);

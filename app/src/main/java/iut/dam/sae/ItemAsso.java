@@ -5,7 +5,7 @@ public class ItemAsso {
     private String description;
     private int imageResId;
     private String siteWeb;
-    private String category; // Ajout de la catégorie
+    private String category;
 
     public ItemAsso(String nom, String description, int imageResId, String siteWeb, String category) {
         this.nom = nom;

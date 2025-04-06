@@ -23,7 +23,7 @@ public class AssociationAdapter extends RecyclerView.Adapter<AssociationAdapter.
     private OnItemClickListener onItemClickListener; // Ajout de l'interface ici
 
     public interface OnItemClickListener {
-        void onItemClick(ItemAsso item);  // Méthode à implémenter dans l'activité
+        void onItemClick(ItemAsso item);
     }
 
     public AssociationAdapter(List<ItemAsso> associationList, Context context) {

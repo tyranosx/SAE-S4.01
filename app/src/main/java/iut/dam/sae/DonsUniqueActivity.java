@@ -60,7 +60,7 @@ public class DonsUniqueActivity extends AppCompatActivity {
         ImageButton btnRetour = findViewById(R.id.btn_retour);
         ImageButton btnProfil = findViewById(R.id.btn_profil);
 
-        // === ANIMATIONS ===
+        // Animations
         Animation clickScale = AnimationUtils.loadAnimation(this, R.anim.click_scale);
         Animation fadeIn = AnimationUtils.loadAnimation(this, R.anim.fade_in);
         Animation slideIn = AnimationUtils.loadAnimation(this, R.anim.slide_in_bottom);
@@ -72,7 +72,7 @@ public class DonsUniqueActivity extends AppCompatActivity {
         findViewById(R.id.montant_total_dons).startAnimation(fadeIn);
         findViewById(R.id.nombre_total_dons).startAnimation(fadeIn);
 
-        // RecyclerView items → cascade animation
+        // RecyclerView items -> cascade animation
         recyclerViewDonsUniques.setLayoutAnimation(
                 AnimationUtils.loadLayoutAnimation(this, R.anim.layout_fade_in)
         );

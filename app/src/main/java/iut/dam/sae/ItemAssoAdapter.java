@@ -44,7 +44,7 @@ public class ItemAssoAdapter extends RecyclerView.Adapter<ItemAssoAdapter.ViewHo
 
         holder.tvNom.setText(association.getNom());
         holder.tvDescription.setText(association.getDescription());
-        holder.ivLogo.setImageResource(R.drawable.logo);  // Logo générique France Assos Santé
+        holder.ivLogo.setImageResource(R.drawable.logo);
 
         // Gestion du bouton "Donner"
         holder.btnDonner.setOnClickListener(v -> {
@@ -52,10 +52,10 @@ public class ItemAssoAdapter extends RecyclerView.Adapter<ItemAssoAdapter.ViewHo
             FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
 
             if (currentUser != null) {
-                // Utilisateur connecté → Va vers Don1Activity
+                // Utilisateur connecté -> Va vers Don1Activity
                 intent = new Intent(context, Don1Activity.class);
             } else {
-                // Utilisateur non connecté → Va vers Don3Activity
+                // Utilisateur non connecté -> Va vers Don3Activity
                 intent = new Intent(context, Don3Activity.class);
 
                 // Vérification si le prénom provient de DemandePrenomActivity
@@ -77,7 +77,6 @@ public class ItemAssoAdapter extends RecyclerView.Adapter<ItemAssoAdapter.ViewHo
         return associationList.size();
     }
 
-    // Ajouter cette méthode dans ItemAssoAdapter
     public void setFilteredList(List<ItemAsso> filteredList) {
         this.associationList = filteredList;
         notifyDataSetChanged();
@@ -97,7 +96,7 @@ public class ItemAssoAdapter extends RecyclerView.Adapter<ItemAssoAdapter.ViewHo
             tvNom = itemView.findViewById(R.id.nom_association);
             tvDescription = itemView.findViewById(R.id.tv_description_association);
             ivLogo = itemView.findViewById(R.id.img_association);
-            btnDonner = itemView.findViewById(R.id.btn_donner);  // Ajout du bouton "Donner"
+            btnDonner = itemView.findViewById(R.id.btn_donner);
         }
     }
 }

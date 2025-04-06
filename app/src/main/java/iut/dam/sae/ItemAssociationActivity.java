@@ -3,8 +3,8 @@ package iut.dam.sae;
 public class ItemAssociationActivity {
     private String nom;
     private String description;
-    private int logoResId; // Référence vers une image drawable
-    private String siteWeb; // URL du site web de l'association
+    private int logoResId;
+    private String siteWeb;
 
     public void ItemAssociation(String nom, String description, int logoResId, String siteWeb) {
         this.nom = nom;

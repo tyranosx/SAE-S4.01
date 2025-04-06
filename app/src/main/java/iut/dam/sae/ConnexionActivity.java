@@ -174,14 +174,14 @@ public class ConnexionActivity extends AppCompatActivity {
             };
             handler.postDelayed(timeoutRunnable, 10000); // 10 sec
         } else {
-            btnConnexion.setText(getString(R.string.connexion)); // ← "Se connecter"
+            btnConnexion.setText(getString(R.string.connexion));
             btnConnexion.startAnimation(AnimationUtils.loadAnimation(this, R.anim.fade_in));
             loadingContainer.setVisibility(View.GONE);
 
             // Annuler le timeout si on quitte le loading
             if (timeoutRunnable != null) handler.removeCallbacks(timeoutRunnable);
-            textLoading.setText(getString(R.string.connexion_en_cours)); // ou "" si tu préfères
-            textLoading.setTextColor(getResources().getColor(android.R.color.black)); // ou autre couleur par défaut
+            textLoading.setText(getString(R.string.connexion_en_cours));
+            textLoading.setTextColor(getResources().getColor(android.R.color.black));
         }
 
         btnConnexion.setEnabled(!isLoading);

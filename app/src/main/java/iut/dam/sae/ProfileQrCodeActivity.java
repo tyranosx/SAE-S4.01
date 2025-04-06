@@ -34,7 +34,7 @@ public class ProfileQrCodeActivity extends AppCompatActivity {
         shareButton = findViewById(R.id.shareButton);
 
         // Générer le QR code
-        String dynamicLink = "https://sae.page.link/ouvrir"; // ton vrai lien dynamique Firebase
+        String dynamicLink = "https://sae.page.link/ouvrir";
         qrCodeBitmap = generateQRCode(dynamicLink, 500, 500);
 
         if (qrCodeBitmap != null) {
